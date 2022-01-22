@@ -1,0 +1,19 @@
+ssh_authorized_keys:
+- github:synthe102
+hostname: nuc1
+run_cmd:
+- "sudo mount -t ext4 /dev/sda1 /longhorn-sda"
+
+k3os:
+  token: homelab-cluster
+  modules:
+  - nvme
+  k3s_args:
+  - server
+  - "disable-cloud-controller"
+  - "--tls-san=homelab-cluster.suslian.engineer"
+  - "--cluster-init"
+  - "--disable=servicelb"
+  - "--disable=traefik"
+  - "--disable=local-storage"
+  - "--disable=metrics-server"
