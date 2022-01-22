@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: stack
+  name: metallb
   namespace: argo-cd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
