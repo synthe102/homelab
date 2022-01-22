@@ -11,7 +11,7 @@ spec:
     namespace: metallb
   project: default
   source:
-    path: apps/
+    path: charts/metallb
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: master
   syncPolicy:
