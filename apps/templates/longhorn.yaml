@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: longhorn
+    namespace: longhorn-system
   project: default
   source:
     path: charts/longhorn
