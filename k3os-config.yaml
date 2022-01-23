@@ -10,9 +10,9 @@ k3os:
   - nvme
   k3s_args:
   - server
-  - "disable-cloud-controller"
-  - "--tls-san=homelab-cluster.suslian.engineer"
   - "--cluster-init"
+  - "--disable-cloud-controller"
+  - "--tls-san=homelab-cluster.suslian.engineer"
   - "--disable=servicelb"
   - "--disable=traefik"
   - "--disable=local-storage"
