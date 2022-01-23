@@ -1,2 +1,2 @@
 longhorn:
-  namespaceOverride: longhorn
+  namespaceOverride: "longhorn"
