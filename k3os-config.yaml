@@ -2,7 +2,7 @@ ssh_authorized_keys:
 - github:synthe102
 hostname: nuc1
 run_cmd:
-- "sudo mount -t ext4 /dev/sda1 /longhorn-sda"
+- "sudo mount -t ext4 /dev/sda1 /var/lib/rancher/longhorn-sda"
 
 k3os:
   token: homelab-cluster
