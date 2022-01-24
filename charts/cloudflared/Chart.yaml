@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cloudflared
+version: 1.0.0
+dependencies:
+  - name: cloudflared
+    version: 0.3.3
+    repository: https://khuedoan.github.io/charts
