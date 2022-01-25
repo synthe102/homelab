@@ -1,17 +1,19 @@
+{{- range $index, $app := .Values.apps }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metallb
+  name: {{ $app.name }}
   namespace: argo-cd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: metallb
+    namespace: {{ $app.namespace | default $app.name }}
   project: default
   source:
-    path: charts/metallb
+    path: {{ $app.path | default (printf "charts/%s" $app.name) }}/
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: master
   syncPolicy:
@@ -20,3 +22,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+{{- end }}

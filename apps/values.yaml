@@ -1,0 +1,10 @@
+apps:
+  - name: stack
+    namespace: argo-cd
+    path: apps
+  - name: metallb
+  - name: argo-cd
+  - name: cloudflared
+  - name: ingress-nginx
+  - name: longhorn
+    namespace: longhorn-system
