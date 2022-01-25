@@ -8,7 +8,6 @@ argo-cd:
         external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
         #kubernetes.io/tls-acme: "true"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         # If you encounter a redirect loop or are getting a 307 response code 
         # then you need to force the nginx ingress to connect to the backend using HTTPS.
@@ -20,7 +19,7 @@ argo-cd:
         - secretName: argocd-secret #Do not change, required by argo-cd
           hosts:
             - argo.suslian.engineer
-      https: true
+      #https: true
     config:
       # Disable the admin user, only allows GitHub users to login
       #admin.enabled: "false"
