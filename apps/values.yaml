@@ -8,3 +8,4 @@ apps:
   - name: ingress-nginx
   - name: longhorn
     namespace: longhorn-system
+  - name: cert-manager
