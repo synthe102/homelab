@@ -4,6 +4,8 @@ argo-cd:
       enabled: true
       ingressClassName: "nginx"
       annotations:
+        external-dns.alpha.kubernetes.io/target: homelab-tunnel.suslian.engineer
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - argo.suslian.engineer
       tls:
