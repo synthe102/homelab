@@ -1,4 +1,5 @@
 cloudflared:
+  replicaCount: 2
   image:
     tag: 2022.1.2
   credentials:
