@@ -10,4 +10,4 @@ apps:
   #  namespace: longhorn-system
   - name: cert-manager
   - name: external-dns
-  - name: vault
+  #- name: vault
