@@ -1,0 +1,16 @@
+vault:
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      hosts:
+        - host: vault.suslian.engineer
+      tls:
+        - secretName: vault-tls-secret #Do not change, required by argo-cd
+          hosts:
+            - vault.suslian.engineer
