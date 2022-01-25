@@ -9,3 +9,4 @@ apps:
   - name: longhorn
     namespace: longhorn-system
   - name: cert-manager
+  - name: external-dns
