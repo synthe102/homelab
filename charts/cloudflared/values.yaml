@@ -8,7 +8,7 @@ cloudflared:
     tunnel: homelab
     ingress:
       - hostname: '*.suslian.engineer'
-        service: https://ingress-nginx-controller.ingress-nginx
+        service: http://ingress-nginx-controller.ingress-nginx
         originRequest:
           noTLSVerify: true
       - service: http_status:404
