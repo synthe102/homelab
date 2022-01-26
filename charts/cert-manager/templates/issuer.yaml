@@ -7,13 +7,13 @@ metadata:
 spec:
   acme:
     server: {{ $issuer.server }}
-    email: {{ .Values.email }}
+    email: {{ $issuer.email }}
     privateKeySecretRef:
       name: {{ $issuer.name }}
     solvers:
     - dns01:
         cloudflare:
-          email: {{ .Values.email }}
+          email: {{ $issuer.email }}
           apiTokenSecretRef:
             name: cloudflare-api-token
             key: api-token
