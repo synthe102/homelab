@@ -2,11 +2,10 @@ cert-manager:
   installCRDs: true
 
 
+email: leonard.suslian@gmail.com
 
 issuers:
   - server: https://acme-v02.api.letsencrypt.org/directory
     name: letsencrypt-prod
-    email: leonard.suslian@gmail.com
   - server: https://acme-staging-v02.api.letsencrypt.org/directory
     name: letsencrypt-staging
-    email: leonard.suslian@gmail.com
