@@ -21,6 +21,8 @@ rook-ceph-cluster:
   cephClusterSpec:
     mon:
       count: 1
+    monitoring:
+      enabled: false
     mgr:
       count: 1
     placement:
