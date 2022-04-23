@@ -1,7 +1,7 @@
 argo-cd:
   server:
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: "nginx"
       hosts:
         - argo.suslian.engineer
