@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/synthe102/homelab.git
+      revision: refacto
+      directories:
+      - path: k8s/platform/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/argoproj/applicationset.git
+        targetRevision: refacto
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfheal: true
+        syncOptions:
+          - CreateNamespace=true

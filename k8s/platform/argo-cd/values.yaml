@@ -1,0 +1,41 @@
+argo-cd:
+  server:
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - argo.suslian.engineer
+      tls:
+        - secretName: argocd-tls-secret #Do not change, required by argo-cd
+          hosts:
+            - argo.suslian.engineer
+      https: true
+    config:
+      # Disable the admin user, only allows GitHub users to login
+      #admin.enabled: "false"
+      # Allow display of statusbadge
+      statusbadge.enabled: "true"
+      #Url of the server, required for the GitHub auth
+      #url: https://argo.suslian.engineer
+      #dex.config: |
+      #  connectors:
+      #    #GitHub
+      #    - type: github
+      #      id: github
+      #      name: GitHub
+      #      config:
+      #        clientID: 
+      #        clientSecret: $dex.github.clientSecret
+      #        useLoginAsID: true
+      # Disable diff check for caBundles on mutating webhooks (because they are generated on a per-installation basis)
+      resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
+        jqPathExpressions:
+        - '.webhooks[]?.clientConfig.caBundle'
+      resource.compareoptions: |
+        # disables status field diffing in specified resource types
+        # 'crd' - CustomResourceDefinition-s (default)
+        # 'all' - all resources
+        # 'none' - disabled
+        ignoreResourceStatusField: crd
+    rbacConfig:
+      policy.default: role:readonly
