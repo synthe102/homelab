@@ -79,5 +79,5 @@ rook-ceph-cluster:
           # in hyperconverged settings where the volume is mounted on the same node as the osds.
           csi.storage.k8s.io/fstype: ext4
 
-  cephBlockPools:
-  cephObjectStores:
+  cephBlockPools: {}
+  cephObjectStores: {}
