@@ -2,6 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: platform
+  namespace: argo-cd
 spec:
   generators:
   - git:
@@ -15,7 +16,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/argoproj/applicationset.git
+        repoURL: https://github.com/synthe102/homelab.git
         targetRevision: refacto
         path: '{{path}}'
       destination:
@@ -24,6 +25,6 @@ spec:
       syncPolicy:
         automated:
           prune: true
-          selfheal: true
+          selfHeal: true
         syncOptions:
           - CreateNamespace=true
