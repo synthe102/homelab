@@ -3,14 +3,14 @@ vault:
     dev:
       enabled: true
     ingress:
-      enabled: false
+      enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx
-        external-dns.alpha.kubernetes.io/target: "homelab-direct.suslian.engineer"
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-staging
       hosts:
         - host: vault.suslian.engineer
       tls:
-        - secretName: vault-tls-secret #Do not change, required by argo-cd
+        - secretName: vault-tls-secret 
           hosts:
             - vault.suslian.engineer
