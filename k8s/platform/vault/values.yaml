@@ -9,6 +9,7 @@ vault:
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
       hosts:
         - host: vault.suslian.engineer
       tls:
