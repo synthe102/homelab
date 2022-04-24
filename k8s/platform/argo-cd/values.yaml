@@ -7,7 +7,7 @@ argo-cd:
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - argo.suslian.engineer
       tls:
