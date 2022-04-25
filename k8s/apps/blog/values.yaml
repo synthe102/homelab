@@ -294,7 +294,7 @@ wordpress:
   service:
     ## @param service.type WordPress service type
     ##
-    type: clusterIP
+    type: ClusterIP
     ## @param service.ports.http WordPress service HTTP port
     ## @param service.ports.https WordPress service HTTPS port
     ##
