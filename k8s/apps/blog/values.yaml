@@ -359,6 +359,7 @@ wordpress:
     ##
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
       cert-manager.io/cluster-issuer: letsencrypt-prod
     ## @param ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
     ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
