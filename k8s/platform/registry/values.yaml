@@ -7,6 +7,7 @@ docker-registry:
     hosts:
       - registry.suslian.engineer
     annotations:
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       external-dns.alpha.kubernetes.io/exclude: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod
