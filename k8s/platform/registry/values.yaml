@@ -13,7 +13,7 @@ docker-registry:
     tls:
       - secretName: registry-secret
         hosts:
-          - registry.suslian.engieer
+          - registry.suslian.engineer
   persistence:
     accessMode: 'ReadWriteOnce'
     enabled: true
