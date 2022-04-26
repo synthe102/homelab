@@ -29,3 +29,7 @@ docker-registry:
   secrets:
     haSharedSecret: ""
     htpasswd: ""
+
+  extraEnvVars:
+    - name: REGISTRY_STORAGE_DELETE_ENABLED
+      value: true
