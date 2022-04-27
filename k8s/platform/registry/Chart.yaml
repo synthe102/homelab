@@ -1,7 +1,0 @@
-apiVersion: v2
-name: registry
-version: 1.0.0
-dependencies:
-  - name: docker-registry
-    version: 2.1.0
-    repository: https://helm.twun.io
