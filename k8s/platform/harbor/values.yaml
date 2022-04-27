@@ -9,7 +9,6 @@ harbor:
         core: registry.suslian.engineer
         notary: notary.suslian.engineer
     tls:
-      certSource: secret
       secretName: harbor-ingress
       notarySecretName: notary-ingress
   externalURL: https://registry.suslian.engineer
