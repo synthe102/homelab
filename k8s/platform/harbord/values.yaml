@@ -1,0 +1,12 @@
+harbor:
+  expose:
+    ingress:
+      annotations:
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        core: registry.suslian.engineer
+        notary: notary.suslian.engineer
+    tls:
+      secretName: harbor-secret
+  externalURL: https://registry.suslian.engineer
