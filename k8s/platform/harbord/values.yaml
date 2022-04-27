@@ -1,6 +1,7 @@
 harbor:
   expose:
     ingress:
+      className: "nginx"
       annotations:
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
