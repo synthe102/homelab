@@ -12,6 +12,5 @@ vault:
       hosts:
         - host: vault.suslian.engineer
       tls:
-        - secretName: vault-tls-secret 
-          hosts:
+        - hosts:
             - vault.suslian.engineer

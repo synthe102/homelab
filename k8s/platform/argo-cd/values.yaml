@@ -11,8 +11,7 @@ argo-cd:
       hosts:
         - argo.suslian.engineer
       tls:
-        - secretName: argocd-secret #Do not change, required by argo-cd
-          hosts:
+        - hosts:
             - argo.suslian.engineer
       https: true
     config:
