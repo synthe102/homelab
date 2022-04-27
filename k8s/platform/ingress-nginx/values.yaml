@@ -2,3 +2,4 @@ ingress-nginx:
   controller:
     extraArgs:
       enable-ssl-passthrough: ""
+      default-ssl-certificate: "cert-manager/wildcard-cert"
