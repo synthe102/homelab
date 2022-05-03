@@ -1,0 +1,33 @@
+mealie:
+  env:
+  # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "nginx"
+
+      ## Configure the hosts for the ingress
+      hosts:
+        -  # -- Host address. Helm template can be passed.
+          host: mealie.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            -  # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls: 
+        - hosts:
+            - mealie.suslian.engineer
