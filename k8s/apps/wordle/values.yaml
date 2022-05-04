@@ -1,0 +1,21 @@
+component-chart:
+  containers:
+    - name: wordle
+      image: modem7/wordle
+  service:
+    ports:
+      - port: 8080
+        containerPort: 8080
+        name: wordle
+  ingress:                    # struct    | Ingress for component
+    rules:                    # struct[]  | Array of ingress rules for component
+    - host: wordle.suslian.engineer
+      path: /                 # string    | Host path for ingress rule (default: /)
+      servicePort: 8080
+      serviceName: wordle
+    tls: true                 # boolean OR string | True (for auto-generated secert name) or name of secret with SSL certificate (default: false)
+    ingressClass: nginx       # string    | Ingress class for certificate provisioning
+    name: wordle # string    | Name of the ingress (optional, default: name of component release)
+    annotations:              # map       | Map of additional annotations (optional)
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
