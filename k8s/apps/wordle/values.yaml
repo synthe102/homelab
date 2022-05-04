@@ -18,4 +18,5 @@ component-chart:
     name: wordle # string    | Name of the ingress (optional, default: name of component release)
     annotations:              # map       | Map of additional annotations (optional)
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      kubernetes.io/ingress.class: nginx
       external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
