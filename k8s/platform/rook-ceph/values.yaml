@@ -1,0 +1,85 @@
+rook-ceph:
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+
+  discover:
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+
+rook-ceph-cluster:
+  configOverride: |
+    [global]
+    mon_allow_pool_delete = true
+    osd_pool_default_size = 1
+    osd_pool_default_min_size = 1
+    mon_warn_on_pool_no_redundancy = false
+
+  cephClusterSpec:
+    mon:
+      count: 1
+    monitoring:
+      enabled: false
+    mgr:
+      count: 1
+    placement:
+      all:
+        tolerations:
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+    crashCollector:
+      disable: true
+    resources:
+    storage:
+      nodes:
+        - name: "nuc01"
+          devices:
+            - name: "sda"
+
+  cephFileSystems:
+    - name: ceph-filesystem
+      # see https://github.com/rook/rook/blob/master/Documentation/ceph-filesystem-crd.md#filesystem-settings for available configuration
+      spec:
+        metadataPool:
+          replicated:
+            size: 1
+            requireSafeReplicaSize: false
+        dataPools:
+          - failureDomain: host
+            replicated:
+              size: 1
+              requireSafeReplicaSize: false
+            # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/ceph-filesystem-crd.md#pools
+            name: data0
+        metadataServer:
+          activeCount: 1
+          activeStandby: false
+      storageClass:
+        enabled: true
+        isDefault: true
+        name: ceph-filesystem
+        # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
+        pool: data
+        reclaimPolicy: Delete
+        allowVolumeExpansion: true
+        mountOptions: []
+        # see https://github.com/rook/rook/blob/master/Documentation/ceph-filesystem.md#provision-storage for available configuration
+        parameters:
+          # The secrets contain Ceph admin credentials.
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+          csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+          # Specify the filesystem type of the volume. If not specified, csi-provisioner
+          # will set default as `ext4`. Note that `xfs` is not recommended due to potential deadlock
+          # in hyperconverged settings where the volume is mounted on the same node as the osds.
+          csi.storage.k8s.io/fstype: ext4
+
+  cephBlockPools: {}
+  cephObjectStores: {}
