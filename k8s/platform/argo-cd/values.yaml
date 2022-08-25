@@ -4,15 +4,16 @@ argo-cd:
       enabled: true
       ingressClassName: "nginx"
       annotations:
-        nginx.ingress.kubernetes.io/ssl-redirect: "false"
         external-dns.alpha.kubernetes.io/exclude: "true"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       hosts:
         - argo.suslian.engineer
       tls:
         - hosts:
             - argo.suslian.engineer
+          secretName: argocd-secret
       https: true
     config:
       # Disable the admin user, only allows GitHub users to login
