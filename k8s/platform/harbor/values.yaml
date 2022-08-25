@@ -7,7 +7,8 @@ harbor:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         core: registry.suslian.engineer
-        notary: notary.suslian.engineer
     tls:
       certSource: none
   externalURL: https://registry.suslian.engineer
+  notary:
+    enabled: false
