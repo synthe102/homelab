@@ -1,8 +1,0 @@
-apiVersion: v2
-name: wordle
-version: 1.0.0
-dependencies:
-  - name: component-chart
-    version: 0.8.4
-    repository: https://charts.devspace.sh
-
