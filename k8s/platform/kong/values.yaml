@@ -9,3 +9,13 @@ kong:
 
   ingressController:
     enabled: true
+  certificates:
+    enabled: true
+    clusterIssuer: letsencrypt-prod
+    proxy:
+      enabled: true
+      clusterIssuer: letsencrypt-prod
+      commonName: suslian.engineer
+      dnsNames:
+        - "suslian.engineer"
+        - "*.suslian.engineer"
