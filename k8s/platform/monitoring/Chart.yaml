@@ -8,4 +8,7 @@ dependencies:
   - name: mimir-distributed
     version: 3.0.0
     repository: https://grafana.github.io/helm-charts
+  - name: loki
+    version: 2.15.2
+    repository: https://grafana.github.io/helm-charts
 
