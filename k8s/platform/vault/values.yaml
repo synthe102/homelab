@@ -5,12 +5,12 @@ vault:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: kong
         external-dns.alpha.kubernetes.io/exclude: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "false"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         - host: vault.suslian.engineer
       tls:
         - hosts:
             - vault.suslian.engineer
+          secretName: vault-ssl-secret
