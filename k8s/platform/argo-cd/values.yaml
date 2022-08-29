@@ -1,5 +1,8 @@
 argo-cd:
   server:
+    service:
+      annotations:
+        konghq.com/protocol: https
     ingress:
       enabled: true
       ingressClassName: "kong"
