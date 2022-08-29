@@ -2,12 +2,12 @@ argo-cd:
   server:
     ingress:
       enabled: true
-      ingressClassName: "nginx"
+      ingressClassName: "kong"
       annotations:
+        konghq.com/protocols: "https,grpcs"
+        konghq.com/https-redirect-status-code: "301"
         external-dns.alpha.kubernetes.io/exclude: "true"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       hosts:
         - argo.suslian.engineer
       tls:
