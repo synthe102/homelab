@@ -1,14 +1,16 @@
 harbor:
   expose:
     ingress:
-      className: "nginx"
+      className: "kong"
       annotations:
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts:
         core: registry.suslian.engineer
     tls:
-      certSource: none
+      certSource: secret
+      secret:
+        secretName: harbor-ssl-secret
   externalURL: https://registry.suslian.engineer
   notary:
     enabled: false
