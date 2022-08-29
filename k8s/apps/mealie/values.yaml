@@ -8,13 +8,14 @@ mealie:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        konghq.com/protocols: "https"
+        konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
 
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "nginx"
+      ingressClassName: "kong"
 
       ## Configure the hosts for the ingress
       hosts:
@@ -31,3 +32,4 @@ mealie:
       tls: 
         - hosts:
             - mealie.suslian.engineer
+          secretName: mealie-ssl-secret
