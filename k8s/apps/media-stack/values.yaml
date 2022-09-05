@@ -103,3 +103,56 @@ sonarr:
         nfs:
           server: 192.168.1.252
           path: /mnt/MainHDD/Media
+
+radarr:
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        konghq.com/protocols: "https"
+        konghq.com/https-redirect-status-code: "308"
+        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "kong"
+
+      ## Configure the hosts for the ingress
+      hosts:
+        -  # -- Host address. Helm template can be passed.
+          host: radarr.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            -  # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls: 
+        - hosts:
+            - radarr.suslian.engineer
+          secretName: radarr-ssl-secret
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
+
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    media:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media
