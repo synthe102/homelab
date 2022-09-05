@@ -226,7 +226,7 @@ rtorrent-flood:
       ## Configure the hosts for the ingress
       hosts:
         -  # -- Host address. Helm template can be passed.
-          host: rtorrent-flood.suslian.engineer
+          host: flood.suslian.engineer
           ## Configure the paths for the host
           paths:
             -  # -- Path.  Helm template can be passed.
