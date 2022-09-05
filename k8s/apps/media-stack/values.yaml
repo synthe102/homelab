@@ -208,6 +208,10 @@ rtorrent-flood:
     # -- Set the container timezone
     TZ: Europe/Paris
 
+  service:
+    bittorrent:
+      enabled: true
+
   ingress:
     main:
       # -- Enables or disables the ingress
