@@ -1,0 +1,7 @@
+apiVersion: v2
+name: intel-gpu-plugin
+version: 1.0.0
+dependencies:
+  - name: intel-gpu-plugin
+    version: 4.4.2
+    repository: https://k8s-at-home.com/charts/
