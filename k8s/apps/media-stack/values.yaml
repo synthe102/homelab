@@ -203,14 +203,10 @@ prowlarr:
     config:
       enabled: true
 
-rtorrent-flood:
+deluge:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
-  service:
-    bittorrent:
-      enabled: true
 
   ingress:
     main:
@@ -230,7 +226,7 @@ rtorrent-flood:
       ## Configure the hosts for the ingress
       hosts:
         -  # -- Host address. Helm template can be passed.
-          host: flood.suslian.engineer
+          host: deluge.suslian.engineer
           ## Configure the paths for the host
           paths:
             -  # -- Path.  Helm template can be passed.
@@ -241,8 +237,8 @@ rtorrent-flood:
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
       tls: 
         - hosts:
-            - flood.suslian.engineer
-          secretName: rtorrent-flood-ssl-secret
+            - deluge.suslian.engineer
+          secretName: deluge-ssl-secret
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
@@ -258,4 +254,4 @@ rtorrent-flood:
       volumeSpec:
         nfs:
           server: 192.168.1.252
-          path: /mnt/MainHDD/Media
+          path: /mnt/MainHDD/Media/downloads
