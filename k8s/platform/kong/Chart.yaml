@@ -3,5 +3,5 @@ name: kong
 version: 1.0.0
 dependencies:
   - name: kong
-    version: 2.12.0
+    version: 2.13.1
     repository: https://charts.konghq.com
