@@ -12,6 +12,10 @@ kong:
   certificates:
     enabled: true
     clusterIssuer: letsencrypt-prod
+    admin:
+      enabled: false
+    cluster:
+      enabled: false
     proxy:
       enabled: true
       clusterIssuer: letsencrypt-prod
