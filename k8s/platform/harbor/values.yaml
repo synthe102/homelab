@@ -5,6 +5,8 @@ harbor:
       annotations:
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        konghq.com/https-redirect-status-code: "308"
+        konghq.com/protocols: https
       hosts:
         core: registry.suslian.engineer
     tls:
