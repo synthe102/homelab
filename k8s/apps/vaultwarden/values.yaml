@@ -1,4 +1,6 @@
 vaultwarden:
+  env:
+    SIGNUPS_ALLOWED: false
   ingress:
     main:
       # -- Enables or disables the ingress
