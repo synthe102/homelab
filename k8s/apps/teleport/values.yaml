@@ -2,7 +2,7 @@
 teleport-cluster:
   clusterName: teleport.suslian.engineer
   highAvailability:
+    replicaCount: 3
     certManager:
-      replicaCount: 3
       enabled: true
       issuerName: letsencrypt-prod
