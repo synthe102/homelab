@@ -1,8 +1,8 @@
-teleport-kube-agent:
-  roles: kube
-  authToken: 9bf56766d68a649acaeb1529c7f54d4d
-  proxyAddr: teleport-cluster.teleport-cluster.svc.cluster.local:443
-  kubeClusterName: homelab
-  teleportVersionOverride: 11.0.3
-  labels:
-    teleport.internal/resource-id: bfe8603a-71bf-483f-931a-167d392f749e
+---
+teleport-cluster:
+  clusterName: teleport.suslian.engineer
+  highAvailability:
+    certManager:
+      replicaCount: 3
+      enabled: true
+      issuerName: letsencrypt-prod
