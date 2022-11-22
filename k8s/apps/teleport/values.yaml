@@ -1,5 +1,7 @@
 ---
 teleport-cluster:
+  podSecurityPolicy:
+    enabled: false
   clusterName: teleport.suslian.engineer
   highAvailability:
     certManager:
