@@ -5,3 +5,4 @@ teleport-cluster:
     certManager:
       enabled: true
       issuerName: letsencrypt-prod
+      issuerKind: ClusterIssuer
