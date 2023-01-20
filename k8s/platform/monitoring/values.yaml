@@ -11,7 +11,7 @@ kube-prometheus-stack:
         - grafana.suslian.engineer
       tls:
         - hosts:
-            -grafana.suslian.engineer
+            - grafana.suslian.engineer
           secretName: grafana-secret
   prometheus:
     prometheusSpec:
