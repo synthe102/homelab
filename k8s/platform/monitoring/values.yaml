@@ -1,0 +1,26 @@
+kube-prometheus-stack:
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        konghq.com/protocols: "https"
+        konghq.com/https-redirect-status-code: "301"
+        external-dns.alpha.kubernetes.io/exclude: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - grafana.suslian.engineer
+      tls:
+        - hosts:
+            -grafana.suslian.engineer
+          secretName: grafana-secret
+  prometheus:
+    prometheusSpec:
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 25Gi
+      retention: 2w
+      retentionSize: 23Gi
