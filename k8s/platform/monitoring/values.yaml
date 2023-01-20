@@ -23,4 +23,4 @@ kube-prometheus-stack:
               requests:
                 storage: 25Gi
       retention: 2w
-      retentionSize: 23Gi
+      retentionSize: 23GiB
