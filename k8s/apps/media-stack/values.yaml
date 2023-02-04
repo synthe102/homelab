@@ -2,7 +2,6 @@ jellyfin:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -13,31 +12,27 @@ jellyfin:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: jellyfin.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - jellyfin.suslian.engineer
           secretName: jellyfin-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
@@ -50,12 +45,10 @@ jellyfin:
         nfs:
           server: 192.168.1.252
           path: /mnt/MainHDD/Media
-
 sonarr:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -66,31 +59,36 @@ sonarr:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: sonarr.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
+        - # -- Host address. Helm template can be passed.
+          host: tv-shows.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - sonarr.suslian.engineer
+            - tv-shows.suslian.engineer
           secretName: sonarr-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
@@ -103,12 +101,10 @@ sonarr:
         nfs:
           server: 192.168.1.252
           path: /mnt/MainHDD/Media
-
 radarr:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -119,31 +115,36 @@ radarr:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: radarr.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
+        - # -- Host address. Helm template can be passed.
+          host: movies.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - radarr.suslian.engineer
+            - movies.suslian.engineer
           secretName: radarr-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
@@ -156,12 +157,10 @@ radarr:
         nfs:
           server: 192.168.1.252
           path: /mnt/MainHDD/Media
-
 bazarr:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -172,31 +171,27 @@ bazarr:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: bazarr.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - bazarr.suslian.engineer
           secretName: bazarr-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
@@ -209,12 +204,10 @@ bazarr:
         nfs:
           server: 192.168.1.252
           path: /mnt/MainHDD/Media
-
 prowlarr:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -225,42 +218,36 @@ prowlarr:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: prowlarr.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - prowlarr.suslian.engineer
           secretName: prowlarr-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
     config:
       enabled: true
-
 deluge:
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
-
   ingress:
     main:
       # -- Enables or disables the ingress
@@ -271,31 +258,27 @@ deluge:
         konghq.com/https-redirect-status-code: "308"
         external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
       ingressClassName: "kong"
-
       ## Configure the hosts for the ingress
       hosts:
-        -  # -- Host address. Helm template can be passed.
+        - # -- Host address. Helm template can be passed.
           host: deluge.suslian.engineer
           ## Configure the paths for the host
           paths:
-            -  # -- Path.  Helm template can be passed.
+            - # -- Path.  Helm template can be passed.
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
-      tls: 
+      tls:
         - hosts:
             - deluge.suslian.engineer
           secretName: deluge-ssl-secret
-      #  - secretName: chart-example-tls
-      #    hosts:
-      #      - chart-example.local
-
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
   # -- Configure persistence settings for the chart under this key.
   # @default -- See values.yaml
   persistence:
