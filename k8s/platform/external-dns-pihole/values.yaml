@@ -1,4 +1,7 @@
 external-dns:
+  image:
+    # adds pihole support
+    tag: v0.13.2
   provider: pihole
   env:
     - name: EXTERNAL_DNS_PIHOLE_PASSWORD
