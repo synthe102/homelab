@@ -31,7 +31,8 @@ argo-cd:
     rbac:
       policy.default: role:readonly
       policy.csv: |
-        g, leonard.suslian@gmail.com, role:admin
+        g, synthe102, role:admin
+      scopes: '[groups, preferred_username]'
   server:
     service:
       annotations:
