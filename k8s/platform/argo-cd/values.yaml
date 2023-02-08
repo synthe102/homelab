@@ -1,24 +1,6 @@
 argo-cd:
-  server:
-    service:
-      annotations:
-        konghq.com/protocol: https
-    ingress:
-      enabled: true
-      ingressClassName: "kong"
-      annotations:
-        konghq.com/protocols: "https,grpcs"
-        konghq.com/https-redirect-status-code: "301"
-        external-dns.alpha.kubernetes.io/exclude: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts:
-        - argo.suslian.engineer
-      tls:
-        - hosts:
-            - argo.suslian.engineer
-          secretName: argocd-secret
-      https: true
-    config:
+  configs:
+    cm:
       # Disable the admin user, only allows GitHub users to login
       #admin.enabled: "false"
       # Allows logs and shells
@@ -46,5 +28,26 @@ argo-cd:
         # 'all' - all resources
         # 'none' - disabled
         ignoreResourceStatusField: crd
-    rbacConfig:
+    rbac:
       policy.default: role:readonly
+      policy.csv: |
+        g, synthe102, role:admin
+  server:
+    service:
+      annotations:
+        konghq.com/protocol: https
+    ingress:
+      enabled: true
+      ingressClassName: "kong"
+      annotations:
+        konghq.com/protocols: "https,grpcs"
+        konghq.com/https-redirect-status-code: "301"
+        external-dns.alpha.kubernetes.io/exclude: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - argo.suslian.engineer
+      tls:
+        - hosts:
+            - argo.suslian.engineer
+          secretName: argocd-secret
+      https: true
