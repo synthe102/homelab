@@ -22,4 +22,4 @@ ingressController:
     enabled: true
     runtimeGroupID: "f8251b4a-53c4-424a-8c33-3b448939d6e9"
     tlsClientSecretName: konnect-client-tls
-    apiHostname: “us.kic.api.konghq.tech”
+    apiHostname: "us.kic.api.konghq.tech"
