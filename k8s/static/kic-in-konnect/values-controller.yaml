@@ -3,7 +3,7 @@ deployment:
     enabled: false
 
 proxy:
-  nameOverride: gw-kong-proxy
+  nameOverride: kic-in-konnect-kong-proxy
 
 ingressController:
   enabled: true
@@ -17,7 +17,7 @@ ingressController:
   gatewayDiscovery:
     enabled: true
     adminApiService:
-      name: gw-kong-admin
+      name: kic-in-konnect-kong-admin
 
   konnect:
     enabled: true
