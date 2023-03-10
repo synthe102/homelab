@@ -7,9 +7,7 @@ proxy:
 
 ingressController:
   enabled: true
-  ingressClass: kic-in-konnect
   image:
-    #don't user nightly
     repository: kong/kubernetes-ingress-controller
     tag:  "2.9.0-rc.1"
     effectiveSemver: "2.9.0"
@@ -21,6 +19,6 @@ ingressController:
 
   konnect:
     enabled: true
-    runtimeGroupID: "8155c89a-5a5b-4a5d-82f4-8c4a950c726e"
+    runtimeGroupID: "f8251b4a-53c4-424a-8c33-3b448939d6e9"
     tlsClientSecretName: konnect-client-tls
     apiHostname: “us.kic.api.konghq.tech”
