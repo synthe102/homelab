@@ -9,7 +9,8 @@ ingressController:
   enabled: true
   ingressClass: kic-in-konnect
   image:
-    repository: kong/nightly-ingress-controller
+    #don't user nightly
+    repository: kong/kubernetes-ingress-controller
     tag:  "2.9.0-rc.1"
     effectiveSemver: "2.9.0"
 
