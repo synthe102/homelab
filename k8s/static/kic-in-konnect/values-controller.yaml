@@ -1,0 +1,24 @@
+deployment:
+  kong:
+    enabled: false
+
+proxy:
+  nameOverride: gw-kong-proxy
+
+ingressController:
+  enabled: true
+  image:
+    repository: kong/nightly-ingress-controller
+    tag:  "2.9.0-rc.1"
+    effectiveSemver: "2.9.0"
+
+  gatewayDiscovery:
+    enabled: true
+    adminApiService:
+      name: gw-kong-admin
+
+  konnect:
+    enabled: true
+    runtimeGroupID: "8155c89a-5a5b-4a5d-82f4-8c4a950c726e"
+    tlsClientSecretName: konnect-client-tls
+    apiHostname: “us.kic.api.konghq.tech”
