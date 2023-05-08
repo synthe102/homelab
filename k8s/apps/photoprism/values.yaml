@@ -38,6 +38,7 @@ photoprism:
   persistence:
     config:
       enabled: true
+      size: 25Gi
     originals:
       enabled: true
       type: custom
