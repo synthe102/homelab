@@ -25,19 +25,10 @@ readarr:
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-        - # -- Host address. Helm template can be passed.
-          host: books.suslian.engineer
-          ## Configure the paths for the host
-          paths:
-            - # -- Path.  Helm template can be passed.
-              path: /
-              # -- Ignored if not kubeVersion >= 1.14-0
-              pathType: Prefix
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
       tls:
         - hosts:
             - readarr.suslian.engineer
-            - books.suslian.engineer
           secretName: readarr-ssl-secret
           #  - secretName: chart-example-tls
           #    hosts:
