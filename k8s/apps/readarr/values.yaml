@@ -47,8 +47,8 @@ readarr:
   persistence:
     config:
       enabled: true
-      size: 25Gi
-    originals:
+      size: 1Gi
+    media:
       enabled: true
       type: custom
       volumeSpec:
