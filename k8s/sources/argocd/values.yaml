@@ -22,15 +22,22 @@ configs:
     #         clientID: 8849c4478dc3afa63a4b
     #         clientSecret: $dex.github.clientSecret
     # Disable diff check for caBundles on mutating webhooks (because they are generated on a per-installation basis)
-    # resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
-    #   jqPathExpressions:
-    #   - '.webhooks[]?.clientConfig.caBundle'
-    # resource.compareoptions: |
-    #   # disables status field diffing in specified resource types
-    #   # 'crd' - CustomResourceDefinition-s (default)
-    #   # 'all' - all resources
-    #   # 'none' - disabled
-    #   ignoreResourceStatusField: crd
+    resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
+      jqPathExpressions:
+      - '.webhooks[]?.clientConfig.caBundle'
+    # Disable updates for certificates authorities in secrets
+    resource.customizations.ignoreDifferences.Secret: |
+      jqPathExpressions:
+      - '.data."ca.crt"'
+      - '.data."ca.key"'
+      - '.data."tls.key"'
+      - '.data."tls.crt"'
+    resource.compareoptions: |
+      # disables status field diffing in specified resource types
+      # 'crd' - CustomResourceDefinition-s (default)
+      # 'all' - all resources
+      # 'none' - disabled
+      ignoreResourceStatusField: crd
   # rbac:
   #   policy.default: role:readonly
   #   policy.csv: |
