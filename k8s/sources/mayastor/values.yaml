@@ -5,10 +5,9 @@ etcd:
     storageClass: manual
 loki-stack:
   enabled: false
-nats:
-  cluster:
-    replicas: 3
 localpv-provisioner:
+  enabled: false
+eventing:
   enabled: false
 obs:
   callhome:
