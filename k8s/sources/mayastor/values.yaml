@@ -4,6 +4,4 @@ etcd:
   persistence:
     storageClass: manual
 loki-stack:
-  loki:
-    persistence:
-      storageClassName: manual
+  enabled: false
