@@ -1,0 +1,9 @@
+etcd:
+  replicaCount: 3
+  podAntiAffinityPreset: soft
+  persistence:
+    storageClass: manual
+loki-stack:
+  loki:
+    persistence:
+      storageClassName: manual
