@@ -10,3 +10,6 @@ nats:
     replicas: 3
 localpv-provisioner:
   enabled: false
+obs:
+  callhome:
+    enabled: false
