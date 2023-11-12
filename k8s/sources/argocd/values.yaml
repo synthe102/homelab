@@ -32,6 +32,7 @@ configs:
       - '.data."ca.key"'
       - '.data."tls.key"'
       - '.data."tls.crt"'
+      - '.data."jwt-token.pem"'
     resource.compareoptions: |
       # disables status field diffing in specified resource types
       # 'crd' - CustomResourceDefinition-s (default)
