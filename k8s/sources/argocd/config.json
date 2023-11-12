@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://argoproj.github.io/argo-helm",
+  "chart": "argo-cd",
+  "targetRevision": "5.51.*",
+  "namespace": "argocd"
+}
