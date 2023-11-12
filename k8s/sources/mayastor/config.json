@@ -1,6 +1,6 @@
 {
   "repoURL": "https://openebs.github.io/mayastor-extensions",
   "chart": "mayastor",
-  "targetRevision": "2.1.*",
+  "targetRevision": "2.4.*",
   "namespace": "mayastor"
 }
