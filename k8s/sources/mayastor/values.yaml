@@ -1,5 +1,5 @@
 etcd:
-  replicaCount: 3
+  replicaCount: 1
   podAntiAffinityPreset: soft
   persistence:
     storageClass: manual
