@@ -1,8 +1,4 @@
-cert-manager:
-  installCRDs: true
-
-
-email: leonard.suslian@gmail.com
+email: "contact+letsencrypt@suslian.engineer"
 
 issuers:
   - server: https://acme-v02.api.letsencrypt.org/directory
