@@ -3,12 +3,6 @@ kind: CiliumL2AnnouncementPolicy
 metadata:
   name: lb
 spec:
-  nodeSelector:
-    matchExpressions:
-      - key: node-role.kubernetes.io/control-plane
-        operator: In 
-        values:
-          - "true"
   interfaces:
   - eno1
   externalIPs: true
