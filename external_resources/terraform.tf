@@ -8,16 +8,11 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "3.7.0"
+      version = "4.18.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.7.1"
+      version = "2.23.0"
     }
   }
-}
-
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-  config_context = "homelab"
 }
