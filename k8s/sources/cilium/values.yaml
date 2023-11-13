@@ -1,6 +1,6 @@
 ipam:
   mode: kubernetes
-kubeProxyReplacement: true
+kubeProxyReplacement: "strict"
 operator:
   replicas: 1
   affinity: {}
@@ -35,6 +35,8 @@ l2announcements:
   enabled: true
 externalIPs:
   enabled: true
+devices:
+  - eno1
 hubble:
   relay:
     enabled: true
