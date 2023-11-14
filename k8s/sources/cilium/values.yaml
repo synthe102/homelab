@@ -37,6 +37,9 @@ externalIPs:
   enabled: true
 devices:
   - eno+
+ingressController:
+  enabled: true
+  loadbalancerMode: shared
 hubble:
   relay:
     enabled: true
