@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://geek-cookbook.github.io/charts/",
+  "chart": "intel-gpu-plugin",
+  "targetRevision": "4.4.*",
+  "namespace": "kube-system"
+}
