@@ -29,15 +29,15 @@ cgroup:
 k8sServiceHost: localhost
 k8sServicePort: 7445
 k8sClientRateLimit:
-  qps: 100
-  burst: 500
+  qps: 500
+  burst: 2500
 l2announcements:
   enabled: true
-  leaseDuration: 120s
-  leaseRenewDeadline: 60s
-  leaseRetryPeriod: 30s
+  leaseDuration: 240s 
+  leaseRenewDeadline: 120s 
+  leaseRetryPeriod: 60s 
 externalIPs:
-  enabled: true
+  enabled: false
 devices:
   - eno+
 ingressController:
