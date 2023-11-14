@@ -36,7 +36,7 @@ l2announcements:
 externalIPs:
   enabled: true
 devices:
-  - eno1
+  - eno+
 hubble:
   relay:
     enabled: true
