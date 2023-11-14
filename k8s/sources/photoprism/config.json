@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://djjudas21.github.io/charts/",
+  "chart": "photoprism",
+  "targetRevision": "7.4.*",
+  "namespace": "photoprism"
+}
