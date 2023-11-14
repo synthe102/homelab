@@ -29,10 +29,13 @@ cgroup:
 k8sServiceHost: localhost
 k8sServicePort: 7445
 k8sClientRateLimit:
-  qps: 20
-  burst: 30
+  qps: 100
+  burst: 500
 l2announcements:
   enabled: true
+  leaseDuration: 120s
+  leaseRenewDeadline: 60s
+  leaseRetryPeriod: 30s
 externalIPs:
   enabled: true
 devices:
