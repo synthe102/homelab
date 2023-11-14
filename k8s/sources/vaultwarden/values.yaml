@@ -22,6 +22,9 @@ ingress:
         - vaultwarden.suslian.engineer
       secretName: vaultwarden-tls
 
+serviceAccount:
+  create: true
+
 persistence:
   enabled: true
   size: 5Gi
