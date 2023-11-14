@@ -44,22 +44,16 @@ configs:
   #   policy.csv: |
   #     g, synthe102, role:admin
   #   scopes: '[groups, preferred_username]'
-# server:
-#   service:
-#     annotations:
-#       konghq.com/protocol: https
-#   ingress:
-#     enabled: true
-#     ingressClassName: "kong"
-#     annotations:
-#       konghq.com/protocols: "https,grpcs"
-#       konghq.com/https-redirect-status-code: "301"
-#       external-dns.alpha.kubernetes.io/exclude: "true"
-#       cert-manager.io/cluster-issuer: letsencrypt-prod
-#     hosts:
-#       - argo.suslian.engineer
-#     tls:
-#       - hosts:
-#           - argo.suslian.engineer
-#         secretName: argocd-secret
-#     https: true
+server:
+  ingress:
+    enabled: true
+    ingressClassName: "cilium"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - argo.suslian.engineer
+    tls:
+      - hosts:
+          - argo.suslian.engineer
+        secretName: argocd-secret
+    https: true
