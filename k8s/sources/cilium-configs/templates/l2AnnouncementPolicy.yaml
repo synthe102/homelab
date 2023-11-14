@@ -5,5 +5,5 @@ metadata:
 spec:
   interfaces:
   - eno1
-  externalIPs: true
+  externalIPs: false
   loadBalancerIPs: true
