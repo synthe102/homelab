@@ -8,13 +8,10 @@ jellyfin:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -29,7 +26,7 @@ jellyfin:
       tls:
         - hosts:
             - jellyfin.suslian.engineer
-          secretName: jellyfin-ssl-secret
+          secretName: jellyfin-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
@@ -55,13 +52,10 @@ sonarr:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -85,7 +79,7 @@ sonarr:
         - hosts:
             - sonarr.suslian.engineer
             - tv-shows.suslian.engineer
-          secretName: sonarr-ssl-secret
+          secretName: sonarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
@@ -111,13 +105,10 @@ radarr:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -141,7 +132,7 @@ radarr:
         - hosts:
             - radarr.suslian.engineer
             - movies.suslian.engineer
-          secretName: radarr-ssl-secret
+          secretName: radarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
@@ -167,13 +158,10 @@ bazarr:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -188,7 +176,7 @@ bazarr:
       tls:
         - hosts:
             - bazarr.suslian.engineer
-          secretName: bazarr-ssl-secret
+          secretName: bazarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
@@ -214,13 +202,10 @@ prowlarr:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -235,7 +220,7 @@ prowlarr:
       tls:
         - hosts:
             - prowlarr.suslian.engineer
-          secretName: prowlarr-ssl-secret
+          secretName: prowlarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
@@ -254,13 +239,10 @@ deluge:
       enabled: true
       # -- Provide additional annotations which may be required.
       annotations:
-        konghq.com/protocols: "https"
-        konghq.com/https-redirect-status-code: "308"
-        external-dns.alpha.kubernetes.io/target: "homelab-tunnel.suslian.engineer"
         cert-manager.io/cluster-issuer: letsencrypt-prod
       # -- Set the ingressClass that is used for this ingress.
       # Requires Kubernetes >=1.19
-      ingressClassName: "kong"
+      ingressClassName: "cilium"
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
@@ -275,7 +257,7 @@ deluge:
       tls:
         - hosts:
             - deluge.suslian.engineer
-          secretName: deluge-ssl-secret
+          secretName: deluge-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local
