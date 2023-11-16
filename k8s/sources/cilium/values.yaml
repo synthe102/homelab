@@ -43,8 +43,6 @@ devices:
 ingressController:
   enabled: true
   loadbalancerMode: shared
-gatewayAPI:
-  enabled: true
 hubble:
   relay:
     enabled: true
