@@ -1,4 +1,9 @@
 jellyfin:
+  resources:
+    requests:
+      gpu.intel.com/i915: 1
+    limits:
+      gpu.intel.com/i915: 1
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
