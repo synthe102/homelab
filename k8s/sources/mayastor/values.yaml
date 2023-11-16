@@ -1,0 +1,14 @@
+etcd:
+  replicaCount: 1
+  podAntiAffinityPreset: soft
+  persistence:
+    storageClass: manual
+loki-stack:
+  enabled: false
+localpv-provisioner:
+  enabled: false
+eventing:
+  enabled: false
+obs:
+  callhome:
+    enabled: false

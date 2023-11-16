@@ -1,0 +1,283 @@
+jellyfin:
+  resources:
+    requests:
+      gpu.intel.com/i915: 1
+    limits:
+      gpu.intel.com/i915: 1
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: jellyfin.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - jellyfin.suslian.engineer
+          secretName: jellyfin-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    media:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media
+sonarr:
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: sonarr.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+        - # -- Host address. Helm template can be passed.
+          host: tv-shows.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - sonarr.suslian.engineer
+            - tv-shows.suslian.engineer
+          secretName: sonarr-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    media:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media
+radarr:
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: radarr.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+        - # -- Host address. Helm template can be passed.
+          host: movies.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - radarr.suslian.engineer
+            - movies.suslian.engineer
+          secretName: radarr-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    media:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media
+bazarr:
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: bazarr.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - bazarr.suslian.engineer
+          secretName: bazarr-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    media:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media
+prowlarr:
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: prowlarr.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - prowlarr.suslian.engineer
+          secretName: prowlarr-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+qbittorrent:
+  image:
+    repository: linuxserver/qbittorrent
+    tag: 4.6.0
+  env:
+    # -- Set the container timezone
+    TZ: Europe/Paris
+  ingress:
+    main:
+      # -- Enables or disables the ingress
+      enabled: true
+      # -- Provide additional annotations which may be required.
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      # -- Set the ingressClass that is used for this ingress.
+      # Requires Kubernetes >=1.19
+      ingressClassName: "cilium"
+      ## Configure the hosts for the ingress
+      hosts:
+        - # -- Host address. Helm template can be passed.
+          host: torrent.suslian.engineer
+          ## Configure the paths for the host
+          paths:
+            - # -- Path.  Helm template can be passed.
+              path: /
+              # -- Ignored if not kubeVersion >= 1.14-0
+              pathType: Prefix
+      # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+      tls:
+        - hosts:
+            - torrent.suslian.engineer
+          secretName: torrent-tls-secret
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+  # -- Configure persistence settings for the chart under this key.
+  # @default -- See values.yaml
+  persistence:
+    config:
+      enabled: true
+    downloads:
+      enabled: true
+      type: custom
+      volumeSpec:
+        nfs:
+          server: 192.168.1.252
+          path: /mnt/MainHDD/Media/downloads

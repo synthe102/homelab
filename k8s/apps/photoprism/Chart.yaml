@@ -1,7 +1,0 @@
-apiVersion: v2
-name: photoprism
-version: 1.0.0
-dependencies:
-  - name: photoprism
-    version: 7.3.2
-    repository: https://djjudas21.github.io/charts/

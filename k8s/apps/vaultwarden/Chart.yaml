@@ -1,7 +1,0 @@
-apiVersion: v2
-name: vaultwarden
-version: 1.0.1
-dependencies:
-  - name: vaultwarden
-    version: 6.0.0
-    repository: https://helm.samipsolutions.fi/

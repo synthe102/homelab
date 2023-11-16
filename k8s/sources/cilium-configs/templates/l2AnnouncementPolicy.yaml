@@ -1,0 +1,9 @@
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: lb
+spec:
+  interfaces:
+  - eno1
+  externalIPs: false
+  loadBalancerIPs: true
