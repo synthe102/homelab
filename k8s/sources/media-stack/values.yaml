@@ -234,7 +234,10 @@ prowlarr:
   persistence:
     config:
       enabled: true
-deluge:
+qbittorrent:
+  image:
+    repository: linuxserver/qbittorrent
+    tag: 4.6.0
   env:
     # -- Set the container timezone
     TZ: Europe/Paris
@@ -251,7 +254,7 @@ deluge:
       ## Configure the hosts for the ingress
       hosts:
         - # -- Host address. Helm template can be passed.
-          host: deluge.suslian.engineer
+          host: torrent.suslian.engineer
           ## Configure the paths for the host
           paths:
             - # -- Path.  Helm template can be passed.
@@ -261,8 +264,8 @@ deluge:
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
       tls:
         - hosts:
-            - deluge.suslian.engineer
-          secretName: deluge-tls-secret
+            - torrent.suslian.engineer
+          secretName: torrent-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
           #      - chart-example.local

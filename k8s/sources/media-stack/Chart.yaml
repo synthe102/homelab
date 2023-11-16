@@ -14,8 +14,8 @@ dependencies:
   - name: prowlarr
     version: 4.5.2
     repository: https://k8s-at-home.com/charts
-  - name: deluge
-    version: 5.4.2
+  - name: qbittorrent
+    version: 13.5.2
     repository: https://k8s-at-home.com/charts
   - name: bazarr
     version: 10.6.2
