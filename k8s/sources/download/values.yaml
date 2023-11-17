@@ -70,6 +70,8 @@ ingress:
   main:
     enabled: true
     className: "cilium"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - host: &host torrent.suslian.engineer
         paths:
@@ -80,6 +82,7 @@ ingress:
     tls:
       - hosts:
           - *host
+        secretName: qbittorrent-tls
 
 persistence:
   config:
