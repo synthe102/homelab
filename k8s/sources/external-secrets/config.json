@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://charts.external-secrets.io",
+  "chart": "external-secrets",
+  "targetRevision": "0.9.*",
+  "namespace": "external-secrets"
+}
