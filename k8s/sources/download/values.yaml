@@ -1,0 +1,110 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: qbittorrent
+        image:
+          repository: ghcr.io/onedr0p/qbittorrent
+          tag: 4.6.0
+        env:
+          UMASK: "022"
+          QBITTORRENT__PORT: &port 8080
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+      port-forward:
+        image:
+          repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+          tag: "1.0"
+        env:
+          - name: QBITTORRENT_SERVER
+            value: localhost
+          - name: QBITTORRENT_PORT
+            value: "8080"
+          - name: PORT_FORWARDED
+            value: "/tmp/gluetun/forwarded_port"
+
+      gluetun:
+        image:
+          repository: ghcr.io/qdm12/gluetun
+          tag: latest
+        env:
+          - name: VPN_SERVICE_PROVIDER
+            value: custom
+          - name: VPN_TYPE
+            value: wireguard
+          - name: VPN_ENDPOINT_PORT
+            value: "51820"
+          - name: FIREWALL_OUTBOUND_SUBNETS
+            # Allow access to k8s subnets
+            value: "10.96.0.0/12,10.244.0.0/16"
+          - name: VPN_INTERFACE
+            value: wg0
+          - name: SHADOWSOCKS
+            value: "on"
+          - name: FIREWALL_INPUT_PORTS
+            value: "8080"
+          - name: DOT
+            value: "off"
+        envFrom:
+          - secretRef:
+              name: qbittorrent-vpn-config
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+
+service:
+  main:
+    ports:
+      http:
+        port: *port
+
+ingress:
+  main:
+    enabled: true
+    className: "cilium"
+    hosts:
+      - host: &host torrent.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /config
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media/downloads
+    advancedMounts:
+      main:
+        main:
+          - path: /downloads
+  gluetun-data:
+    type: emptyDir
+    advancedMounts:
+      main:
+        gluetun:
+          - path: /tmp/gluetun
+        port-forward:
+          - path: /tmp/gluetun
+            readOnly: true
