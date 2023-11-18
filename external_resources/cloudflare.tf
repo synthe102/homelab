@@ -18,15 +18,11 @@ resource "cloudflare_api_token" "cert_manager" {
   }
 }
 
-resource "kubernetes_secret" "cert_manager_token" {
-  metadata {
-    name      = "cloudflare-api-token"
-    namespace = "cert-manager"
-  }
-
-  data = {
-    "api-token" = cloudflare_api_token.cert_manager.value
-  }
+resource "doppler_secret" "cert_manager_cloudflare_api_token" {
+  project = "homelab"
+  config  = "main"
+  name    = "CERT_MANAGER_CLOUDFLARE_API_TOKEN"
+  value   = cloudflare_api_token.cert_manager.value
 }
 
 resource "cloudflare_api_token" "external_dns" {
@@ -43,13 +39,9 @@ resource "cloudflare_api_token" "external_dns" {
   }
 }
 
-resource "kubernetes_secret" "external_dns_token" {
-  metadata {
-    name      = "cloudflare-api-token"
-    namespace = "external-dns"
-  }
-
-  data = {
-    "api-token" = cloudflare_api_token.external_dns.value
-  }
+resource "doppler_secret" "external_dns_cloudflare_api_token" {
+  project = "homelab"
+  config  = "main"
+  name    = "EXTERNAL_DNS_CLOUDFLARE_API_TOKEN"
+  value   = cloudflare_api_token.external_dns.value
 }

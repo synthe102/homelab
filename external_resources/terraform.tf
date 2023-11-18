@@ -8,11 +8,15 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.18.0"
+      version = "~>4.18.0"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.23.0"
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~>5.26.0"
+    }
+    doppler = {
+      source  = "DopplerHQ/doppler"
+      version = "~>1.3.0"
     }
   }
 }
