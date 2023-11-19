@@ -48,7 +48,7 @@ configs:
   #   scopes: '[groups, preferred_username]'
 server:
   ingress:
-    enabled: false
+    enabled: true
     ingressClassName: "cilium"
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -57,5 +57,5 @@ server:
     tls:
       - hosts:
           - argo.suslian.engineer
-        secretName: argocd-secret
+        secretName: argocd-tls
     https: false
