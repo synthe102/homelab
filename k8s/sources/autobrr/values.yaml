@@ -1,0 +1,56 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+
+    containers:
+      main:
+        image:
+          repository: ghcr.io/autobrr/autobrr
+          tag: v1.33.0
+        env:
+          AUTOBRR__CHECKFORUPDATES: "false"
+          AUTOBRR__HOST: 0.0.0.0
+          AUTOBRR__PORT: &port 7474
+          AUTOBRR__LOGLEVEL: DEBUG
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            memory: 256Mi
+
+service:
+  main:
+    ports:
+      http:
+        port: *port
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    className: "cilium"
+    hosts:
+      - host: &host "autobrr.suslian.engineer"
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: autobrr-tls
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
