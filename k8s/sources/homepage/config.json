@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://jameswynn.github.io/helm-charts",
+  "chart": "homepage",
+  "targetRevision": "1.2.*",
+  "namespace": "homepage"
+}
