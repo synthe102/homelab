@@ -63,6 +63,8 @@ controllers:
 service:
   main:
     ports:
+      gluetun:
+        port: 8000
       http:
         port: *port
 
