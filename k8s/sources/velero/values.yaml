@@ -9,7 +9,7 @@ configuration:
   volumeSnapshotLocation:
     - provider: aws
       config:
-        region: home-server
+        region: eu-west-1
 initContainers:
   - name: velero-plugin-for-csi
     image: velero/velero-plugin-for-csi:v0.6.1
