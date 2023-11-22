@@ -1,0 +1,14 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: daily-global
+  namespace: velero
+spec:
+  schedule: '0 2 * * *'
+  template:
+    snapshotVolumes: false
+    includeClusterResources: true
+    includedNamespaces:
+    - '*'
+    # 30 days retention
+    ttl: 720h0m0s
