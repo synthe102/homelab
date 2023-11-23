@@ -6,8 +6,7 @@ metadata:
 spec:
   schedule: '0 2 * * *'
   template:
-    snapshotVolumes: false
-    includeClusterResources: true
+    snapshotMoveData: true
     includedNamespaces:
     - '*'
     # 30 days retention
