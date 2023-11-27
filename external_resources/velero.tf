@@ -29,7 +29,7 @@ resource "doppler_secret" "velero_access_key_id" {
 resource "doppler_secret" "velero_secret_access_key" {
   project = "homelab"
   config  = "main"
-  name    = "VELEOR_SECRET_ACCESS_KEY"
+  name    = "VELERO_SECRET_ACCESS_KEY"
   value   = aws_iam_access_key.velero.secret
 }
 
