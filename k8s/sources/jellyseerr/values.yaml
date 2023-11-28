@@ -1,0 +1,54 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: jellyseerr
+        image:
+          repository: fallenbagel/jellyseerr
+          tag: 1.7.0
+        env:
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+service:
+  main:
+    ports:
+      http:
+        port: 5055
+
+ingress:
+  main:
+    enabled: true
+    className: "cilium"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: &host requests.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: jellyseerr-tls
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /app/config
