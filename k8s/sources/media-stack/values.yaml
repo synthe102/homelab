@@ -71,19 +71,10 @@ sonarr:
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-        - # -- Host address. Helm template can be passed.
-          host: tv-shows.suslian.engineer
-          ## Configure the paths for the host
-          paths:
-            - # -- Path.  Helm template can be passed.
-              path: /
-              # -- Ignored if not kubeVersion >= 1.14-0
-              pathType: Prefix
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
       tls:
         - hosts:
             - sonarr.suslian.engineer
-            - tv-shows.suslian.engineer
           secretName: sonarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:
@@ -124,19 +115,10 @@ radarr:
               path: /
               # -- Ignored if not kubeVersion >= 1.14-0
               pathType: Prefix
-        - # -- Host address. Helm template can be passed.
-          host: movies.suslian.engineer
-          ## Configure the paths for the host
-          paths:
-            - # -- Path.  Helm template can be passed.
-              path: /
-              # -- Ignored if not kubeVersion >= 1.14-0
-              pathType: Prefix
       # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
       tls:
         - hosts:
             - radarr.suslian.engineer
-            - movies.suslian.engineer
           secretName: radarr-tls-secret
           #  - secretName: chart-example-tls
           #    hosts:

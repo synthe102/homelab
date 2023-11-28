@@ -31,7 +31,19 @@ ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: &host requests.suslian.engineer
+      - host: &host1 requests.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+      - host: &host2 tv-shows.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+      - host: &host3 movies.suslian.engineer
         paths:
           - path: /
             service:
@@ -39,7 +51,9 @@ ingress:
               port: http
     tls:
       - hosts:
-          - *host
+          - *host1
+          - *host2
+          - *host3
         secretName: jellyseerr-tls
 
 persistence:
