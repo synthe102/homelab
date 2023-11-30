@@ -1,0 +1,56 @@
+controllers:
+  main:
+    pod:
+      resources:
+        requests:
+          gpu.intel.com/i915: 1
+        limits:
+          gpu.intel.com/i915: 1
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: jellyfin
+        image:
+          repository: jellyfin/jellyfin
+          tag: 10.8.13
+        env:
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+service:
+  main:
+    ports:
+      http:
+        port: 8096
+
+ingress:
+  main:
+    enabled: true
+    className: "cilium"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: &host jellyfin.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: jellyfin-tls
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    nameOverride: media-stack-jellyfin-config
