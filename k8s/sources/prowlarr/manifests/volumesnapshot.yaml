@@ -1,0 +1,23 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: prowlarr-config-snapshot
+spec:
+  volumeSnapshotClassName: csi-mayastor-snapshotclass
+  source:
+    persistentVolumeClaimName: media-stack-prowlarr-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+spec:
+  dataSource:
+    name: prowlarr-config-snapshot
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
