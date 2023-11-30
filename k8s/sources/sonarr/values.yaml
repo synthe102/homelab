@@ -12,6 +12,7 @@ controllers:
           repository: ghcr.io/onedr0p/sonarr
           tag: 3.0.10
         env:
+          SONARR__PORT: &port 8989
           UMASK: "022"
           TZ: "Europe/Paris"
         securityContext:
@@ -22,7 +23,7 @@ service:
   main:
     ports:
       http:
-        port: 8096
+        port: *port
 
 ingress:
   main:
