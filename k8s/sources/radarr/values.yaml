@@ -1,0 +1,54 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: radarr
+        image:
+          repository: ghcr.io/onedr0p/radarr
+          tag: 5.1.3
+        env:
+          RADARR__PORT: &port 7878
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+service:
+  main:
+    ports:
+      http:
+        port: *port
+
+ingress:
+  main:
+    enabled: true
+    className: "cilium"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: &host radarr.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: radarr-tls
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    existingClaim: radarr-config
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media

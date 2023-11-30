@@ -1,0 +1,23 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: radarr-config-snapshot
+spec:
+  volumeSnapshotClassName: csi-mayastor-snapshotclass
+  source:
+    persistentVolumeClaimName: media-stack-radarr-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config
+spec:
+  dataSource:
+    name: radarr-config-snapshot
+    kind: VolumeSnapshot
+    apiGroup: snapshot.storage.k8s.io
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
