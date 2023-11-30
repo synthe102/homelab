@@ -7,11 +7,6 @@ controllers:
 
     containers:
       main:
-        resources:
-          requests:
-            gpu.intel.com/i915: 1
-          limits:
-            gpu.intel.com/i915: 1
         nameOverride: sonarr
         image:
           repository: ghcr.io/onedr0p/sonarr
