@@ -1,17 +1,17 @@
 controllers:
   main:
     pod:
-      resources:
-        requests:
-          gpu.intel.com/i915: 1
-        limits:
-          gpu.intel.com/i915: 1
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
 
     containers:
       main:
+        resources:
+          requests:
+            gpu.intel.com/i915: 1
+          limits:
+            gpu.intel.com/i915: 1
         nameOverride: jellyfin
         image:
           repository: jellyfin/jellyfin
