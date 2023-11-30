@@ -52,3 +52,7 @@ persistence:
     enabled: true
     type: persistentVolumeClaim
     existingClaim: jellyfin-config
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media
