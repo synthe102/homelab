@@ -8,9 +8,6 @@ immich:
 
 # Dependencies
 
-postgresql:
-  enabled: true
-
 redis:
   enabled: true
 
