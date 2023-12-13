@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://opensource.zalando.com/postgres-operator/charts/postgres-operator",
+  "chart": "postgres-operator",
+  "targetRevision": "1.10.*",
+  "namespace": "postgres-operator"
+}
