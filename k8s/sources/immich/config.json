@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://immich-app.github.io/immich-charts",
+  "chart": "immich",
+  "targetRevision": "0.2.0",
+  "namespace": "immich"
+}
