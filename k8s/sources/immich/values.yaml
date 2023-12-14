@@ -6,6 +6,9 @@ immich:
       # You have to specify an existing PVC to use
       existingClaim: photos-nfs
 
+image:
+  tag: v1.90.2
+
 # Dependencies
 
 redis:
