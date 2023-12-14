@@ -51,6 +51,7 @@ server:
       className: "cilium"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        kubernetes.io/ingress.class: cilium
       hosts:
         - host: &host photos.suslian.engineer
           paths:
