@@ -6,6 +6,10 @@ immich:
       # You have to specify an existing PVC to use
       existingClaim: photos-nfs
 
+env:
+  DB_USERNAME: postgres
+  DB_PASSWORD: postgres
+
 image:
   tag: v1.90.2
 
@@ -16,6 +20,8 @@ redis:
 
 postgresql:
   enabled: true
+  auth:
+    postgresPassword: postgres
   primary:
     extendedConfiguration: |-
       huge_pages = off
