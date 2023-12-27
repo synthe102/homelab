@@ -1,0 +1,6 @@
+{
+  "repoURL": "https://charts.konghq.com",
+  "chart": "ingress",
+  "targetRevision": "0.10.1",
+  "namespace": "kong"
+}
