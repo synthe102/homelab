@@ -3,8 +3,6 @@ global:
     format: json
     level: warn
 configs:
-  params:
-    server.insecure: true #required with cilium ingress right now
   cm:
     # Disable the admin user, only allows GitHub users to login
     admin.enabled: "true"
@@ -62,5 +60,4 @@ server:
     tls:
       - hosts:
           - argo.suslian.engineer
-        secretName: argocd-tls
-    https: false
+        secretName: argocd-secret
