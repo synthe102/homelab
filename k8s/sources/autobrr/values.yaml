@@ -35,7 +35,9 @@ ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-    className: "cilium"
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
+    className: "kong"
     hosts:
       - host: &host "autobrr.suslian.engineer"
         paths:

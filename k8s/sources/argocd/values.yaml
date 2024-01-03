@@ -47,11 +47,16 @@ configs:
   #     g, synthe102, role:admin
   #   scopes: '[groups, preferred_username]'
 server:
+  service:
+    annotations:
+      konghq.com/protocol: https
   ingress:
     enabled: true
-    ingressClassName: "cilium"
+    ingressClassName: "kong"
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: "https,gprcs"
+      konghq.com/https-redirect-status-code: "301"
     hosts:
       - argo.suslian.engineer
     tls:

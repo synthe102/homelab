@@ -28,9 +28,11 @@ service:
 ingress:
   main:
     enabled: true
-    className: "cilium"
+    className: "kong"
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
     hosts:
       - host: &host radarr.suslian.engineer
         paths:

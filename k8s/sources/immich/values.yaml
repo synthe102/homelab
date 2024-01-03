@@ -57,10 +57,12 @@ server:
   ingress:
     main:
       enabled: true
-      className: "cilium"
+      className: "kong"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
-        kubernetes.io/ingress.class: cilium
+        kubernetes.io/ingress.class: kong
+        konghq.com/protocols: https
+        konghq.com/https-redirect-status-code: "301"
       hosts:
         - host: &host photos.suslian.engineer
           paths:
