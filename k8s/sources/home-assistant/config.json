@@ -1,6 +1,0 @@
-{
-  "repoURL": "https://bjw-s.github.io/helm-charts",
-  "chart": "app-template",
-  "targetRevision": "2.2.*",
-  "namespace": "home-automation"
-}

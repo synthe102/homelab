@@ -1,6 +1,0 @@
-{
-  "repoURL": "https://gissilabs.github.io/charts",
-  "chart": "vaultwarden",
-  "targetRevision": "1.0.*",
-  "namespace": "vaultwarden"
-}

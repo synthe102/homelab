@@ -1,6 +1,0 @@
-{
-  "repoURL": "https://helm.cilium.io",
-  "chart": "cilium",
-  "targetRevision": "1.14.*",
-  "namespace": "kube-system"
-}
