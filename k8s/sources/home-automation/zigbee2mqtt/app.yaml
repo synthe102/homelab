@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zigbee2mqtt
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: home-automation
+  project: default
+  sources:
+  - chart: app-template
+    helm:
+      valueFiles:
+      - $values/k8s/sources/home-automation/zigbee2mqtt/values.yaml
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 2.4.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

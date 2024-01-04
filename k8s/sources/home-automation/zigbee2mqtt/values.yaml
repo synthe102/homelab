@@ -1,0 +1,60 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    containers:
+      main:
+        securityContext:
+          privileged: true
+        image:
+          repository: koenkk/zigbee2mqtt
+          tag: 1.35.0
+
+service:
+  main:
+    ports:
+      http:
+        port: 8080
+
+ingress:
+  main:
+    enabled: true
+    className: "kong"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
+    hosts:
+      - host: &host z2m.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: zigbee2mqtt-tls
+
+persistence:
+  usb:
+    enabled: true
+    type: hostPath
+    hostPath: /dev/ttyUSB0
+    advancedMounts:
+      main:
+        main:
+          - path: /dev/ttyUSB0
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /app/data
