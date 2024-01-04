@@ -15,3 +15,7 @@ spec:
     directory:
       recurse: true
       include: "**/app.yaml"
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
