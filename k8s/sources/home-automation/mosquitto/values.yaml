@@ -1,0 +1,32 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: eclipse-mosquitto
+          tag: 2.0.18
+        command:
+          - "mosquitto"
+          - "-c"
+          - "/mosquitto-no-auth.conf"
+
+service:
+  main:
+    ports:
+      http:
+        port: 9001
+        enabled: false
+      mqtt:
+        port: 1883
+        enabled: true
+
+persistence:
+  mosquitto:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /mosquitto
