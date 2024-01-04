@@ -12,7 +12,7 @@ spec:
   - chart: app-template
     helm:
       valueFiles:
-      - $values/k8s/sources/download/values.yaml
+      - $values/k8s/sources/download/download/values.yaml
     repoURL: https://bjw-s.github.io/helm-charts
     targetRevision: 2.4.*
   - ref: values
