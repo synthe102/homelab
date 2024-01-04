@@ -14,7 +14,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/bazarr/values.yaml
     repoURL: https://bjw-s.github.io/helm-charts
-    targetRevision: 2.2.*
+    targetRevision: 2.4.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
