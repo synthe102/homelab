@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prowlarr
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: media
+  project: default
+  sources:
+  - chart: app-template
+    helm:
+      valueFiles:
+      - $values/k8s/sources/prowlarr/values.yaml
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 2.2.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/prowlarr/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

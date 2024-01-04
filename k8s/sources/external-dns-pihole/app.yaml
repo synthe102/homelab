@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns-pihole
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: external-dns-pihole
+  project: default
+  sources:
+  - chart: external-dns
+    helm:
+      valueFiles:
+      - $values/k8s/sources/external-dns-pihole/values.yaml
+    repoURL: https://kubernetes-sigs.github.io/external-dns
+    targetRevision: 1.13.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/external-dns-pihole/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

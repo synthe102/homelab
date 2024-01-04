@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: kong
+  project: default
+  sources:
+  - chart: ingress
+    helm:
+      valueFiles:
+      - $values/k8s/sources/kong/values.yaml
+    repoURL: https://charts.konghq.com
+    targetRevision: 0.10.1
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/kong/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

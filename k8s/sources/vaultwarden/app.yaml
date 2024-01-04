@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vaultwarden
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: vaultwarden
+  project: default
+  sources:
+  - chart: vaultwarden
+    helm:
+      valueFiles:
+      - $values/k8s/sources/vaultwarden/values.yaml
+    repoURL: https://gissilabs.github.io/charts
+    targetRevision: 1.0.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/vaultwarden/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: teleport
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: teleport
+  project: default
+  sources:
+  - chart: teleport-cluster
+    helm:
+      valueFiles:
+      - $values/k8s/sources/teleport/values.yaml
+    repoURL: https://charts.releases.teleport.dev
+    targetRevision: 14.1.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/teleport/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

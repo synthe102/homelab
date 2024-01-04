@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intel-gpu-plugin
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  project: default
+  sources:
+  - chart: intel-gpu-plugin
+    helm:
+      valueFiles:
+      - $values/k8s/sources/intel-gpu-plugin/values.yaml
+    repoURL: https://geek-cookbook.github.io/charts/
+    targetRevision: 4.4.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/intel-gpu-plugin/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true

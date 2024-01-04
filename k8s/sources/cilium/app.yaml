@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  project: default
+  sources:
+  - chart: cilium
+    helm:
+      valueFiles:
+      - $values/k8s/sources/cilium/values.yaml
+    repoURL: https://helm.cilium.io
+    targetRevision: 1.14.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  - path: k8s/sources/cilium/manifests
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true
