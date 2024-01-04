@@ -12,13 +12,13 @@ spec:
   - chart: app-template
     helm:
       valueFiles:
-      - $values/k8s/sources/sonarr/values.yaml
+      - $values/k8s/sources/media/sonarr/values.yaml
     repoURL: https://bjw-s.github.io/helm-charts
     targetRevision: 2.4.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
-  - path: k8s/sources/sonarr/manifests
+  - path: k8s/sources/media/sonarr/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

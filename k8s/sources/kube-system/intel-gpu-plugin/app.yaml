@@ -12,13 +12,10 @@ spec:
   - chart: intel-gpu-plugin
     helm:
       valueFiles:
-      - $values/k8s/sources/intel-gpu-plugin/values.yaml
+      - $values/k8s/sources/kube-system/intel-gpu-plugin/values.yaml
     repoURL: https://geek-cookbook.github.io/charts/
     targetRevision: 4.4.*
   - ref: values
-    repoURL: https://github.com/synthe102/homelab.git
-    targetRevision: main
-  - path: k8s/sources/intel-gpu-plugin/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

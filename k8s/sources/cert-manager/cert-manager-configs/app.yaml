@@ -9,7 +9,7 @@ spec:
     namespace: cert-manager
   project: default
   sources:
-  - path: k8s/sources/cert-manager-configs
+  - path: k8s/sources/cert-manager/cert-manager-configs
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

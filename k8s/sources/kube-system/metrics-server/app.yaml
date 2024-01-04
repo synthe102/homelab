@@ -12,13 +12,10 @@ spec:
   - chart: metrics-server
     helm:
       valueFiles:
-      - $values/k8s/sources/metrics-server/values.yaml
+      - $values/k8s/sources/kube-system/metrics-server/values.yaml
     repoURL: https://kubernetes-sigs.github.io/metrics-server
     targetRevision: 3.11.*
   - ref: values
-    repoURL: https://github.com/synthe102/homelab.git
-    targetRevision: main
-  - path: k8s/sources/metrics-server/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

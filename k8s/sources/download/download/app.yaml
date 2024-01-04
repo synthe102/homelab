@@ -18,7 +18,7 @@ spec:
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
-  - path: k8s/sources/download/manifests
+  - path: k8s/sources/download/download/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

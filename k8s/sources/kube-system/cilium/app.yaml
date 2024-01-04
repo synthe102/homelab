@@ -12,13 +12,13 @@ spec:
   - chart: cilium
     helm:
       valueFiles:
-      - $values/k8s/sources/cilium/values.yaml
+      - $values/k8s/sources/kube-system/cilium/values.yaml
     repoURL: https://helm.cilium.io
     targetRevision: 1.14.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
-  - path: k8s/sources/cilium/manifests
+  - path: k8s/sources/kube-system/cilium/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

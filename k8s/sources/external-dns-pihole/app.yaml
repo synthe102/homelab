@@ -18,9 +18,6 @@ spec:
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
-  - path: k8s/sources/external-dns-pihole/manifests
-    repoURL: https://github.com/synthe102/homelab.git
-    targetRevision: main
   syncPolicy:
     syncOptions:
     - PruneLast=true

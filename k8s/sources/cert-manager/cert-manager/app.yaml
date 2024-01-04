@@ -12,13 +12,10 @@ spec:
   - chart: cert-manager
     helm:
       valueFiles:
-      - $values/k8s/sources/cert-manager/values.yaml
+      - $values/k8s/sources/cert-manager/cert-manager/values.yaml
     repoURL: https://charts.jetstack.io
     targetRevision: v1.13.*
   - ref: values
-    repoURL: https://github.com/synthe102/homelab.git
-    targetRevision: main
-  - path: k8s/sources/cert-manager/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:

@@ -12,13 +12,10 @@ spec:
   - chart: app-template
     helm:
       valueFiles:
-      - $values/k8s/sources/autobrr/values.yaml
+      - $values/k8s/sources/download/autobrr/values.yaml
     repoURL: https://bjw-s.github.io/helm-charts
     targetRevision: 2.4.*
   - ref: values
-    repoURL: https://github.com/synthe102/homelab.git
-    targetRevision: main
-  - path: k8s/sources/autobrr/manifests
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:
