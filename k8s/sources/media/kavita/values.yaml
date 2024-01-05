@@ -1,0 +1,60 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: radarr
+        image:
+          repository: jvmilazz0/kavita
+          tag: 0.7.10
+        env:
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+service:
+  main:
+    ports:
+      http:
+        port: 5000
+
+ingress:
+  main:
+    enabled: true
+    className: "kong"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
+    hosts:
+      - host: &host reader.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: kavita-tls
+
+persistence:
+  config:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /kavita/config
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media
