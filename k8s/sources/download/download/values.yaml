@@ -33,7 +33,7 @@ controllers:
       gluetun:
         image:
           repository: ghcr.io/qdm12/gluetun
-          tag: 3.37.0
+          tag: v3.37.0
         env:
           - name: VPN_PORT_FORWARDING
             value: "on"
@@ -69,6 +69,11 @@ service:
     ports:
       gluetun:
         port: 8000
+      shadowsocks:
+        port: 8388
+      shadowsocks-udp:
+        port: 8388
+        protocol: UDP
       http:
         port: *port
 
