@@ -50,10 +50,14 @@ controllers:
             value: "10.96.0.0/12,10.244.0.0/16"
           - name: VPN_INTERFACE
             value: wg0
-          - name: SHADOWSOCKS
-            value: "on"
           - name: FIREWALL_INPUT_PORTS
-            value: "8080,8000,8388"
+            value: "8080,8000,8888"
+          - name: HTTPPROXY
+            value: "on"
+          - name: HTTPPROXY_USER
+            value: "test"
+          - name: HTTPPROXY_PASSWORD
+            value: "test"
           - name: DOT
             value: "off"
         envFrom:
@@ -69,10 +73,10 @@ service:
     ports:
       gluetun:
         port: 8000
-      shadowsocks:
-        port: 8388
-      shadowsocks-udp:
-        port: 8388
+      proxy:
+        port: 8888
+      proxy-udp:
+        port: 8888
         protocol: UDP
       http:
         port: *port
