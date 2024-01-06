@@ -35,7 +35,7 @@ controllers:
           - name: SHADOWSOCKS
             value: "on"
           - name: FIREWALL_INPUT_PORTS
-            value: "8080,8000"
+            value: "9696,8000"
           - name: DOT
             value: "off"
         envFrom:
