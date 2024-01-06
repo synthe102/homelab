@@ -1,0 +1,31 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    containers:
+      main:
+        nameOverride: protonmail-bridge
+        image:
+          repository: shenxn/protonmail-bridge
+          tag: 3.7.1-1
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+
+service:
+  main:
+    ports:
+      http:
+        enabled: false
+      smtp:
+        port: 25
+
+persistence:
+  root:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
