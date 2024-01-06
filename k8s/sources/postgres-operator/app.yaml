@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgres-operator
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: postgres-operator
+  project: default
+  sources:
+  - chart: pgo
+    helm:
+      valueFiles:
+      - $values/k8s/sources/postgres-operator/values.yaml
+    repoURL: registry.developers.crunchydata.com/crunchydata
+    targetRevision: 5.5.*
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true
