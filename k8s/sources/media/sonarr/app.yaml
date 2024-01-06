@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: sonarr
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: in-cluster
