@@ -16,10 +16,41 @@ controllers:
         securityContext:
           runAsUser: 568
           runAsGroup: 568
+      gluetun:
+        image:
+          repository: ghcr.io/qdm12/gluetun
+          tag: latest
+        env:
+          - name: VPN_SERVICE_PROVIDER
+            value: custom
+          - name: VPN_TYPE
+            value: wireguard
+          - name: VPN_ENDPOINT_PORT
+            value: "51820"
+          - name: FIREWALL_OUTBOUND_SUBNETS
+            # Allow access to k8s subnets
+            value: "10.96.0.0/12,10.244.0.0/16"
+          - name: VPN_INTERFACE
+            value: wg0
+          - name: SHADOWSOCKS
+            value: "on"
+          - name: FIREWALL_INPUT_PORTS
+            value: "8080,8000"
+          - name: DOT
+            value: "off"
+        envFrom:
+          - secretRef:
+              name: prowlarr-vpn-config
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
 
 service:
   main:
     ports:
+      gluetun:
+        port: 8000
       http:
         port: 9696
 
