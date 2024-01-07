@@ -17,6 +17,8 @@ service:
     ports:
       http:
         port: 8080
+      content:
+        port: 8081
 
 ingress:
   main:
