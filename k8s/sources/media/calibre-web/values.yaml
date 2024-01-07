@@ -1,28 +1,22 @@
 controllers:
   main:
-    pod:
-      securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
-
     containers:
       main:
-        nameOverride: radarr
+        nameOverride: calibre-web
         image:
-          repository: ghcr.io/onedr0p/readarr-develop
-          tag: 0.3.14
+          repository: ghcr.io/linuxserver/calibre-web
+          tag: 0.6.21
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
+          PUID: 1000
+          PGID: 1000
 
 service:
   main:
     ports:
       http:
-        port: 8787
+        port: 8083
 
 ingress:
   main:
@@ -33,7 +27,7 @@ ingress:
       konghq.com/protocols: https
       konghq.com/https-redirect-status-code: "301"
     hosts:
-      - host: &host readarr.suslian.engineer
+      - host: &host books.suslian.engineer
         paths:
           - path: /
             service:
@@ -42,7 +36,7 @@ ingress:
     tls:
       - hosts:
           - *host
-        secretName: readarr-tls
+        secretName: calibre-web-tls
 
 persistence:
   config:
