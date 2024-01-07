@@ -1,10 +1,5 @@
 controllers:
   main:
-    pod:
-      securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: "OnRootMismatch"
-
     containers:
       main:
         nameOverride: lazylibrarian
@@ -12,11 +7,10 @@ controllers:
           repository: linuxserver/lazylibrarian
           tag: 132dc7bd-ls26
         env:
+          PUID: 1000
+          PGID: 1000
           UMASK: "022"
           TZ: "Europe/Paris"
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
 
 service:
   main:
