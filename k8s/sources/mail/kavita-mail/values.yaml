@@ -5,7 +5,7 @@ controllers:
         nameOverride: kavita-mail
         image:
           repository: jvmilazz0/kavitaemail
-          tag: 0.1.25
+          tag: 0.1.26
 
 service:
   main:
