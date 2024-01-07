@@ -10,7 +10,7 @@ controllers:
         nameOverride: lazylibrarian
         image:
           repository: linuxserver/lazylibrarian
-          tag: 132dc7bd-ls26
+          tag: 37923178-ls26
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
