@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/external-dns-pihole/values.yaml
     repoURL: https://kubernetes-sigs.github.io/external-dns
-    targetRevision: 1.13.*
+    targetRevision: 1.14.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
