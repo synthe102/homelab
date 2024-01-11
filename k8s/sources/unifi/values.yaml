@@ -37,6 +37,8 @@ controllers:
 
 service:
   main:
+    annotations:
+      konghq.com/protocol: https
     type: LoadBalancer
     ports:
       stun:
@@ -55,6 +57,26 @@ service:
       discovery:
         port: 10001
         protocol: UDP
+
+ingress:
+  main:
+    enabled: true
+    className: "kong"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
+    hosts:
+      - host: &host unifi.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: gui
+    tls:
+      - hosts:
+          - *host
+        secretName: unifi-tls
 
 persistence:
   config:
