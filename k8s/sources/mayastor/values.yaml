@@ -12,3 +12,5 @@ eventing:
 obs:
   callhome:
     enabled: false
+io_engine:
+  cpuCount: "1"
