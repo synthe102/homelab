@@ -9,7 +9,7 @@ controllers:
         nameOverride: unifi
         image:
           repository: ghcr.io/goofball222/unifi
-          tag: 8.0.26
+          tag: 8.0.28
         securityContext:
           runAsUser: 999
           runAsGroup: 999
