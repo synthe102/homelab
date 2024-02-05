@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/kube-system/cilium/values.yaml
     repoURL: https://helm.cilium.io
-    targetRevision: 1.14.*
+    targetRevision: 1.15.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
