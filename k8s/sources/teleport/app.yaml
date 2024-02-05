@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/teleport/values.yaml
     repoURL: https://charts.releases.teleport.dev
-    targetRevision: 14.3.*
+    targetRevision: 15.0.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
