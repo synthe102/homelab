@@ -11,7 +11,7 @@ env:
   DB_PASSWORD: postgres
 
 image:
-  tag: v1.90.2
+  tag: v1.91.4
 
 # Dependencies
 
@@ -43,7 +43,7 @@ postgresql:
           huge_pages = off
 
 typesense:
-  enabled: true
+  enabled: false
   persistence:
     tsdata:
       # Enabling typesense persistence is recommended to avoid slow reindexing
