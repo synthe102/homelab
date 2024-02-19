@@ -7,8 +7,7 @@ immich:
       existingClaim: photos-nfs
 
 env:
-  DB_USERNAME: postgres
-  DB_PASSWORD: postgres
+  DB_URL: postgresql://immich:G,dAsGIpF_L%29yM9t2%7B%5DcyBqT@hippo-primary.default.svc:5432/immich
 
 image:
   tag: v1.90.2
@@ -19,28 +18,7 @@ redis:
   enabled: true
 
 postgresql:
-  enabled: true
-  auth:
-    postgresPassword: postgres
-  primary:
-    extendedConfiguration: |-
-      huge_pages = off
-    extraVolumeMounts:
-      - name: pg-sample-config
-        mountPath: /opt/bitnami/postgresql/share/postgresql.conf.sample
-        subPath: postgresql.conf.sample
-    extraVolumes:
-      - configMap:
-          name: pg-sample-config
-        name:  pg-sample-config
-  extraDeploy:
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: pg-sample-config
-      data:
-        postgresql.conf.sample: |-
-          huge_pages = off
+  enabled: false
 
 typesense:
   enabled: false
