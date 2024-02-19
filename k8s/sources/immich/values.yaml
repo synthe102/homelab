@@ -7,10 +7,10 @@ immich:
       existingClaim: photos-nfs
 
 env:
-  DB_URL: postgresql://immich:G,dAsGIpF_L%29yM9t2%7B%5DcyBqT@hippo-primary.default.svc:5432/immich
+  DB_URL: postgresql://immich:k.6SA%5Ern%5EJNFc78%2FhUu%3EAKg9@lab-cluster-primary.postgres-operator.svc:5432/immich?sslmode=no-verify
 
 image:
-  tag: v1.90.2
+  tag: v1.91.0
 
 # Dependencies
 
