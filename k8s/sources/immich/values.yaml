@@ -11,7 +11,7 @@ env:
   DB_PASSWORD: postgres
 
 image:
-  tag: v1.91.4
+  tag: v1.90.2
 
 # Dependencies
 
