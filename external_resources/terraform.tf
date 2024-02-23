@@ -12,7 +12,7 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.35.0"
+      version = "~> 5.38.0"
     }
     doppler = {
       source  = "DopplerHQ/doppler"
