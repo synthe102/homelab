@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/argocd/values.yaml
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 5.53.*
+    targetRevision: 5.55.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
