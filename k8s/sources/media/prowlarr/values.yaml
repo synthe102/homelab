@@ -10,7 +10,7 @@ controllers:
         nameOverride: prowlarr
         image:
           repository: ghcr.io/onedr0p/prowlarr
-          tag: 1.12.2
+          tag: 1.14.3
         env:
           TZ: "Europe/Paris"
         securityContext:
