@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/kube-system/metrics-server/values.yaml
     repoURL: https://kubernetes-sigs.github.io/metrics-server
-    targetRevision: 3.11.*
+    targetRevision: 3.12.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
