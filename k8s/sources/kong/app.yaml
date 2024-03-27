@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/kong/values.yaml
     repoURL: https://charts.konghq.com
-    targetRevision: 0.10.2
+    targetRevision: 0.12.0
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
