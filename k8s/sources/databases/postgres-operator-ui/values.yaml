@@ -1,0 +1,24 @@
+envs:
+  # IMPORTANT: While operator chart and UI chart are independent, this is the interface between
+  # UI and operator API. Insert the service name of the operator API here!
+  appUrl: "https://postgres-operator.suslian.engineer"
+  resourcesVisible: "True"
+  # Set to "*" to allow viewing/creation of clusters in all namespaces
+  targetNamespace: "*"
+  teams:
+    - "homelab"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    konghq.com/protocols: https
+    konghq.com/https-redirect-status-code: "301"
+  ingressClassName: kong
+  hosts:
+    - host: &host postgres-operator.suslian.engineer
+      paths: ["/"]
+  tls:
+    - secretName: postgres-operator-tls
+      hosts:
+        - *host
