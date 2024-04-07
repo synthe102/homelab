@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/immich/values.yaml
     repoURL: https://immich-app.github.io/immich-charts
-    targetRevision: 0.3.1
+    targetRevision: 0.5.0
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
