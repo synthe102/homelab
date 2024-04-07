@@ -5,3 +5,7 @@ configKubernetes:
 configMajorVersionUpgrade:
   # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too
   major_version_upgrade_mode: "full"
+
+configDebug:
+  # toggles verbose debug logs from the operator
+  debug_logging: false
