@@ -1,6 +1,9 @@
 configKubernetes:
   enable_cross_namespace_secret: true
   enable_finalizers: true
+  persistent_volume_claim_retention_policy:
+    when_deleted: "delete"
+    when_scaled: "delete"
 
 configMajorVersionUpgrade:
   # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too
