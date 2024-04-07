@@ -1,4 +1,5 @@
 global:
+  domain: argo.suslian.engineer
   logging:
     format: json
     level: warn
