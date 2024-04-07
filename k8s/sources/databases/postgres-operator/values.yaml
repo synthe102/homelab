@@ -1,0 +1,6 @@
+configKubernetes:
+  enable_cross_namespace_secret: true
+
+configMajorVersionUpgrade:
+  # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too
+  major_version_upgrade_mode: "full"
