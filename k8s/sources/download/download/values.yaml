@@ -33,7 +33,7 @@ controllers:
       gluetun:
         image:
           repository: ghcr.io/qdm12/gluetun
-          tag: v3.37.0
+          tag: v3.38.0
         env:
           - name: VPN_PORT_FORWARDING
             value: "on"
