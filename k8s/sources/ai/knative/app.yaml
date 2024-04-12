@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: knative
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: knative
+  project: default
+  sources:
+  - helm:
+      valueFiles:
+      - $values/k8s/sources/ai/knative/values.yaml
+    repoURL: https://github.com/knative/operator
+    path: config/charts/knative-operator
+    targetRevision: main
+  - ref: values
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true
