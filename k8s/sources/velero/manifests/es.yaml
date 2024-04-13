@@ -18,9 +18,15 @@ spec:
           aws_secret_access_key={{ .AWS_SECRET_ACCESS_KEY }}
           region=eu-west-1
   data:
-  - secretKey: AWS_ACCESS_KEY_ID
-    remoteRef:
-      key: VELERO_ACCESS_KEY_ID
-  - secretKey: AWS_SECRET_ACCESS_KEY
-    remoteRef:
-      key: VELERO_SECRET_ACCESS_KEY
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: VELERO_ACCESS_KEY_ID
+        metadataPolicy: None
+      secretKey: AWS_ACCESS_KEY_ID
+    - remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: VELERO_SECRET_ACCESS_KEY
+        metadataPolicy: None
+      secretKey: AWS_SECRET_ACCESS_KEY
