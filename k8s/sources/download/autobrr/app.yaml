@@ -21,6 +21,9 @@ spec:
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
     - PruneLast=true
     - CreateNamespace=true
