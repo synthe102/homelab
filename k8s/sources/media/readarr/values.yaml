@@ -10,7 +10,7 @@ controllers:
         nameOverride: radarr
         image:
           repository: ghcr.io/onedr0p/readarr-develop
-          tag: 0.3.21
+          tag: 0.3.22
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
