@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/vaultwarden/values.yaml
     repoURL: https://gissilabs.github.io/charts
-    targetRevision: 1.0.*
+    targetRevision: 1.2.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
