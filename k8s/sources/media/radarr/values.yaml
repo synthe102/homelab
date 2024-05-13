@@ -10,7 +10,7 @@ controllers:
         nameOverride: radarr
         image:
           repository: ghcr.io/onedr0p/radarr
-          tag: 5.4.6
+          tag: 5.5.3
         env:
           RADARR__PORT: &port 7878
           UMASK: "022"
