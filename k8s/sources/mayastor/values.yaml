@@ -16,3 +16,8 @@ obs:
     enabled: false
 io_engine:
   cpuCount: "1"
+storageClass:
+  allowVolumeExpansion: false
+  parameters:
+    thin: 'true'
+    ioTimeout: '60'
