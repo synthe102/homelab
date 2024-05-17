@@ -1,6 +1,8 @@
 etcd:
   replicaCount: 1
   podAntiAffinityPreset: soft
+  localpvScConfig:
+    enabled: false
   persistence:
     storageClass: manual
 loki-stack:
