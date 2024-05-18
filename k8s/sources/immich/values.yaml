@@ -7,7 +7,7 @@ immich:
       existingClaim: photos-nfs
 
 image:
-  tag: v1.103.1
+  tag: v1.105.1
 # Dependencies
 
 redis:
