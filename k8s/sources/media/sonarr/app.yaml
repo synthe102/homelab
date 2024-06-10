@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/media/sonarr/values.yaml
     repoURL: https://bjw-s.github.io/helm-charts
-    targetRevision: 2.6.*
+    targetRevision: 3.2.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
