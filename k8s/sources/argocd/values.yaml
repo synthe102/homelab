@@ -54,7 +54,7 @@ server:
     ingressClassName: "kong"
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
-      konghq.com/protocols: "https,gprcs"
+      konghq.com/protocols: "https,grpcs"
       konghq.com/https-redirect-status-code: "301"
     hosts:
       - argo.suslian.engineer
