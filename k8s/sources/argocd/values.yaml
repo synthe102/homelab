@@ -10,7 +10,7 @@ configs:
     # Allows logs and shells
     # exec.enabled: "true"
     # Allow display of statusbadge
-    statusbadge.enabled: "true"
+    statusbadge.enabled: true
     #Url of the server, required for the GitHub auth
     # url: 'https://argo.suslian.engineer'
     # dex.config: |
