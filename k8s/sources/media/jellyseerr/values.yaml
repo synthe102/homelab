@@ -10,7 +10,7 @@ controllers:
         nameOverride: jellyseerr
         image:
           repository: fallenbagel/jellyseerr
-          tag: 1.9.0
+          tag: 1.9.2
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
