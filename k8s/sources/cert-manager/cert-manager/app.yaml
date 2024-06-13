@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/cert-manager/cert-manager/values.yaml
     repoURL: https://charts.jetstack.io
-    targetRevision: 1.14.*
+    targetRevision: 1.15.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
