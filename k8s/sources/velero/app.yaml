@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/velero/values.yaml
     repoURL: https://vmware-tanzu.github.io/helm-charts
-    targetRevision: 6.7.*
+    targetRevision: 7.1.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
