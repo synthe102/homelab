@@ -1,8 +1,7 @@
 configuration:
-  uploaderType: kopia
+  features: EnableCSI
   backupStorageLocation:
     - bucket: "velero-backups-synthe"
-      defaultVolumesToFsBackup: False
       provider: aws
       config:
         region: eu-west-1
@@ -18,6 +17,5 @@ initContainers:
       - mountPath: /target
         name: plugins
 deployNodeAgent: true
-features: EnableCSI  
 credentials:
   existingSecret: velero-creds
