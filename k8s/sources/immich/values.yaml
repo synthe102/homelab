@@ -6,6 +6,9 @@ immich:
       # You have to specify an existing PVC to use
       existingClaim: photos-nfs
 
+env:
+  DB_HOSTNAME: immich-rw
+
 image:
   tag: v1.109.2
 # Dependencies
@@ -14,16 +17,7 @@ redis:
   enabled: true
 
 postgresql:
-  enabled: true
-
-typesense:
   enabled: false
-  persistence:
-    tsdata:
-      # Enabling typesense persistence is recommended to avoid slow reindexing
-      enabled: true
-      accessMode: ReadWriteOnce
-      size: 1Gi
 
 # Immich components
 
