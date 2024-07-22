@@ -7,6 +7,10 @@ metadata:
 spec:
   backup:
     barmanObjectStore:
+      wal:
+        compression: bzip2
+      data:
+        compression: bzip2
       destinationPath: "s3://velero-backups-synthe/cnpg"
       s3Credentials:
         accessKeyId:
@@ -15,7 +19,7 @@ spec:
         secretAccessKey:
           name: aws-s3-creds
           key: AWS_SECRET_ACCESS_KEY
-    retentionPolicy: "30d"
+    retentionPolicy: "15d"
   instances: 1 
   enableSuperuserAccess: true
   bootstrap:
