@@ -10,7 +10,7 @@ env:
   DB_HOSTNAME: immich-rw
 
 image:
-  tag: v1.109.2
+  tag: v1.111.0
 # Dependencies
 
 redis:
