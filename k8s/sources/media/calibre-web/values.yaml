@@ -5,7 +5,7 @@ controllers:
         nameOverride: calibre-web
         image:
           repository: ghcr.io/linuxserver/calibre-web
-          tag: 0.6.22
+          tag: 0.6.23
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
