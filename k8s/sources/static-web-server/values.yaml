@@ -1,0 +1,44 @@
+controllers:
+  main:
+    containers:
+      main:
+        nameOverride: static-web-server
+        image:
+          repository: joseluisq/static-web-server
+          tag: 2-alpine
+
+service:
+  main:
+    ports:
+      http:
+        port: 80
+
+ingress:
+  main:
+    enabled: true
+    className: "kong"
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      konghq.com/protocols: https
+      konghq.com/https-redirect-status-code: "301"
+    hosts:
+      - host: &host static.suslian.engineer
+        paths:
+          - path: /
+            service:
+              name: main
+              port: http
+    tls:
+      - hosts:
+          - *host
+        secretName: static-web-server-tls
+
+persistence:
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/static
+    advancedMounts:
+      main:
+        main:
+          - path: /var/public
