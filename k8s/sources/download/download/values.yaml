@@ -33,33 +33,25 @@ controllers:
       gluetun:
         image:
           repository: ghcr.io/qdm12/gluetun
-          tag: v3.39.0
+          tag: v3.39.1
         env:
-          - name: VPN_PORT_FORWARDING
-            value: "on"
-          - name: VPN_PORT_FORWARDING_PROVIDER
-            value: protonvpn
-          - name: VPN_SERVICE_PROVIDER
-            value: custom
-          - name: VPN_TYPE
-            value: wireguard
-          - name: VPN_ENDPOINT_PORT
-            value: "51820"
           - name: FIREWALL_OUTBOUND_SUBNETS
             # Allow access to k8s subnets
             value: "10.96.0.0/12,10.244.0.0/16"
-          - name: VPN_INTERFACE
-            value: wg0
-          - name: FIREWALL_INPUT_PORTS
-            value: "8080,8000,8888"
           - name: HTTPPROXY
             value: "on"
           - name: HTTPPROXY_USER
-            value: "test"
+            value: test
           - name: HTTPPROXY_PASSWORD
-            value: "test"
-          - name: DOT
-            value: "off"
+            value: test
+          - name: FIREWALL_INPUT_PORTS
+            value: 8080,8000,8888
+          - name: VPN_SERVICE_PROVIDER
+            value: protonvpn
+          - name: VPN_TYPE
+            value: wireguard
+          - name: VPN_INTERFACE
+            value: wg0
         envFrom:
           - secretRef:
               name: qbittorrent-vpn-config
