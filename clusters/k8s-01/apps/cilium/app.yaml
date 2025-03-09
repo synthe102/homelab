@@ -12,8 +12,11 @@ spec:
     - /data/ca.key
     - /data/tls.crt
     - /data/tls.key
-  source:
-    chart: cilium
+  sources:
+  - path: clusters/k8s-01/apps/cilium/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
+  - chart: cilium
     repoURL: https://helm.cilium.io/
     targetRevision: 1.17.1
     helm:

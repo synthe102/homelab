@@ -1,0 +1,20 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: l3-policy
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: linux
+  virtualRouters:
+  - exportPodCIDR: true
+    localASN: 64514
+    neighbors:
+    - peerASN: 64513
+      peerAddress: 192.168.1.1/32
+    serviceSelector:
+      matchExpressions:
+      - key: thisFakeSelector
+        operator: NotIn
+        values:
+        - will-match-and-announce-all-services
