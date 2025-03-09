@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: cnpg
+    repoURL: https://cloudnative-pg.github.io/charts
+    targetRevision: 0.23.2
+  destination:
+    name: in-cluster
+    namespace: cnpg-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

@@ -6,3 +6,4 @@ resources:
   - kube-prometheus-stack
   - rook
   - irq-balance
+  - cnpg
