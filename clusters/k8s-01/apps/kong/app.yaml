@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: ingress
+    repoURL: https://charts.konghq.com
+    targetRevision: 0.18.0
+  destination:
+    name: in-cluster
+    namespace: kong
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
