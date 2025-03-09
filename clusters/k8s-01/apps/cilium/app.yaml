@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  project: default
+  ignoreDifferences:
+  - kind: Secret
+    jsonPointers:
+    - /data/ca.crt
+    - /data/ca.key
+    - /data/tls.crt
+    - /data/tls.key
+  source:
+    chart: cilium
+    repoURL: https://helm.cilium.io/
+    targetRevision: 1.17.1
+    helm:
+      valuesObject:
+        envoy:
+          enabled: false
+        bpf:
+          datapathMode: netkit
+          masquerade: true
+          preallocateMaps: true
+        autoDirectNodeRoutes: true
+        ipv4NativeRoutingCIDR: 10.244.0.0/16
+        routingMode: native
+        bgpControlPlane:
+          enabled: true
+        ipam:
+          mode: kubernetes
+        kubeProxyReplacement: true
+        securityContext:
+          capabilities:
+            ciliumAgent: [CHOWN,KILL,NET_ADMIN,NET_RAW,IPC_LOCK,SYS_ADMIN,SYS_RESOURCE,DAC_OVERRIDE,FOWNER,SETGID,SETUID]
+            cleanCiliumState: [NET_ADMIN,SYS_ADMIN,SYS_RESOURCE]
+        cgroup:
+          autoMount:
+            enabled: false
+          hostRoot: /sys/fs/cgroup
+        k8sServiceHost: localhost
+        k8sServicePort: 7445
+        operator:
+          rollOutPods: true
+          tolerations: []
+        rollOutCiliumPods: true
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

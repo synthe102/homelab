@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: argo-cd
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 7.8.8
+    helm:
+      valuesObject:
+        redis-ha:
+          enabled: true
+        controller:
+          replicas: 1
+        server:
+          replicas: 2
+        repoServer:
+          replicas: 2
+        applicationSet:
+          replicas: 2
+  destination:
+    name: in-cluster
+    namespace: argocd
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
