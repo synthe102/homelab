@@ -8,3 +8,4 @@ resources:
   - irq-balance
   - cnpg
   - kong
+  - external-dns
