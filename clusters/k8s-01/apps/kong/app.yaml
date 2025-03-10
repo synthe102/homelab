@@ -5,6 +5,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  ignoreDifferences:
+  - kind: Secret
+    jsonPointers:
+    - /data/ca.crt
+    - /data/ca.key
+    - /data/tls.crt
+    - /data/tls.key
   source:
     chart: ingress
     repoURL: https://charts.konghq.com
