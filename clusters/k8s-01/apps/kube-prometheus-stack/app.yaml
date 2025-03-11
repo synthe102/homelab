@@ -70,6 +70,8 @@ spec:
           ingress:
             enabled: true
             ingressClassName: kong
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
             hosts:
             - &host grafana.k8s-01.suslian.engineer
             tls:
