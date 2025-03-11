@@ -74,7 +74,8 @@ spec:
             - &host grafana.k8s-01.suslian.engineer
             tls:
             - secretName: grafana-ingress-tls
-              hosts: *host
+              hosts: 
+              - *host
   destination:
     name: in-cluster
     namespace: monitoring
