@@ -12,10 +12,21 @@ spec:
     - /data/ca.key
     - /data/tls.crt
     - /data/tls.key
-  source:
-    chart: ingress
+  - kind: MutatingWebhookConfiguration 
+    group: admissionregistration.k8s.io
+    jqPathExpressions:
+    - .webhooks[].clientConfig.caBundle
+  - kind: ValidatingWebhookConfiguration
+    group: admissionregistration.k8s.io
+    jqPathExpressions:
+    - .webhooks[].clientConfig.caBundle
+  sources:
+  - chart: ingress
     repoURL: https://charts.konghq.com
     targetRevision: 0.18.0
+  - path: clusters/k8s-01/apps/kong/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: kong
