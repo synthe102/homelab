@@ -16,5 +16,6 @@
     age
     k9s
     cilium-cli
+    dig
   ];
 }
