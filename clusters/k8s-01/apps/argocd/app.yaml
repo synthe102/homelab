@@ -15,12 +15,24 @@ spec:
           enabled: true
         controller:
           replicas: 1
-        server:
-          replicas: 2
         repoServer:
           replicas: 2
         applicationSet:
           replicas: 2
+        server:
+          replicas: 2
+          service:
+            annotations:
+              konghq.com/protocol: https
+          ingress:
+            enabled: true
+            ingressClassName: "kong"
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              konghq.com/protocols: "https,grpcs"
+              konghq.com/https-redirect-status-code: "301"
+            tls: true
+            hostname: argo.k8s-01.suslian.engineer
   destination:
     name: in-cluster
     namespace: argocd
