@@ -66,6 +66,15 @@ spec:
             - persistentvolumeclaims=[*]
           prometheus:
             <<: *prometheus
+        grafana:
+          ingress:
+            enabled: true
+            ingressClassName: kong
+            hosts:
+            - &host grafana.k8s-01.suslian.engineer
+            tls:
+            - secretName: grafana-ingress-tls
+              hosts: *host
   destination:
     name: in-cluster
     namespace: monitoring
