@@ -11,6 +11,8 @@ spec:
     targetRevision: 7.8.10
     helm:
       valuesObject:
+        global:
+          domain: &host argo.k8s-01.suslian.engineer
         redis-ha:
           enabled: true
         controller:
@@ -32,7 +34,7 @@ spec:
               konghq.com/protocols: "https,grpcs"
               konghq.com/https-redirect-status-code: "301"
             tls: true
-            hostname: argo.k8s-01.suslian.engineer
+            hostname: *host
   destination:
     name: in-cluster
     namespace: argocd
