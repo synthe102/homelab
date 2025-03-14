@@ -11,7 +11,7 @@ configuration:
         region: eu-west-1
 initContainers:
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.10.0
+    image: velero/velero-plugin-for-aws:v1.11.1
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
