@@ -4,7 +4,7 @@ controllers:
       main:
         image:
           repository: eclipse-mosquitto
-          tag: 2.0.20
+          tag: 2.0.21
         command:
           - "mosquitto"
           - "-c"
