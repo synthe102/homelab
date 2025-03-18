@@ -13,7 +13,7 @@ controllers:
           privileged: true
         image:
           repository: koenkk/zigbee2mqtt
-          tag: 1.40.1
+          tag: 2.1.3
 
 service:
   main:
