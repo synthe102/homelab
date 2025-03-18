@@ -10,3 +10,4 @@ resources:
   - kong
   - external-dns
   - cert-manager
+  - root
