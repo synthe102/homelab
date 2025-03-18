@@ -5,7 +5,7 @@
   ],
   "argocd": {
     "fileMatch": [
-      "k8s/sources/.*\\.yaml",
+      "./clusters/k8s-01/apps/.*\\app.yaml"
     ],
   },
 }
