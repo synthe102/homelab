@@ -8,4 +8,9 @@
       "clusters/k8s-01/apps/.*\\.yaml$"
     ],
   },
+  "helm-values": {
+    "fileMatch": [
+      "clusters/k8s-01/apps/.*\\.yaml$"
+    ],
+  },
 }
