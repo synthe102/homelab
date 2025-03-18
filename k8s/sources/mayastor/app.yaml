@@ -16,7 +16,7 @@ spec:
       valueFiles:
       - $values/k8s/sources/mayastor/values.yaml
     repoURL: https://openebs.github.io/mayastor-extensions
-    targetRevision: 2.6.*
+    targetRevision: 2.8.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: main
