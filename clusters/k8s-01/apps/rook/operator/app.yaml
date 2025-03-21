@@ -5,14 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: rook-ceph
+  sources:
+  - chart: rook-ceph
     repoURL: https://charts.rook.io/release
     targetRevision: v1.16.5
     helm:
       valuesObject:
         monitoring:
           enabled: true
+  - path: clusters/k8s-01/apps/rook/o11y
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: rook-ceph

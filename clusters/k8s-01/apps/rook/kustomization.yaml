@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - ./cluster/app.yaml
   - ./operator/app.yaml
-  - ./o11y
