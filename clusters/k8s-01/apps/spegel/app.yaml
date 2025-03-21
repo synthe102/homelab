@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: spegel
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: spegel
+    repoURL: ghcr.io/spegel-org/helm-charts
+    targetRevision: v0.0.30
+    helm:
+      valuesObject:
+        grafanaDashboard:
+          enabled: true
+        serviceMonitor:
+          enabled: true
+        spegel:
+          appendMirrors: true
+          containerdSock: /run/containerd/containerd.sock
+          containerdRegistryConfigPath: /etc/cri/conf.d/hosts
+        service:
+          registry:
+            hostPort: 29999
+  destination:
+    name: in-cluster
+    namespace: kube-system
