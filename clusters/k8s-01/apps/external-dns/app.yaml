@@ -10,6 +10,7 @@ spec:
     repoURL: https://kubernetes-sigs.github.io/external-dns/
     targetRevision: 1.16.0
     helm:
+      skipSchemaValidation: true # remove when https://github.com/kubernetes-sigs/external-dns/issues/5206 is fixed
       valuesObject:
         fullnameOverride: external-dns-unifi
         logLevel: &logLevel debug
