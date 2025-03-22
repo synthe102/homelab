@@ -17,5 +17,6 @@
     k9s
     cilium-cli
     dig
+    argocd
   ];
 }
