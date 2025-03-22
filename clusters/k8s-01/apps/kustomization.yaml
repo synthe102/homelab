@@ -7,6 +7,7 @@ resources:
   - cnpg
   - kong
   - external-dns
+  - external-secrets
   - cert-manager
   - root
   - kube-system
