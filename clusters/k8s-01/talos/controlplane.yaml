@@ -313,6 +313,7 @@ machine:
     # Configures the node labels for the machine.
     nodeLabels:
         node.kubernetes.io/exclude-from-external-load-balancers: ""
+        intel.feature.node.kubernetes.io/gpu: 'true'
     
     # # Provides machine specific control plane configuration options.
 
