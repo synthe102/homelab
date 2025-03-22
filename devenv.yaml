@@ -2,10 +2,6 @@
 inputs:
   nixpkgs:
     url: github:NixOS/nixpkgs/nixpkgs-unstable
-  talhelper:
-    url: github:budimanjojo/talhelper
-    overlays:
-      - default
 
 # If you're using non-OSS software, you can set allowUnfree to true.
 allowUnfree: true

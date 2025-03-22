@@ -10,7 +10,6 @@
     git
     clusterctl
     talosctl
-    talhelper
     just
     sops
     age
