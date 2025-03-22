@@ -5,14 +5,17 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: external-secrets
+  sources:
+  - chart: external-secrets
     repoURL: https://charts.external-secrets.io
     targetRevision: 0.15.0
     helm:
       valuesObject:
         bitwarden-sdk-server:
           enabled: true
+  - path: clusters/k8s-01/apps/external-secrets/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: external-secrets

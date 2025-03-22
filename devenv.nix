@@ -11,8 +11,6 @@
     clusterctl
     talosctl
     just
-    sops
-    age
     k9s
     cilium-cli
     dig
