@@ -13,7 +13,7 @@ spec:
     - /data/tls.crt
     - /data/tls.key
   sources:
-  - path: clusters/k8s-01/apps/cilium/configs
+  - path: clusters/k8s-01/apps/kube-system/cilium/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
   - chart: cilium
