@@ -1,0 +1,7 @@
+[working-directory: 'talos']
+populate-secrets:
+  bws run -- 'envsubst < controlplane.yaml' > controlplane.out.yaml
+
+[working-directory: 'talos']
+apply-config node-index:
+  talosctl -n 10.0.0.1{{node-index}} apply-config --config-patch @nodes/ms01-0{{node-index}}.yaml -f controlplane.out.yaml
