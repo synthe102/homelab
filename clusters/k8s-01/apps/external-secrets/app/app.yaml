@@ -9,6 +9,10 @@ spec:
     chart: external-secrets
     repoURL: https://charts.external-secrets.io
     targetRevision: 0.15.0
+    helm:
+      valuesObject:
+        bitwarden-sdk-server:
+          enabled: true
   destination:
     name: in-cluster
     namespace: external-secrets
