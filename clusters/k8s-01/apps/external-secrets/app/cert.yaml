@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bitwarden-tls-certs
+  namespace: external-secrets
+spec:
+  secretName: bitwarden-tls-certs
+  commonName: bitwarden-sdk-server.external-secrets.svc.cluster.local
+  duration: 26280h # 3 years
+  renewBefore: 360h # 15d
+  dnsNames:
+  - bitwarden-sdk-server.external-secrets.svc.cluster.local
+  issuerRef:
+    name: self-signed
+    kind: ClusterIssuer
+    group: cert-manager.io
