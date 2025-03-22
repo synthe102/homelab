@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dp-operator
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: intel-device-plugins-operator
+    repoURL: https://intel.github.io/helm-charts
+    targetRevision: 0.32.0
+    helm:
+      valuesObject:
+        manager:
+          devices:
+            gpu: true
+  destination:
+    name: in-cluster
+    namespace: kube-system
