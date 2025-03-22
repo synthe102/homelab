@@ -23,6 +23,9 @@ spec:
       valuesObject:
         dashboards:
           enabled: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
         envoy:
           enabled: false
         bpf:
@@ -52,6 +55,9 @@ spec:
           tolerations: []
           dashboards:
             enabled: true
+          prometheus:
+            serviceMonitor:
+              enabled: true
         rollOutCiliumPods: true
   destination:
     name: in-cluster
