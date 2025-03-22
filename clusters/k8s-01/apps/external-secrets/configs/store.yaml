@@ -1,0 +1,24 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ClusterSecretStore
+metadata:
+  name: bitwarden-homelab
+  namespace: external-secrets
+spec:
+  provider:
+    bitwardensecretsmanager:
+      apiURL: https://api.bitwarden.com
+      identityURL: https://identity.bitwarden.com
+      auth:
+        secretRef:
+          credentials:
+            key: token
+            name: bw-auth-token
+            namespace: external-secrets
+      bitwardenServerSDKURL: https://bitwarden-sdk-server.external-secrets.svc.cluster.local:9998
+      caProvider:
+        type: Secret
+        name: bitwarden-tls-certs
+        namespace: external-secrets
+        key: ca.crt
+      organizationID: b4d93c8d-cb92-4ae9-92ee-b2a800e75ade
+      projectID: 7a91c171-43b8-4711-8b63-b2a800ec755c
