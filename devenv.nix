@@ -17,5 +17,7 @@
     cilium-cli
     dig
     argocd
+    bws
+    envsubst
   ];
 }
