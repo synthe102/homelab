@@ -21,6 +21,8 @@ spec:
     targetRevision: 1.17.2
     helm:
       valuesObject:
+        dashboards:
+          enabled: true
         envoy:
           enabled: false
         bpf:
@@ -48,6 +50,8 @@ spec:
         operator:
           rollOutPods: true
           tolerations: []
+          dashboards:
+            enabled: true
         rollOutCiliumPods: true
   destination:
     name: in-cluster
