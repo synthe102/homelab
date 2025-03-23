@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: volsync
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - chart: volsync
+    repoURL: https://backube.github.io/helm-charts
+    targetRevision: 0.12.0
+  destination:
+    name: in-cluster
+    namespace: volsync
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

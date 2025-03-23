@@ -11,3 +11,4 @@ resources:
   - cert-manager
   - root
   - kube-system
+  - volsync
