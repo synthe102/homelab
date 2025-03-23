@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: external-dns
+  sources:
+  - chart: external-dns
     repoURL: https://kubernetes-sigs.github.io/external-dns/
     targetRevision: 1.16.0
     helm:
@@ -51,6 +51,9 @@ spec:
         txtOwnerId: default
         txtPrefix: k8s.
         domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
+  - path: clusters/k8s-01/apps/external-dns/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: external-dns
