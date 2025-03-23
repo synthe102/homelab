@@ -6,8 +6,8 @@ metadata:
 spec:
   provider:
     bitwardensecretsmanager:
-      apiURL: https://api.bitwarden.com
-      identityURL: https://identity.bitwarden.com
+      apiURL: https://api.bitwarden.eu
+      identityURL: https://identity.bitwarden.eu
       auth:
         secretRef:
           credentials:
