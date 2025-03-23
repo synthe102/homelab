@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: bitwarden
+  name: cloudflare-api-token
 spec:
   refreshInterval: 1h
   secretStoreRef:
