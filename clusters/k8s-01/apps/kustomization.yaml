@@ -12,3 +12,4 @@ resources:
   - root
   - kube-system
   - volsync
+  - media
