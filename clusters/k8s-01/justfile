@@ -7,5 +7,5 @@ apply-config node-index:
   talosctl -n 10.0.0.1{{node-index}} apply-config --config-patch @nodes/ms01-0{{node-index}}.yaml -f controlplane.out.yaml
 
 bootstrap:
-  kubect create ns external-secrets
+  kubectl create ns external-secrets
   kubectl create secret generic bw-auth-token -n external-secrets --from-literal=token=${BW_AUTH_TOKEN}
