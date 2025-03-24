@@ -32,6 +32,8 @@ spec:
               limits:
                 memory: 256Mi
         server:
+          controller:
+            strategy: Recreate
           ingress:
             main:
               enabled: true
@@ -51,6 +53,8 @@ spec:
                   secretName: immich-tls
 
         machine-learning:
+          controller:
+            strategy: Recreate
           image:
             tag: v1.129.0-openvino
           resources:
