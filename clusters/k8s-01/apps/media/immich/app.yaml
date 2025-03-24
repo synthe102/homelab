@@ -35,7 +35,7 @@ spec:
                 konghq.com/protocols: https
                 konghq.com/https-redirect-status-code: "301"
               hosts:
-                - host: &host photos.k8s-01.suslian.engineer
+                - host: &host photos.suslian.engineer
                   paths:
                     - path: "/"
               tls:
