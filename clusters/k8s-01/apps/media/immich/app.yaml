@@ -34,6 +34,13 @@ spec:
         server:
           controller:
             strategy: Recreate
+          resources:
+            requests:
+              gpu.intel.com/i915: "1"
+              memory: 4Gi
+            limits:
+              gpu.intel.com/i915: "1"
+              memory: 4Gi
           ingress:
             main:
               enabled: true
