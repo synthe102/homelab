@@ -24,6 +24,13 @@ spec:
           tag: &tag v1.129.0
         redis:
           enabled: true
+          master:
+            resources:
+              requests:
+                cpu: 0.2
+                memory: 256Mi
+              limits:
+                memory: 256Mi
         server:
           ingress:
             main:
@@ -49,8 +56,10 @@ spec:
           resources:
             requests:
               gpu.intel.com/i915: "1"
+              memory: 4Gi
             limits:
               gpu.intel.com/i915: "1"
+              memory: 4Gi
           persistence:
             cache:
               enabled: true
