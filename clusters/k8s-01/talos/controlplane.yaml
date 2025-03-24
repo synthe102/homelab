@@ -397,10 +397,8 @@ machine:
     # # Used to configure the machine's sysctls.
 
     # # MachineSysctls usage example.
-    # sysctls:
-    #     kernel.domainname: talos.dev
-    #     net.ipv4.ip_forward: "0"
-    #     net/ipv6/conf/eth0.100/disable_ipv6: "1"
+    sysctls:
+      vm.nr_hugepages: "1024"
 
     # # Used to configure the machine's sysfs.
 
