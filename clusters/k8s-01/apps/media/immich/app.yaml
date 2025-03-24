@@ -6,6 +6,53 @@ metadata:
 spec:
   project: default
   sources:
+  - chart: immich
+    helm:
+      valuesObject:
+        immich:
+          persistence:
+            library:
+              existingClaim: photos-nfs
+        env:
+          DB_VECTOR_EXTENSION: pgvector
+          DB_URL:
+            valueFrom:
+              secretKeyRef:
+                name: immich-app
+                key: uri
+        image:
+          tag: v1.129.0
+        redis:
+          enabled: true
+        server:
+          ingress:
+            main:
+              enabled: true
+              className: "kong"
+              annotations:
+                cert-manager.io/cluster-issuer: letsencrypt-prod
+                kubernetes.io/ingress.class: kong
+                konghq.com/protocols: https
+                konghq.com/https-redirect-status-code: "301"
+              hosts:
+                - host: &host photos.k8s-01.suslian.engineer
+                  paths:
+                    - path: "/"
+              tls:
+                - hosts:
+                    - *host
+                  secretName: immich-tls
+
+        machine-learning:
+          persistence:
+            cache:
+              enabled: true
+              size: 10Gi
+              # Optional: Set this to pvc to avoid downloading the ML models every start.
+              type: pvc
+              accessMode: ReadWriteOnce
+    repoURL: https://immich-app.github.io/immich-charts
+    targetRevision: 0.9.1
   - path: clusters/k8s-01/apps/media/immich/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
