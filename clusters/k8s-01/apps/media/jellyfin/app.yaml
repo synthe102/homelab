@@ -49,7 +49,7 @@ spec:
               konghq.com/protocols: https
               konghq.com/https-redirect-status-code: "301"
             hosts:
-              - host: &host jellyfin.k8s-01.suslian.engineer
+              - host: &host jellyfin.suslian.engineer
                 paths:
                   - path: /
                     service:
