@@ -5,15 +5,23 @@ metadata:
   name: immich
 spec:
   instances: 2
-  enableSuperuserAccess: true
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+  managed:
+    roles:
+      - name: immich
+        superuser: true
+        login: true
   bootstrap:
     initdb:
       database: immich
       owner: immich
-      secret:
-        name: immich-db-user
-      dataChecksums: true
-      encoding: 'UTF8'
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube" CASCADE;
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance" CASCADE;
   storage:
     size: 8Gi
   resources:
