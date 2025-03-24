@@ -21,7 +21,7 @@ spec:
                 name: immich-app
                 key: uri
         image:
-          tag: v1.129.0
+          tag: &tag v1.129.0
         redis:
           enabled: true
         server:
@@ -44,6 +44,13 @@ spec:
                   secretName: immich-tls
 
         machine-learning:
+          image:
+            tag: v1.129.0-openvino
+          resources:
+            requests:
+              gpu.intel.com/i915: "1"
+            limits:
+              gpu.intel.com/i915: "1"
           persistence:
             cache:
               enabled: true
