@@ -13,6 +13,7 @@ spec:
       valuesObject:
         name: i915
         nodeFeatureRule: false
+        sharedDevNum: 2 # Allow 2 Pod per GPU
   destination:
     name: in-cluster
     namespace: kube-system
