@@ -66,10 +66,10 @@ spec:
             type: persistentVolumeClaim
             accessMode: ReadWriteOnce
             size: 5Gi
-          # media:
-          #   type: nfs
-          #   server: 192.168.1.252
-          #   path: /mnt/MainHDD/Media
+          media:
+            type: nfs
+            server: 192.168.1.252
+            path: /mnt/MainHDD/Media
   destination:
     name: in-cluster
     namespace: media
