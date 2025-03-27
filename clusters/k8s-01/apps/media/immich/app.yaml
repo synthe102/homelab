@@ -63,7 +63,7 @@ spec:
           controller:
             strategy: Recreate
           image:
-            tag: v1.129.0-openvino
+            tag: v1.130.2-openvino
           resources:
             requests:
               gpu.intel.com/i915: "1"
