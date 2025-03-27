@@ -87,7 +87,7 @@ spec:
                   limits:
                     memory: "4Gi"
                   requests:
-                    cpu: "1000m"
+                    cpu: '1'
                     memory: "4Gi"
                 priorityClassName: system-cluster-critical
             storageClass:
