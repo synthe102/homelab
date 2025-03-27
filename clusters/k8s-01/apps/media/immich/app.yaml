@@ -21,7 +21,7 @@ spec:
                 name: immich-app
                 key: uri
         image:
-          tag: &tag v1.129.0
+          tag: &tag v1.130.2
         redis:
           enabled: true
           master:
