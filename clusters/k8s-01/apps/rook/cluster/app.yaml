@@ -27,6 +27,8 @@ spec:
           csi:
             readAffinity:
               enabled: true
+            cephfs:
+              kernelMountOptions: "ms_mode=prefer-crc"
           mgr:
             modules:
               - name: pg_autoscaler
