@@ -8,7 +8,7 @@ spec:
   source:
     chart: rook-ceph-cluster
     repoURL: https://charts.rook.io/release
-    targetRevision: v1.16.5
+    targetRevision: v1.16.6
     helm:
       valuesObject:
         monitoring:
