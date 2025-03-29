@@ -13,3 +13,4 @@ resources:
   - kube-system
   - volsync
   - media
+  - github-actions
