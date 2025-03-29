@@ -17,6 +17,8 @@ spec:
         controllerServiceAccount:
           name: gha-runner-scale-set-controller-gha-rs-controller
           namespace: arc-system
+        containerMode:
+          type: dind
   destination:
     name: in-cluster
     namespace: arc-system
