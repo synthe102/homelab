@@ -30,7 +30,7 @@ spec:
                   TZ: "Europe/Paris"
                 image:
                   repository: jellyfin/jellyfin
-                  tag: 10.10.6
+                  tag: 10.10.7
                 securityContext:
                   runAsUser: 568
                   runAsGroup: 568
