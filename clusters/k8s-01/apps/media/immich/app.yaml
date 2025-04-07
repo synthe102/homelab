@@ -21,7 +21,7 @@ spec:
                 name: immich-app
                 key: uri
         image:
-          tag: &tag v1.130.2
+          tag: &tag v1.131.3
         redis:
           enabled: true
           master:
@@ -63,7 +63,7 @@ spec:
           controller:
             strategy: Recreate
           image:
-            tag: v1.130.2-openvino
+            tag: v1.131.3-openvino
           resources:
             requests:
               gpu.intel.com/i915: "1"
