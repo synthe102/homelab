@@ -1,0 +1,77 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prowlarr
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: downloads
+  project: default
+  sources:
+  - chart: app-template
+    helm:
+      valuesObject:
+        controllers:
+          main:
+            pod:
+              securityContext:
+                fsGroup: 568
+                fsGroupChangePolicy: "OnRootMismatch"
+            containers:
+              main:
+                nameOverride: prowlarr
+                image:
+                  repository: ghcr.io/home-operations/prowlarr
+                  tag: 1.33.3
+                env:
+                  TZ: "Europe/Paris"
+                securityContext:
+                  runAsUser: 568
+                  runAsGroup: 568
+
+        service:
+          main:
+            controller: main
+            ports:
+              http:
+                port: 9696
+
+        ingress:
+          main:
+            enabled: true
+            className: "kong"
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              konghq.com/protocols: https
+              konghq.com/https-redirect-status-code: "301"
+            hosts:
+              - host: &host prowlarr.suslian.engineer
+                paths:
+                  - path: /
+                    service:
+                      identifier: main
+                      port: http
+            tls:
+              - hosts:
+                  - *host
+                secretName: prowlarr-tls
+
+        persistence:
+          config:
+            enabled: true
+            type: persistentVolumeClaim
+            accessMode: ReadWriteOnce
+            size: 5Gi
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 3.7.3
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - ServerSideApply=true
