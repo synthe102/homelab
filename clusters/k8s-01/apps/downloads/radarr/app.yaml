@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: radarr
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: downloads
+  project: default
+  sources:
+  - chart: app-template
+    helm:
+      valuesObject:
+        controllers:
+          main:
+            pod:
+              securityContext:
+                fsGroup: 568
+                fsGroupChangePolicy: "OnRootMismatch"
+            containers:
+              main:
+                nameOverride: radarr
+                image:
+                  repository: ghcr.io/onedr0p/radarr
+                  tag: 5.14.0
+                env:
+                  RADARR__PORT: &port 7878
+                  UMASK: "022"
+                  TZ: "Europe/Paris"
+                securityContext:
+                  runAsUser: 568
+                  runAsGroup: 568
+
+        service:
+          main:
+            controller: main
+            ports:
+              http:
+                port: *port
+
+        ingress:
+          main:
+            enabled: true
+            className: "kong"
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              konghq.com/protocols: https
+              konghq.com/https-redirect-status-code: "301"
+            hosts:
+              - host: &host radarr.suslian.engineer
+                paths:
+                  - path: /
+                    service:
+                      identifier: main
+                      port: http
+            tls:
+              - hosts:
+                  - *host
+                secretName: radarr-tls
+        persistence:
+          config:
+            enabled: true
+            type: persistentVolumeClaim
+            accessMode: ReadWriteOnce
+            size: 5Gi
+          media:
+            type: nfs
+            server: 192.168.1.252
+            path: /mnt/MainHDD/Media
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 3.7.3
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
