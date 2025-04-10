@@ -47,7 +47,7 @@ spec:
               konghq.com/protocols: https
               konghq.com/https-redirect-status-code: "301"
             hosts:
-              - host: &host1 requests.suslian.engineer
+              - host: &host requests.suslian.engineer
                 paths:
                   - path: /
                     service:
@@ -55,9 +55,7 @@ spec:
                       port: http
             tls:
               - hosts:
-                  - *host1
-                  - *host2
-                  - *host3
+                  - *host
                 secretName: jellyseerr-tls
 
         persistence:
