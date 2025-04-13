@@ -60,6 +60,8 @@ spec:
             serviceMonitor:
               enabled: true
         rollOutCiliumPods: true
+        cni:
+          exclusive: false
   destination:
     name: in-cluster
     namespace: kube-system
