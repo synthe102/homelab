@@ -11,6 +11,9 @@ spec:
     targetRevision: 7.8.23
     helm:
       valuesObject:
+        configs:
+          cm:
+            application.resourceTrackingMethod: annotation
         global:
           domain: &host argo.k8s-01.suslian.engineer
         redis-ha:
