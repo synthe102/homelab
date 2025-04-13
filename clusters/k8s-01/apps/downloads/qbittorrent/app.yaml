@@ -20,7 +20,7 @@ spec:
               [{
                 "name": "multus-vpn-routed",
                 "namespace": "kube-system",
-                "ips": ["192.168.30.2/24"]
+                "ips": ["10.0.30.2/24"]
               }]
         controllers:
           main:
