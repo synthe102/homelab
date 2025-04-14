@@ -2,6 +2,16 @@ machine:
   network:
     hostname: ms01-03
     interfaces:
+      - interface: enp2s0f0np0
+        dhcp: true
+        vlans:
+          - vlanId: 100
+            dhcp: false
+            addresses:
+            - 10.0.100.13/24
+            routes:
+            - network: 0.0.0.0/0 # The route's network (destination).
+              gateway: 10.0.100.1
       - # m1
         deviceSelector: { busPath: 1-1.0 }
         dhcp: false
