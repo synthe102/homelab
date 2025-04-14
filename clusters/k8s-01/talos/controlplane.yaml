@@ -74,12 +74,14 @@ machine:
     # Provides machine specific network configuration options.
     network:
       interfaces:
-          - interface: enp2s0f0
+          - interface: enp2s0f0np0
             dhcp: true
             vlans:
-              - vlanId: 30
-                dhcp: false
-                mtu: 1500
+              - vlanId: 100
+                dhcp: true
+                routes:
+                - network: 0.0.0.0/0
+                  gateway: 10.0.100.1
     # # Used to statically set the nameservers for the machine.
       nameservers:
           - 10.0.0.1
