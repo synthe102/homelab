@@ -13,9 +13,9 @@ spec:
       valuesObject:
         bitwarden-sdk-server:
           enabled: true
-  - path: clusters/k8s-01/apps/external-secrets/configs
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
+  # - path: clusters/k8s-01/apps/external-secrets/configs
+  #   repoURL: 'https://github.com/synthe102/homelab.git'
+  #   targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: external-secrets
