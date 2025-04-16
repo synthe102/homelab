@@ -18,7 +18,7 @@ spec:
     targetRevision: HEAD
   - chart: cilium
     repoURL: https://helm.cilium.io/
-    targetRevision: 1.17.3
+    targetRevision: 1.17.2
     helm:
       valuesObject:
         dashboards:
