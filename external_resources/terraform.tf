@@ -16,7 +16,7 @@ terraform {
     }
     doppler = {
       source  = "DopplerHQ/doppler"
-      version = "~> 1.9.0"
+      version = "~> 1.16.0"
     }
   }
 }
