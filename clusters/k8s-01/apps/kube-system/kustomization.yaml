@@ -6,3 +6,4 @@ resources:
   - irq-balance
   - intel-device-plugin
   - multus
+  - external-snapshotter
