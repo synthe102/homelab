@@ -73,6 +73,8 @@ spec:
           name: csi-ceph-block
           isDefault: true
           deletionPolicy: Delete
+          labels:
+            velero.io/csi-volumesnapshot-class: "true"
         cephFileSystems:
           - name: ceph-filesystem
             spec:
@@ -118,6 +120,8 @@ spec:
           name: ceph-filesystem
           isDefault: false
           deletionPolicy: Delete
+          labels:
+            velero.io/csi-volumesnapshot-class: "true"
         cephObjectStores: []
   destination:
     name: in-cluster
