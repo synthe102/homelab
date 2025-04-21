@@ -17,5 +17,6 @@
     argocd
     bws
     envsubst
+    velero
   ];
 }
