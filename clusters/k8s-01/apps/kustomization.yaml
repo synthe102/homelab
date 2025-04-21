@@ -14,3 +14,4 @@ resources:
   - kube-system
   - media
   - github-actions
+  - velero
