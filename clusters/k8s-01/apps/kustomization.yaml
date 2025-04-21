@@ -12,6 +12,5 @@ resources:
   - cert-manager
   - root
   - kube-system
-  - volsync
   - media
   - github-actions
