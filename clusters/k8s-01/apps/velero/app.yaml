@@ -14,6 +14,7 @@ spec:
     helm:
       valuesObject:
         configuration:
+          features: EnableCSI
           backupStorageLocation:
           - name: cloudflare
             provider: aws
