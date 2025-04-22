@@ -31,6 +31,9 @@ spec:
           - name: cloudflare
             provider: aws
             default: true
+            credential:
+              name: cloudflare-r2
+              key: credentials
             config:
               region: auto
         initContainers:
