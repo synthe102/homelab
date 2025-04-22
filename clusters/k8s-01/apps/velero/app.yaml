@@ -30,13 +30,8 @@ spec:
           - name: cloudflare
             provider: aws
             default: true
-            bucket: k8s-01-backups
-            credential:
-              name: cloudflare-r2
-              key: credentials
             config:
               region: auto
-              s3Url: https://6815e9f87446426c602fab643b303d4f.eu.r2.cloudflarestorage.com
         initContainers:
         - name: velero-plugin-for-aws
           image: velero/velero-plugin-for-aws:v1.12.0
