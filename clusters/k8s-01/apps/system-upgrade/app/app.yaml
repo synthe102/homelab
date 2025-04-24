@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: &app system-upgrade-controller
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - chart: app-template
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 3.7.3
+    helm:
+      valuesObject:
+        controllers:
+          system-upgrade-controller:
+            strategy: RollingUpdate
+            replicas: 2
+            containers:
+              app:
+                image:
+                  repository: docker.io/rancher/system-upgrade-controller
+                  tag: v0.15.2
+                env:
+                  SYSTEM_UPGRADE_CONTROLLER_LEADER_ELECT: true
+                  SYSTEM_UPGRADE_CONTROLLER_NAME: *app
+                  SYSTEM_UPGRADE_CONTROLLER_NAMESPACE:
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: metadata.namespace
+                  SYSTEM_UPGRADE_CONTROLLER_NODE_NAME:
+                    valueFrom:
+                      fieldRef:
+                        fieldPath: spec.nodeName
+                  SYSTEM_UPGRADE_JOB_PRIVILEGED: false
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities: { drop: ["ALL"] }
+        defaultPodOptions:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+        serviceAccount:
+          name: *app
+          create: true
+  - path: clusters/k8s-01/apps/system-upgrade/app/rbac
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: system-upgrade
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
