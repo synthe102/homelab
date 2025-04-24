@@ -204,14 +204,14 @@ machine:
             forwardKubeDNSToHost: false # Use the host DNS resolver as upstream for Kubernetes CoreDNS pods.
         
         # # Configure Talos API access from Kubernetes pods.
-        # kubernetesTalosAPIAccess:
-        #     enabled: true # Enable Talos API access from Kubernetes pods.
-        #     # The list of Talos API roles which can be granted for access from Kubernetes pods.
-        #     allowedRoles:
-        #         - os:reader
-        #     # The list of Kubernetes namespaces Talos API access is available from.
-        #     allowedKubernetesNamespaces:
-        #         - kube-system
+        kubernetesTalosAPIAccess:
+            enabled: true # Enable Talos API access from Kubernetes pods.
+            # The list of Talos API roles which can be granted for access from Kubernetes pods.
+            allowedRoles:
+                - "os:admin"
+            # The list of Kubernetes namespaces Talos API access is available from.
+            allowedKubernetesNamespaces:
+                - system-upgrade
     # Configures the node labels for the machine.
     nodeLabels:
         node.kubernetes.io/exclude-from-external-load-balancers: ""
