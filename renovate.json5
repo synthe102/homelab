@@ -13,4 +13,9 @@
       "clusters/k8s-01/apps/.*\\.yaml$"
     ],
   },
+  kubernetes: {
+    "fileMatch": [
+      "clusters/k8s-01/apps/.*\\.yaml$"
+    ],
+  },
 }
