@@ -8,6 +8,61 @@ metadata:
 spec:
   project: default
   sources:
+  - chart: authentik
+    helm:
+      valuesObject:
+        authentik:
+          secret_key: file:///secret-key/secret-key
+          postgresql:
+            host: authentik-rw
+            user: file:///postgres-creds/username
+            password: file:///postgres-creds/password
+        server:
+          ingress:
+            enabled: true
+            ingressClassName: kong
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              konghq.com/https-redirect-status-code: "301"
+            hosts:
+              - &host auth.suslian.engineer
+            tls:
+              - hosts:
+                  - *host
+                secretName: authentik-tls
+          volumes:
+            - name: postgres-creds
+              secret:
+                secretName: authentik-app
+            - name: secret-key
+              secret:
+                secretName: authentik-secret-key
+          volumeMounts:
+            - name: postgres-creds
+              mountPath: /postgres-creds
+              readOnly: true
+            - name: secret-key
+              mountPath: /secret-key
+              readOnly: true
+        worker:
+          volumes:
+            - name: postgres-creds
+              secret:
+                secretName: authentik-app
+            - name: secret-key
+              secret:
+                secretName: authentik-secret-key
+          volumeMounts:
+            - name: postgres-creds
+              mountPath: /postgres-creds
+              readOnly: true
+            - name: secret-key
+              mountPath: /secret-key
+              readOnly: true
+        redis:
+          enabled: true
+    repoURL: https://charts.goauthentik.io/
+    targetRevision: 2025.2.4
   - path: clusters/k8s-01/apps/authentik/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
