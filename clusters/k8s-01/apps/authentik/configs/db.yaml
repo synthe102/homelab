@@ -2,12 +2,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &name authentik-db
+  name: authentik-db
 spec:
   instances: 2
   managed:
     roles:
-      - name: *name
+      - name: &name authentik
         superuser: true
         login: true
   bootstrap:
