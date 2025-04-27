@@ -14,7 +14,7 @@ spec:
         authentik:
           secret_key: file:///secret-key/secret-key
           postgresql:
-            host: authentik-rw
+            host: authentik-db-rw
             user: file:///postgres-creds/username
             password: file:///postgres-creds/password
         server:
@@ -33,7 +33,7 @@ spec:
           volumes:
             - name: postgres-creds
               secret:
-                secretName: authentik-app
+                secretName: authentik-db-app
             - name: secret-key
               secret:
                 secretName: authentik-secret-key
@@ -48,7 +48,7 @@ spec:
           volumes:
             - name: postgres-creds
               secret:
-                secretName: authentik-app
+                secretName: authentik-db-app
             - name: secret-key
               secret:
                 secretName: authentik-secret-key
