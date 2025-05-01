@@ -6,6 +6,15 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+      - name: kube-multus
+        resources:
+          limits:
+            cpu: 100m
+            memory: 250Mi
+          requests:
+            cpu: 100m
+            memory: 250Mi
       initContainers:
         - name: install-multus-binary
           command:
