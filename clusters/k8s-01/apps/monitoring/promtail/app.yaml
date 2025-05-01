@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promtail
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: promtail
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 6.16.6
+    helm:
+      valuesObject:
+        config:
+          clients:
+            - url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        serviceMonitor:
+          enabled: true
+  destination:
+    name: in-cluster
+    namespace: monitoring
