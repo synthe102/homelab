@@ -53,5 +53,8 @@ spec:
     name: in-cluster
     namespace: system-upgrade
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
     syncOptions:
     - CreateNamespace=true

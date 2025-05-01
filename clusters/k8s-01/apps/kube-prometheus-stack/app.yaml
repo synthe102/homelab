@@ -84,5 +84,8 @@ spec:
     name: in-cluster
     namespace: monitoring
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
     syncOptions:
     - CreateNamespace=true

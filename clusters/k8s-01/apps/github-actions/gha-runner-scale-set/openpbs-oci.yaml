@@ -23,6 +23,3 @@ spec:
   destination:
     name: in-cluster
     namespace: arc-system
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true

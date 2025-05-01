@@ -49,5 +49,8 @@ spec:
     name: in-cluster
     namespace: velero-system
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
     syncOptions:
     - CreateNamespace=true

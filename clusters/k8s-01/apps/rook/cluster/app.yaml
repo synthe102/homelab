@@ -126,6 +126,3 @@ spec:
   destination:
     name: in-cluster
     namespace: rook-ceph
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
