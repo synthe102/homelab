@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gha-runner-scale-set-cpu
+  name: gha-runner-openpbs-oci
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
