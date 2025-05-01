@@ -4,7 +4,7 @@ resources:
   - argocd
   - authentik
   - downloads
-  - kube-prometheus-stack
+  - monitoring
   - rook
   - cnpg
   - kong
