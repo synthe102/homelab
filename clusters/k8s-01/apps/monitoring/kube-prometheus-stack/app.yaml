@@ -91,6 +91,12 @@ spec:
                 url: http://loki-headless.monitoring.svc.cluster.local:3100
                 jsonData:
                   maxLines: 250
+          dashboards:
+            sidecarProvider:
+              unifi-insights:
+                gnetId: 11315
+                revision: 9
+                datasource: Prometheus
   destination:
     name: in-cluster
     namespace: monitoring
