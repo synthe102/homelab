@@ -73,7 +73,7 @@ spec:
             type: persistentVolumeClaim
             accessMode: ReadWriteOnce
             size: 5Gi
-    repoURL: https://bjw-s.github.io/helm-charts
+    repoURL: https://bjw-s-labs.github.io/helm-charts
     targetRevision: 3.7.3
   syncPolicy:
     automated:
