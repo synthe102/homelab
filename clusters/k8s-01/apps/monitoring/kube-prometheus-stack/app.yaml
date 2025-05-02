@@ -91,8 +91,20 @@ spec:
                 url: http://loki-headless.monitoring.svc.cluster.local:3100
                 jsonData:
                   maxLines: 250
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - name: default
+                  orgId: 1
+                  folder: ""
+                  type: file
+                  disableDeletion: false
+                  editable: false
+                  options:
+                    path: /var/lib/grafana/dashboards/default
           dashboards:
-            sidecarProvider:
+            default:
               unifi-insights:
                 gnetId: 11315
                 revision: 9
