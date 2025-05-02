@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: unpoller
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - path: clusters/k8s-01/apps/monitoring/unpoller/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: monitoring
