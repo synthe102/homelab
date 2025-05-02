@@ -121,6 +121,9 @@ spec:
                 gnetId: 5342
                 revision: 9
                 datasource: Prometheus
+          plugins:
+            - grafana-piechart-panel
+            - grafana-clock-panel
   destination:
     name: in-cluster
     namespace: monitoring
