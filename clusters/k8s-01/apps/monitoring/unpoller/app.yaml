@@ -65,7 +65,7 @@ spec:
             serviceName: *app
             endpoints:
               - port: http
-                interval: 2m # Unifi API only polls at 2m intervals
+                interval: 30s
                 scrapeTimeout: 10s
   - path: clusters/k8s-01/apps/monitoring/unpoller/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
