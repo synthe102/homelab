@@ -109,6 +109,18 @@ spec:
                 gnetId: 11315
                 revision: 9
                 datasource: Prometheus
+              unifi-network-sites:
+                gnetId: 11311
+                revision: 5
+                datasource: Prometheus
+              unifi-uap:
+                gnetId: 11314
+                revision: 10
+                datasource: Prometheus
+              unifi-usw:
+                gnetId: 11312
+                revision: 9
+                datasource: Prometheus
               ceph-cluster:
                 gnetId: 2842
                 revision: 18
