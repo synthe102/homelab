@@ -1,13 +1,65 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: unpoller
+  name: &app unpoller
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
+  - chart: app-template
+    repoURL: https://bjw-s.github.io/helm-charts
+    targetRevision: 3.7.3
+    helm:
+      valuesObject:
+        controllers:
+          unpoller:
+            containers:
+              app:
+                image:
+                  repository: ghcr.io/unpoller/unpoller
+                  tag: v2.15.3
+                env:
+                  TZ: Europe/Paris
+                  UP_UNIFI_DEFAULT_ROLE: Monitoring
+                  UP_UNIFI_DEFAULT_VERIFY_SSL: false
+                  UP_INFLUXDB_DISABLE: true
+                envFrom:
+                  - secretRef:
+                      name: unpoller
+                probes:
+                  liveness:
+                    enabled: true
+                  readiness:
+                    enabled: true
+                resources:
+                  requests:
+                    cpu: 10m
+                  limits:
+                    memory: 64Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities: { drop: ["ALL"] }
+        defaultPodOptions:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+        service:
+          app:
+            controller: *app
+            ports:
+              http:
+                port: 9130
+        serviceMonitor:
+          app:
+            serviceName: *app
+            endpoints:
+              - port: http
+                interval: 2m # Unifi API only polls at 2m intervals
+                scrapeTimeout: 10s
   - path: clusters/k8s-01/apps/monitoring/unpoller/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
