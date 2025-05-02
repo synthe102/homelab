@@ -25,6 +25,13 @@ spec:
                   UP_UNIFI_DEFAULT_ROLE: Monitoring
                   UP_UNIFI_DEFAULT_VERIFY_SSL: false
                   UP_INFLUXDB_DISABLE: true
+                  UP_LOKI_DISABLE: "false"
+                  UP_LOKI_URL: "http://loki:3100"
+                  UP_UNIFI_DEFAULT_SAVE_ALARMS: "true"
+                  UP_UNIFI_DEFAULT_SAVE_ANOMALIES: "true"
+                  UP_UNIFI_DEFAULT_SAVE_DPI: "true"
+                  UP_UNIFI_DEFAULT_SAVE_EVENTS: "true"
+                  UP_UNIFI_DEFAULT_SAVE_IDS: "true"
                 envFrom:
                   - secretRef:
                       name: unpoller
