@@ -15,9 +15,6 @@ spec:
       valuesObject:
         monitoring:
           enabled: true
-  - path: clusters/k8s-01/apps/rook/o11y
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: rook-ceph
