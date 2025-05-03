@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: &app smartctl-exporter
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: prometheus-smartctl-exporter
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: v0.14.0
+    helm:
+      valuesObject:
+        fullnameOverride: *app
+        prometheusRules:
+          enabled: true
+        serviceMonitor:
+          enabled: true
+  destination:
+    name: in-cluster
+    namespace: monitoring

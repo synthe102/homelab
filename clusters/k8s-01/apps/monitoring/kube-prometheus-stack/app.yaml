@@ -139,6 +139,10 @@ spec:
                 gnetId: 5342
                 revision: 9
                 datasource: Prometheus
+              smartctl-exporter:
+                gnetId: 20204
+                revision: 2
+                datasource: [{ name: DS_PROMETHEUS, value: Prometheus }]
           plugins:
             - grafana-piechart-panel
             - grafana-clock-panel
