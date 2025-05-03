@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - bgp.yaml
   - loadbalancerippool.yaml
+  - vip.yaml
