@@ -1,0 +1,14 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: telegram-bot-token
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  data:
+  - secretKey: bot-token
+    remoteRef:
+      key: K8S_01_KUBE_MONITORING_TELEGRAM_BOT_TOKEN
