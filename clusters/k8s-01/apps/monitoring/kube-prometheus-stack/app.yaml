@@ -80,6 +80,8 @@ spec:
             - secretName: grafana-ingress-tls
               hosts: 
               - *host
+          env:
+            GF_SERVER_ROOT_URL: https://grafana.k8s-01.suslian.engineer
           datasources:
             datasources.yaml:
               apiVersion: 1
