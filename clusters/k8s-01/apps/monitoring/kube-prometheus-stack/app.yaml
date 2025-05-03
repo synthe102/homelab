@@ -21,6 +21,10 @@ spec:
           enabled: false
         alertmanager:
           alertmanagerSpec:
+            alertmanagerConfiguration:
+              name: alertmanager
+              global:
+                resolveTimeout: 5m
             storage:
               volumeClaimTemplate:
                 spec:
