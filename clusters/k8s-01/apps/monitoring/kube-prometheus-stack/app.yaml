@@ -140,7 +140,7 @@ spec:
                 revision: 9
                 datasource: Prometheus
               smartctl-exporter:
-                gnetId: 20204
+                gnetId: 22604
                 revision: 2
                 datasource: [{ name: DS_PROMETHEUS, value: Prometheus }]
           plugins:
