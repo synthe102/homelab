@@ -7,8 +7,8 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: kube-prometheus-stack
+  sources:
+  - chart: kube-prometheus-stack
     repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 71.2.0
     helm:
@@ -142,6 +142,9 @@ spec:
           plugins:
             - grafana-piechart-panel
             - grafana-clock-panel
+  - path: clusters/k8s-01/apps/monitoring/kube-prometheus-stack/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: monitoring
