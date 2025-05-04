@@ -361,7 +361,7 @@ cluster:
     secret: ${K8S_01_TALOS_CLUSTER_SECRET}
     # Provides control plane specific configuration options.
     controlPlane:
-        endpoint: https://10.0.0.12:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+        endpoint: https://api.k8s-01.suslian.engineer:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
     clusterName: k8s-01 # Configures the cluster's name.
     # Provides cluster specific network configuration options.
     network:
@@ -397,7 +397,7 @@ cluster:
         image: registry.k8s.io/kube-apiserver:v1.33.0 # The container image used in the API server manifest.
         # Extra certificate subject alternative names for the API server's certificate.
         certSANs:
-            - 10.0.23.190
+            - api.k8s-01.suslian.engineer
         disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
         # Configure the API server admission plugins.
         admissionControl:
