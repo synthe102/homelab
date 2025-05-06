@@ -22,9 +22,11 @@ spec:
                 image:
                   repository: ghcr.io/dani-garcia/vaultwarden
                   tag: 1.33.2
-                envFrom:
-                  - secretRef:
+                env:
+                  DATABASE_URL:
+                    secretKeyRef:
                       name: vaultwarden
+                      key: DATABASE_URL
 
         service:
           main:
@@ -52,15 +54,22 @@ spec:
               - hosts:
                   - *host
                 secretName: vaultwarden-tls
+        persistence:
+          key:
+            type: secret
+            name: vaultwarden
+            advancedMounts:
+              main:
+                main:
+                  - path: /data/rsa_key.pem
+                    readOnly: true
+                    subPath: rsa_key.pem
     repoURL: https://bjw-s-labs.github.io/helm-charts
     targetRevision: 3.7.3
   - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
     syncOptions:
     - PruneLast=true
     - CreateNamespace=true
