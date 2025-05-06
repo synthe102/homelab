@@ -1,0 +1,16 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 2
+  bootstrap:
+    initdb:
+      database: default
+      owner: default
+  storage:
+    size: 25Gi
+  resources:
+    requests:
+      memory: "1Gi"

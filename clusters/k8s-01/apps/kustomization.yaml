@@ -17,3 +17,4 @@ resources:
   - github-actions
   - velero
   - system-upgrade
+  - databases
