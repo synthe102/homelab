@@ -18,3 +18,4 @@ resources:
   - velero
   - system-upgrade
   - databases
+  - tooling
