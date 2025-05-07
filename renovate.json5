@@ -1,22 +1,22 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "github>synthe102/homelab//.renovate/customManagers.json5",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    'github>synthe102/homelab//.renovate/customManagers.json5',
   ],
-  "argocd": {
-    "fileMatch": [
-      "clusters/k8s-01/apps/.*\\.yaml$"
+  argocd: {
+    managerFilePatterns: [
+      '/clusters/k8s-01/apps/.*\\.yaml$/',
     ],
   },
-  "helm-values": {
-    "fileMatch": [
-      "clusters/k8s-01/apps/.*\\.yaml$"
+  'helm-values': {
+    managerFilePatterns: [
+      '/clusters/k8s-01/apps/.*\\.yaml$/',
     ],
   },
   kubernetes: {
-    "fileMatch": [
-      "clusters/k8s-01/apps/.*\\.yaml$"
+    managerFilePatterns: [
+      '/clusters/k8s-01/apps/.*\\.yaml$/',
     ],
   },
 }
