@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: emqx
+    chart: emqx-operator
     repoURL: https://repos.emqx.io/charts
-    targetRevision: 5.8.6
+    targetRevision: 2.2.29
     helm:
       valuesObject:
         fullnameOverride: emqx-operator
