@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: emqx-operator
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: emqx
+    repoURL: https://repos.emqx.io/charts
+    targetRevision: 5.8.6
+    helm:
+      valuesObject:
+        fullnameOverride: emqx-operator
+        image:
+          repository: ghcr.io/emqx/emqx-operator
+  destination:
+    name: in-cluster
+    namespace: emqx-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
