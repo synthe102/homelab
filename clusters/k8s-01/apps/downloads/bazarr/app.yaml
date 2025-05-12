@@ -25,7 +25,7 @@ spec:
                 nameOverride: bazarr
                 image:
                   repository: ghcr.io/home-operations/bazarr
-                  tag: 1.5.1
+                  tag: 1.5.2
                 env:
                   UMASK: "022"
                   TZ: "Europe/Paris"
