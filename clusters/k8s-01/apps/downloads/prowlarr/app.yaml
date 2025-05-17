@@ -74,7 +74,7 @@ spec:
             accessMode: ReadWriteOnce
             size: 5Gi
     repoURL: https://bjw-s-labs.github.io/helm-charts
-    targetRevision: 3.7.3
+    targetRevision: 4.0.1
   syncPolicy:
     automated:
       prune: true
