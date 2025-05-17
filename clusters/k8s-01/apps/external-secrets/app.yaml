@@ -10,7 +10,7 @@ spec:
   sources:
   - chart: external-secrets
     repoURL: https://charts.external-secrets.io
-    targetRevision: 0.16.2
+    targetRevision: 0.17.0
     helm:
       valuesObject:
         grafanaDashboard:
