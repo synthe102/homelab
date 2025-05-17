@@ -65,7 +65,7 @@ spec:
                     readOnly: true
                     subPath: rsa_key.pem
     repoURL: https://bjw-s-labs.github.io/helm-charts
-    targetRevision: 4.0.1
+    targetRevision: 3.7.3
   - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
