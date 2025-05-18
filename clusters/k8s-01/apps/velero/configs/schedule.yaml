@@ -10,5 +10,6 @@ spec:
     excludedNamespaces:
     - 'vcluster-*'
     - 'monitoring'
+    - 'velero-system'
     # 30 days retention
     ttl: 720h0m0s
