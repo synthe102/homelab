@@ -62,6 +62,7 @@ spec:
                 secretName: radarr-tls
         persistence:
           config:
+            suffix: config
             enabled: true
             type: persistentVolumeClaim
             accessMode: ReadWriteOnce
