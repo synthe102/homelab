@@ -15,7 +15,7 @@ spec:
     helm:
       valueFiles:
       - $values/k8s/sources/media/calibre/values.yaml
-    repoURL: https://bjw-s.github.io/helm-charts
+    repoURL: https://bjw-s-labs.github.io/helm-charts
     targetRevision: 2.6.*
   - ref: values
     repoURL: https://github.com/synthe102/homelab.git
