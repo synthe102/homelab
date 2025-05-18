@@ -38,14 +38,16 @@ spec:
                   allowPrivilegeEscalation: false
                   readOnlyRootFilesystem: true
                   capabilities: { drop: ["ALL"] }
+            serviceAccount:
+              identifier: system-upgrade-controller
         defaultPodOptions:
           securityContext:
             runAsNonRoot: true
             runAsUser: 568
             runAsGroup: 568
         serviceAccount:
-          name: *app
-          create: true
+          system-upgrade-controller:
+            staticToken: true
   - path: clusters/k8s-01/apps/system-upgrade/app/rbac
     repoURL: 'https://github.com/synthe102/homelab.git'
     targetRevision: HEAD
