@@ -13,6 +13,8 @@ spec:
       elements:
       - org: synthe102
         repo: openpbs-oci
+      - org: synthe102
+        repo: homelab
   template:
     metadata:
       name: 'gha-runner-{{.org}}-{{.repo}}'
