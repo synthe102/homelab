@@ -22,6 +22,8 @@ spec:
     repoURL: https://helm.cilium.io/
     targetRevision: 1.17.4
     helm:
+      apiVersions:
+        - monitoring.coreos.com/v1
       valuesObject:
         dashboards:
           enabled: true
