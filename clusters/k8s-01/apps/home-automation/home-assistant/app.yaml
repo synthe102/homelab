@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+  - chart: app-template
+    repoURL: https://bjw-s-labs.github.io/helm-charts
+    targetRevision: 4.0.1
+    helm:
+      valuesObject:
+        controllers:
+          home-assistant:
+            containers:
+              app:
+                image:
+                  repository: ghcr.io/home-operations/home-assistant
+                  tag: 2025.5.2
+                env:
+                  HOME_ASSISTANT_EXTERNAL_URL: https://home-assistant.suslian.engineer
+                  HOME_ASSISTANT_PURGE_KEEP_DAYS: 30
+                  HOME_ASSISTANT_TRUSTED_PROXIES: 10.244.0.0/16
+                  TZ: Europe/Paris
+                resources:
+                  requests:
+                    cpu: 10m
+                    memory: 1Gi
+                  limits:
+                    memory: 1Gi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities: { drop: ["ALL"] }
+        defaultPodOptions:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        ingress:
+          main:
+            enabled: true
+            className: "kong"
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              konghq.com/protocols: https
+              konghq.com/https-redirect-status-code: "301"
+            hosts:
+              - host: &host home-assistant.suslian.engineer
+                paths:
+                  - path: /
+                    service:
+                      identifier: app
+                      port: http
+            tls:
+              - hosts:
+                  - *host
+                secretName: home-assistant-tls
+
+        persistence:
+          config:
+            enabled: true
+            type: persistentVolumeClaim
+            accessMode: ReadWriteOnce
+            size: 10Gi
+          config-logs:
+            type: emptyDir
+            globalMounts:
+              - path: /config/logs
+          config-tts:
+            type: emptyDir
+            globalMounts:
+              - path: /config/tts
+          tmp:
+            type: emptyDir
+        service:
+          app:
+            ports:
+              http:
+                port: 8123
+  destination:
+    name: in-cluster
+    namespace: home-automation
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
