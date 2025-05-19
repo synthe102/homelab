@@ -7,7 +7,6 @@ resources:
   - monitoring
   - rook
   - cnpg
-  - emqx
   - kong
   - external-dns
   - external-secrets
