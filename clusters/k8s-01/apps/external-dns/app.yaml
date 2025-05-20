@@ -48,7 +48,7 @@ spec:
         extraArgs:
           - --ignore-ingress-tls-spec
         policy: sync
-        sources: ["ingress", "service"]
+        sources: ["ingress", "service", "crd"]
         txtOwnerId: default
         txtPrefix: k8s.
         domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
