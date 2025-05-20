@@ -1,0 +1,68 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mosquitto
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: home-automation
+  project: default
+  sources:
+  - chart: app-template
+    helm:
+      valuesObject:
+        controllers:
+          mosquitto:
+            containers:
+              app:
+                image:
+                  repository: public.ecr.aws/docker/library/eclipse-mosquitto
+                  tag: 2.0.21
+                env:
+                  TZ: America/Chicago
+                resources:
+                  requests:
+                    cpu: 10m
+                    memory: 100Mi
+                  limits:
+                    memory: 100Mi
+                securityContext:
+                  allowPrivilegeEscalation: false
+                  readOnlyRootFilesystem: true
+                  capabilities: { drop: ["ALL"] }
+        defaultPodOptions:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+        service:
+          app:
+            ports:
+              http:
+                port: 1883
+        persistence:
+          data:
+            enabled: true
+            type: persistentVolumeClaim
+            accessMode: ReadWriteOnce
+            size: 1Gi
+          config-file:
+            type: configMap
+            name: mosquitto-configmap
+            globalMounts:
+              - path: /mosquitto/config/mosquitto.conf
+                subPath: mosquitto.conf
+    repoURL: https://bjw-s-labs.github.io/helm-charts
+    targetRevision: 4.0.1
+  - path: clusters/k8s-01/apps/home-automation/mosquitto/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
