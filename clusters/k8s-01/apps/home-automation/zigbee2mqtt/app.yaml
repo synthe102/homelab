@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zigbee2mqtt
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: home-automation
+  project: default
+  sources:
+  - path: clusters/k8s-01/apps/home-automation/zigbee2mqtt/configs
+    repoURL: 'https://github.com/synthe102/homelab.git'
+    targetRevision: HEAD
