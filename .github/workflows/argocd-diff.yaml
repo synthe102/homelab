@@ -1,27 +1,23 @@
+---
 name: Argo CD Diff Preview
-
 on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     runs-on: gha-runner-synthe102-homelab
     permissions:
       contents: read
       pull-requests: write
-
     steps:
       - uses: actions/checkout@v4
         with:
           path: pull-request
-
       - uses: actions/checkout@v4
         with:
           ref: main
           path: main
-
       - name: Install GH cli
         run: |
           (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
@@ -32,7 +28,6 @@ jobs:
           && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
           && sudo apt update \
           && sudo apt install gh -y
-
       - name: Generate Diff
         run: |
           docker run \
@@ -43,8 +38,7 @@ jobs:
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=${{ github.head_ref }} \
             -e REPO=${{ github.repository }} \
-            dagandersen/argocd-diff-preview:v0.1.8 --kind-options '--config /base-branch/hack/kind.yaml'
-
+            dagandersen/argocd-diff-preview:v0.1.8 --kind-options '--config /base-branch/.github/hack/kind.yaml'
       - name: Post diff as comment
         run: |
           gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md --edit-last || \
