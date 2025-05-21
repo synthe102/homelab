@@ -34,6 +34,9 @@ spec:
               enabled: true
           gatewayAPI:
             enabled: true
+          tls:
+            secretsNamespace:
+              create: false
           envoy:
             rollOutPods: true
             prometheus:
