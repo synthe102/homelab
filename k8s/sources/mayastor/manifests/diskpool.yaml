@@ -1,8 +1,0 @@
-apiVersion: "openebs.io/v1beta2"
-kind: DiskPool
-metadata:
-  name: nuc
-  namespace: mayastor
-spec:
-  node: nuc
-  disks: ["/dev/sda"]

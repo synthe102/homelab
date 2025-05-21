@@ -1,3 +1,0 @@
-provider "cloudflare" {}
-
-provider "doppler" {}

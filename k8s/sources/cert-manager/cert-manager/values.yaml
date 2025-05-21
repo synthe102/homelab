@@ -1,3 +1,0 @@
-installCRDs: true
-extraArgs:
-  - --feature-gates=ExperimentalGatewayAPISupport=true
