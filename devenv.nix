@@ -18,5 +18,13 @@
     bws
     envsubst
     velero
+    kopia
   ];
+
+  git-hooks.hooks = {
+    yamlfmt = {
+      enable = true;
+      settings.lint-only = false;
+    };
+  };
 }
