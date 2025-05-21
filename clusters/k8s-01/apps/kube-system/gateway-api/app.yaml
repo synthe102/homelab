@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-api
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: clusters/k8s-01/apps/kube-system/gateway-api/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
