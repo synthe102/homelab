@@ -32,8 +32,8 @@ spec:
             enabled: true
             serviceMonitor:
               enabled: true
-          gatewayApi:
-            enabled: false
+          gatewayAPI:
+            enabled: true
           envoy:
             rollOutPods: true
             prometheus:
