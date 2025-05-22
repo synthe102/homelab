@@ -24,7 +24,7 @@ spec:
               main:
                 nameOverride: sonarr
                 image:
-                  repository: ghcr.io/onedr0p/sonarr
+                  repository: ghcr.io/home-operations/sonarr
                   tag: 4.0.13
                 env:
                   SONARR__PORT: &port 8989
