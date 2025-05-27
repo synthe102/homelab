@@ -10,3 +10,4 @@ resources:
   - external-snapshotter
   - metrics-server
   - gateway-api
+  - cosi

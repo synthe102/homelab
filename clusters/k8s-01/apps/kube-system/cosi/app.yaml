@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cosi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: .
+      repoURL: https://github.com/kubernetes-sigs/container-object-storage-interface.git
+      targetRevision: v0.2.1
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
