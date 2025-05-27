@@ -8,154 +8,157 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: rook-ceph-cluster
-    repoURL: https://charts.rook.io/release
-    targetRevision: v1.17.2
-    helm:
-      valuesObject:
-        monitoring:
-          enabled: true
-          createPrometheusRules: true
-        toolbox:
-          enabled: true
-        cephClusterSpec:
-          dashboard:
+  sources:
+    - chart: rook-ceph-cluster
+      repoURL: https://charts.rook.io/release
+      targetRevision: v1.17.2
+      helm:
+        valuesObject:
+          monitoring:
             enabled: true
-            urlPrefix: /
-            ssl: false
-            prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
-          crashCollector:
-            disable: false
-          csi:
-            readAffinity:
+            createPrometheusRules: true
+          toolbox:
+            enabled: true
+          cephClusterSpec:
+            dashboard:
               enabled: true
-            cephfs:
-              kernelMountOptions: "ms_mode=prefer-crc"
-          mgr:
-            modules:
-              - name: pg_autoscaler
+              urlPrefix: /
+              ssl: false
+              prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
+            crashCollector:
+              disable: false
+            csi:
+              readAffinity:
                 enabled: true
-          network:
-            provider: host
-            addressRanges:
-              public: ["10.0.0.0/16"]
-              cluster: ["169.254.255.0/24"]
-            connections:
-              requireMsgr2: true
-          storage:
-            useAllNodes: true
-            useAllDevices: false
-            devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_MZQL21T9HCJR-00B7C_.*
-        cephBlockPools:
-          - name: ceph-blockpool
-            spec:
-              failureDomain: host
-              replicated:
-                size: 3
-            storageClass:
-              enabled: true
-              name: ceph-block
-              isDefault: true
-              reclaimPolicy: Delete
-              allowVolumeExpansion: true
-              parameters:
-                imageFormat: "2"
-                imageFeatures: layering,exclusive-lock,object-map,fast-diff,deep-flatten
-                csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
-                csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
-                csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
-                csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/fstype: ext4
-        cephBlockPoolsVolumeSnapshotClass:
-          enabled: true
-          name: csi-ceph-block
-          isDefault: true
-          deletionPolicy: Delete
-          labels:
-            velero.io/csi-volumesnapshot-class: "true"
-        cephFileSystems:
-          - name: ceph-filesystem
-            spec:
-              metadataPool:
+              cephfs:
+                kernelMountOptions: "ms_mode=prefer-crc"
+            mgr:
+              modules:
+                - name: pg_autoscaler
+                  enabled: true
+            network:
+              provider: host
+              addressRanges:
+                public: ["10.0.0.0/16"]
+                cluster: ["169.254.255.0/24"]
+              connections:
+                requireMsgr2: true
+            storage:
+              useAllNodes: true
+              useAllDevices: false
+              devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_MZQL21T9HCJR-00B7C_.*
+          cephBlockPools:
+            - name: ceph-blockpool
+              spec:
+                failureDomain: host
                 replicated:
                   size: 3
-              dataPools:
-                - failureDomain: host
+              storageClass:
+                enabled: true
+                name: ceph-block
+                isDefault: true
+                reclaimPolicy: Delete
+                allowVolumeExpansion: true
+                parameters:
+                  imageFormat: "2"
+                  imageFeatures: layering,exclusive-lock,object-map,fast-diff,deep-flatten
+                  csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+                  csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+                  csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+                  csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/fstype: ext4
+          cephBlockPoolsVolumeSnapshotClass:
+            enabled: true
+            name: csi-ceph-block
+            isDefault: true
+            deletionPolicy: Delete
+            labels:
+              velero.io/csi-volumesnapshot-class: "true"
+          cephFileSystems:
+            - name: ceph-filesystem
+              spec:
+                metadataPool:
                   replicated:
                     size: 3
-                  name: data0
-              metadataServer:
-                activeCount: 1
-                activeStandby: true
-                resources:
-                  limits:
-                    memory: "4Gi"
-                  requests:
-                    cpu: '1'
-                    memory: "4Gi"
-                priorityClassName: system-cluster-critical
-            storageClass:
-              enabled: true
-              isDefault: false
-              name: ceph-filesystem
-              pool: data0
-              reclaimPolicy: Delete
-              allowVolumeExpansion: true
-              volumeBindingMode: "Immediate"
-              annotations: {}
-              labels: {}
-              mountOptions: []
-              parameters:
-                csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-                csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-                csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-                csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
-                csi.storage.k8s.io/fstype: ext4
-        cephFileSystemVolumeSnapshotClass:
-          enabled: true
-          name: ceph-filesystem
-          isDefault: false
-          deletionPolicy: Delete
-          labels:
-            velero.io/csi-volumesnapshot-class: "true"
-        cephObjectStores:
-          - name: ceph-objectstore
-            storageClass:
-              enabled: false
-            spec:
-              metadataPool:
-                failureDomain: host
-                replicated:
-                  size: 3
-              dataPool:
-                failureDomain: host
-                replicated:
-                  size: 3
-              gateway:
-                port: 80
-                instances: 2
-              hosting:
-                dnsNames:
-                  - &host s3.k8s-01.suslian.engineer
-            ingress:
-              enabled: true
-              ingressClassName: kong
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              host:
-                name: *host
-              tls:
-                - hosts:
-                    - *host
-                    - '*.s3.k8s-01.suslian.engineer'
-                  secretName: rook-s3-tls
+                dataPools:
+                  - failureDomain: host
+                    replicated:
+                      size: 3
+                    name: data0
+                metadataServer:
+                  activeCount: 1
+                  activeStandby: true
+                  resources:
+                    limits:
+                      memory: "4Gi"
+                    requests:
+                      cpu: '1'
+                      memory: "4Gi"
+                  priorityClassName: system-cluster-critical
+              storageClass:
+                enabled: true
+                isDefault: false
+                name: ceph-filesystem
+                pool: data0
+                reclaimPolicy: Delete
+                allowVolumeExpansion: true
+                volumeBindingMode: "Immediate"
+                annotations: {}
+                labels: {}
+                mountOptions: []
+                parameters:
+                  csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+                  csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+                  csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+                  csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+                  csi.storage.k8s.io/fstype: ext4
+          cephFileSystemVolumeSnapshotClass:
+            enabled: true
+            name: ceph-filesystem
+            isDefault: false
+            deletionPolicy: Delete
+            labels:
+              velero.io/csi-volumesnapshot-class: "true"
+          cephObjectStores:
+            - name: ceph-objectstore
+              storageClass:
+                enabled: false
+              spec:
+                metadataPool:
+                  failureDomain: host
+                  replicated:
+                    size: 3
+                dataPool:
+                  failureDomain: host
+                  replicated:
+                    size: 3
+                gateway:
+                  port: 80
+                  instances: 2
+                hosting:
+                  dnsNames:
+                    - &host s3.k8s-01.suslian.engineer
+              ingress:
+                enabled: true
+                ingressClassName: kong
+                annotations:
+                  cert-manager.io/cluster-issuer: letsencrypt-prod
+                  konghq.com/protocols: https
+                  konghq.com/https-redirect-status-code: "301"
+                host:
+                  name: *host
+                tls:
+                  - hosts:
+                      - *host
+                      - '*.s3.k8s-01.suslian.engineer'
+                    secretName: rook-s3-tls
+    - path: clusters/k8s-01/apps/rook/cluster/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: rook-ceph
