@@ -3,6 +3,8 @@ customization:
   extraKernelArgs:
     - iommu=pt
     - intel_iommu=on
+    - -lockdown
+    - lockdown=integrity
   systemExtensions:
     officialExtensions:
       - siderolabs/i915
