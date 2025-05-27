@@ -1,10 +1,11 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: rook-ceph-cluster
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -122,7 +123,34 @@ spec:
           deletionPolicy: Delete
           labels:
             velero.io/csi-volumesnapshot-class: "true"
-        cephObjectStores: []
+        cephObjectStores:
+          - name: ceph-objectstore
+            storageClass:
+              enabled: false
+            spec:
+              metadataPool:
+                failureDomain: host
+                replicated:
+                  size: 3
+              dataPool:
+                failureDomain: host
+                replicated:
+                  size: 3
+              gateway:
+                securePort: 443
+            ingress:
+              enabled: true
+              ingressClassName: kong
+              annotations:
+                cert-manager.io/cluster-issuer: letsencrypt-prod
+                konghq.com/protocols: https
+                konghq.com/https-redirect-status-code: "301"
+              host:
+                name: &host s3.k8s-01.suslian.engineer
+              tls:
+                - hosts:
+                    - *host
+                  secretName: rook-s3-tls
   destination:
     name: in-cluster
     namespace: rook-ceph
