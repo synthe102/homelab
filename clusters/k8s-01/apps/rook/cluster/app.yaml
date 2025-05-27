@@ -139,6 +139,9 @@ spec:
               gateway:
                 port: 80
                 instances: 2
+              hosting:
+                dnsNames:
+                  - &host s3.k8s-01.suslian.engineer
             ingress:
               enabled: true
               ingressClassName: kong
@@ -147,7 +150,7 @@ spec:
                 konghq.com/protocols: https
                 konghq.com/https-redirect-status-code: "301"
               host:
-                name: &host s3.k8s-01.suslian.engineer
+                name: *host
               tls:
                 - hosts:
                     - *host
