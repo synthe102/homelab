@@ -151,6 +151,7 @@ spec:
               tls:
                 - hosts:
                     - *host
+                    - '*.s3.k8s-01.suslian.engineer'
                   secretName: rook-s3-tls
   destination:
     name: in-cluster
