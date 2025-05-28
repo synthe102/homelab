@@ -156,9 +156,6 @@ spec:
                       - *host
                       - '*.s3.k8s-01.suslian.engineer'
                     secretName: rook-s3-tls
-    - path: clusters/k8s-01/apps/rook/cluster/configs
-      repoURL: 'https://github.com/synthe102/homelab.git'
-      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: rook-ceph
