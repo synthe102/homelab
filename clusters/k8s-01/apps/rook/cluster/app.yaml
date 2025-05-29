@@ -126,7 +126,8 @@ spec:
           cephObjectStores:
             - name: ceph-objectstore
               storageClass:
-                enabled: false
+                enabled: true
+                name: ceph-objectstore
               spec:
                 metadataPool:
                   failureDomain: host
