@@ -1,63 +1,67 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: external-dns-unifi
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
-  - chart: external-dns
-    repoURL: https://kubernetes-sigs.github.io/external-dns/
-    targetRevision: 1.16.1
-    helm:
-      valuesObject:
-        fullnameOverride: external-dns-unifi
-        logLevel: &logLevel debug
-        provider:
-          name: webhook
-          webhook:
-            image:
-              repository: ghcr.io/kashalls/external-dns-unifi-webhook
-              tag: v0.6.0
-            env:
-              - name: UNIFI_HOST
-                value: https://192.168.1.1
-              - name: UNIFI_EXTERNAL_CONTROLLER
-                value: "false"
-              - name: UNIFI_API_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: external-dns-unifi-secret
-                    key: api-key
-              - name: LOG_LEVEL
-                value: *logLevel
-            livenessProbe:
-              httpGet:
-                path: /healthz
-                port: http-webhook
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-            readinessProbe:
-              httpGet:
-                path: /readyz
-                port: http-webhook
-              initialDelaySeconds: 10
-              timeoutSeconds: 5
-        extraArgs:
-          - --ignore-ingress-tls-spec
-        policy: sync
-        sources: ["ingress", "service", "crd"]
-        txtOwnerId: default
-        txtPrefix: k8s.
-        domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
-  - path: clusters/k8s-01/apps/external-dns/configs
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
+    - chart: external-dns
+      repoURL: https://kubernetes-sigs.github.io/external-dns/
+      targetRevision: 1.16.1
+      helm:
+        valuesObject:
+          fullnameOverride: external-dns-unifi
+          logLevel: &logLevel debug
+          provider:
+            name: webhook
+            webhook:
+              image:
+                repository: ghcr.io/kashalls/external-dns-unifi-webhook
+                tag: v0.6.0
+              env:
+                - name: UNIFI_HOST
+                  value: https://192.168.1.1
+                - name: UNIFI_EXTERNAL_CONTROLLER
+                  value: "false"
+                - name: UNIFI_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: external-dns-unifi-secret
+                      key: api-key
+                - name: LOG_LEVEL
+                  value: *logLevel
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: http-webhook
+                initialDelaySeconds: 10
+                timeoutSeconds: 5
+              readinessProbe:
+                httpGet:
+                  path: /readyz
+                  port: http-webhook
+                initialDelaySeconds: 10
+                timeoutSeconds: 5
+          extraArgs:
+            - --ignore-ingress-tls-spec
+          policy: sync
+          sources: ["ingress", "service", "crd"]
+          txtOwnerId: default
+          txtPrefix: k8s.
+          domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
+    - path: clusters/k8s-01/apps/external-dns/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: external-dns
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true

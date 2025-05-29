@@ -1,75 +1,76 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: vaultwarden
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: in-cluster
     namespace: tooling
   project: default
   sources:
-  - chart: app-template
-    helm:
-      valuesObject:
-        controllers:
-          main:
-            containers:
-              main:
-                nameOverride: vaultwarden
-                image:
-                  repository: ghcr.io/dani-garcia/vaultwarden
-                  tag: 1.34.1
-                env:
-                  DATABASE_URL:
-                    secretKeyRef:
-                      name: vaultwarden
-                      key: DATABASE_URL
-
-        service:
-          main:
-            controller: main
-            ports:
-              http:
-                port: 80
-
-        ingress:
-          main:
-            enabled: true
-            className: "kong"
-            annotations:
-              cert-manager.io/cluster-issuer: letsencrypt-prod
-              konghq.com/protocols: https
-              konghq.com/https-redirect-status-code: "301"
-            hosts:
-              - host: &host vaultwarden.suslian.engineer
-                paths:
-                  - path: /
-                    service:
-                      identifier: main
-                      port: http
-            tls:
-              - hosts:
-                  - *host
-                secretName: vaultwarden-tls
-        persistence:
-          key:
-            type: secret
-            name: vaultwarden
-            advancedMounts:
-              main:
+    - chart: app-template
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              containers:
                 main:
-                  - path: /data/rsa_key.pem
-                    readOnly: true
-                    subPath: rsa_key.pem
-    repoURL: https://bjw-s-labs.github.io/helm-charts
-    targetRevision: 4.0.1
-  - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
+                  nameOverride: vaultwarden
+                  image:
+                    repository: ghcr.io/dani-garcia/vaultwarden
+                    tag: 1.34.1
+                  env:
+                    DATABASE_URL:
+                      secretKeyRef:
+                        name: vaultwarden
+                        key: DATABASE_URL
+          service:
+            main:
+              controller: main
+              ports:
+                http:
+                  port: 80
+          ingress:
+            main:
+              enabled: true
+              className: "kong"
+              annotations:
+                cert-manager.io/cluster-issuer: letsencrypt-prod
+                konghq.com/protocols: https
+                konghq.com/https-redirect-status-code: "301"
+              hosts:
+                - host: &host vaultwarden.suslian.engineer
+                  paths:
+                    - path: /
+                      service:
+                        identifier: main
+                        port: http
+              tls:
+                - hosts:
+                    - *host
+                  secretName: vaultwarden-tls
+          persistence:
+            key:
+              type: secret
+              name: vaultwarden
+              advancedMounts:
+                main:
+                  main:
+                    - path: /data/rsa_key.pem
+                      readOnly: true
+                      subPath: rsa_key.pem
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.0.1
+    - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
-    - PruneLast=true
-    - CreateNamespace=true
+      - CreateNamespace=true

@@ -1,16 +1,23 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: &app system-upgrade-plan
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
-  - path: clusters/k8s-01/apps/system-upgrade/plans/configs
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
+    - path: clusters/k8s-01/apps/system-upgrade/plans/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: system-upgrade
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

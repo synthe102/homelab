@@ -159,3 +159,7 @@ spec:
   destination:
     name: in-cluster
     namespace: rook-ceph
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

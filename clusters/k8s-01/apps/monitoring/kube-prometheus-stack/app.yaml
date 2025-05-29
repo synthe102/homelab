@@ -1,160 +1,164 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kube-prometheus-stack
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
-  - chart: kube-prometheus-stack
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 72.6.3
-    helm:
-      valuesObject:
-        kubeEtcd:
-          service:
-            selector:
-              component: kube-apiserver # etcd runs on control plane nodes
-        kubeProxy:
-          enabled: false
-        alertmanager:
-          alertmanagerSpec:
-            alertmanagerConfiguration:
-              name: alertmanager
-              global:
-                resolveTimeout: 5m
-            storage:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: ceph-block
-                  resources:
-                    requests:
-                      storage: 1Gi
-        prometheus:
-          prometheusSpec:
-            ruleSelectorNilUsesHelmValues: false
-            serviceMonitorSelectorNilUsesHelmValues: false
-            podMonitorSelectorNilUsesHelmValues: false
-            probeSelectorNilUsesHelmValues: false
-            scrapeConfigSelectorNilUsesHelmValues: false
-            enableAdminAPI: true
-            walCompression: true
-            enableFeatures:
-              - memory-snapshot-on-shutdown
-            retention: 14d
-            retentionSize: 50GB
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: ceph-block
-                  resources:
-                    requests:
-                      storage: 50Gi
-        prometheus-node-exporter:
-          fullnameOverride: node-exporter
-          prometheus: &prometheus
-            monitor:
-              enabled: true
-              relabelings:
-                - action: replace
-                  regex: (.*)
-                  replacement: $1
-                  sourceLabels:
-                    - __meta_kubernetes_pod_node_name
-                  targetLabel: kubernetes_node
-        kube-state-metrics:
-          fullnameOverride: kube-state-metrics
-          metricLabelsAllowlist:
-            - pods=[*]
-            - deployments=[*]
-            - persistentvolumeclaims=[*]
+    - chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 72.6.3
+      helm:
+        valuesObject:
+          kubeEtcd:
+            service:
+              selector:
+                component: kube-apiserver # etcd runs on control plane nodes
+          kubeProxy:
+            enabled: false
+          alertmanager:
+            alertmanagerSpec:
+              alertmanagerConfiguration:
+                name: alertmanager
+                global:
+                  resolveTimeout: 5m
+              storage:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: ceph-block
+                    resources:
+                      requests:
+                        storage: 1Gi
           prometheus:
-            <<: *prometheus
-        grafana:
-          ingress:
-            enabled: true
-            ingressClassName: kong
-            annotations:
-              cert-manager.io/cluster-issuer: letsencrypt-prod
-            hosts:
-            - &host grafana.k8s-01.suslian.engineer
-            tls:
-            - secretName: grafana-ingress-tls
-              hosts: 
-              - *host
-          env:
-            GF_SERVER_ROOT_URL: https://grafana.k8s-01.suslian.engineer
-          datasources:
-            datasources.yaml:
-              apiVersion: 1
-              datasources:
-              - name: Loki
-                type: loki
-                uid: loki
-                access: proxy
-                url: http://loki-headless.monitoring.svc.cluster.local:3100
-                jsonData:
-                  maxLines: 250
-          dashboardProviders:
-            dashboardproviders.yaml:
-              apiVersion: 1
-              providers:
-                - name: default
-                  orgId: 1
-                  folder: ""
-                  type: file
-                  disableDeletion: false
-                  editable: false
-                  options:
-                    path: /var/lib/grafana/dashboards/default
-          dashboards:
-            default:
-              unifi-insights:
-                gnetId: 11315
-                revision: 9
-                datasource: Prometheus
-              unifi-network-sites:
-                gnetId: 11311
-                revision: 5
-                datasource: Prometheus
-              unifi-uap:
-                gnetId: 11314
-                revision: 10
-                datasource: Prometheus
-              unifi-usw:
-                gnetId: 11312
-                revision: 9
-                datasource: Prometheus
-              ceph-cluster:
-                gnetId: 2842
-                revision: 18
-                datasource: Prometheus
-              ceph-osd:
-                gnetId: 5336
-                revision: 9
-                datasource: Prometheus
-              ceph-pools:
-                gnetId: 5342
-                revision: 9
-                datasource: Prometheus
-              smartctl-exporter:
-                gnetId: 22604
-                revision: 2
-                datasource: [{ name: DS_PROMETHEUS, value: Prometheus }]
-          plugins:
-            - grafana-piechart-panel
-            - grafana-clock-panel
-  - path: clusters/k8s-01/apps/monitoring/kube-prometheus-stack/configs
-    repoURL: 'https://github.com/synthe102/homelab.git'
-    targetRevision: HEAD
+            prometheusSpec:
+              ruleSelectorNilUsesHelmValues: false
+              serviceMonitorSelectorNilUsesHelmValues: false
+              podMonitorSelectorNilUsesHelmValues: false
+              probeSelectorNilUsesHelmValues: false
+              scrapeConfigSelectorNilUsesHelmValues: false
+              enableAdminAPI: true
+              walCompression: true
+              enableFeatures:
+                - memory-snapshot-on-shutdown
+              retention: 14d
+              retentionSize: 50GB
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: ceph-block
+                    resources:
+                      requests:
+                        storage: 50Gi
+          prometheus-node-exporter:
+            fullnameOverride: node-exporter
+            prometheus: &prometheus
+              monitor:
+                enabled: true
+                relabelings:
+                  - action: replace
+                    regex: (.*)
+                    replacement: $1
+                    sourceLabels:
+                      - __meta_kubernetes_pod_node_name
+                    targetLabel: kubernetes_node
+          kube-state-metrics:
+            fullnameOverride: kube-state-metrics
+            metricLabelsAllowlist:
+              - pods=[*]
+              - deployments=[*]
+              - persistentvolumeclaims=[*]
+            prometheus:
+              !!merge <<: *prometheus
+          grafana:
+            ingress:
+              enabled: true
+              ingressClassName: kong
+              annotations:
+                cert-manager.io/cluster-issuer: letsencrypt-prod
+              hosts:
+                - &host grafana.k8s-01.suslian.engineer
+              tls:
+                - secretName: grafana-ingress-tls
+                  hosts:
+                    - *host
+            env:
+              GF_SERVER_ROOT_URL: https://grafana.k8s-01.suslian.engineer
+            datasources:
+              datasources.yaml:
+                apiVersion: 1
+                datasources:
+                  - name: Loki
+                    type: loki
+                    uid: loki
+                    access: proxy
+                    url: http://loki-headless.monitoring.svc.cluster.local:3100
+                    jsonData:
+                      maxLines: 250
+            dashboardProviders:
+              dashboardproviders.yaml:
+                apiVersion: 1
+                providers:
+                  - name: default
+                    orgId: 1
+                    folder: ""
+                    type: file
+                    disableDeletion: false
+                    editable: false
+                    options:
+                      path: /var/lib/grafana/dashboards/default
+            dashboards:
+              default:
+                unifi-insights:
+                  gnetId: 11315
+                  revision: 9
+                  datasource: Prometheus
+                unifi-network-sites:
+                  gnetId: 11311
+                  revision: 5
+                  datasource: Prometheus
+                unifi-uap:
+                  gnetId: 11314
+                  revision: 10
+                  datasource: Prometheus
+                unifi-usw:
+                  gnetId: 11312
+                  revision: 9
+                  datasource: Prometheus
+                ceph-cluster:
+                  gnetId: 2842
+                  revision: 18
+                  datasource: Prometheus
+                ceph-osd:
+                  gnetId: 5336
+                  revision: 9
+                  datasource: Prometheus
+                ceph-pools:
+                  gnetId: 5342
+                  revision: 9
+                  datasource: Prometheus
+                smartctl-exporter:
+                  gnetId: 22604
+                  revision: 2
+                  datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
+            plugins:
+              - grafana-piechart-panel
+              - grafana-clock-panel
+    - path: clusters/k8s-01/apps/monitoring/kube-prometheus-stack/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: monitoring
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     managedNamespaceMetadata:
       labels:
         pod-security.kubernetes.io/enforce: privileged
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
