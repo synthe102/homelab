@@ -19,6 +19,7 @@ machine:
 
   # Used to provide additional options to the kubelet.
   kubelet:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     image: ghcr.io/siderolabs/kubelet:v1.33.1 # The `image` field is an optional reference to an alternative kubelet image.
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
@@ -95,6 +96,7 @@ machine:
   # Used to provide instructions for installations.
   install:
     disk: /dev/nvme1n1 # The disk used for installations.
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
     image: factory.talos.dev/metal-installer-secureboot/861de4a233bdf4e02deed4adb66885c0af40a93422997f68e84a04bed1010040:v1.10.2
     wipe: false # Indicates if the installation disk should be wiped at installation time.
     # # Look up disk using disk attributes like model, size, serial and others.
@@ -384,6 +386,7 @@ cluster:
     key: ${K8S_01_TALOS_CLUSTER_SERVICEACCOUNT_KEY}
   # API server specific configuration options.
   apiServer:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     image: registry.k8s.io/kube-apiserver:v1.33.1 # The container image used in the API server manifest.
     # Extra certificate subject alternative names for the API server's certificate.
     certSANs:
@@ -441,17 +444,20 @@ cluster:
           #         timeout: 3s
   # Controller manager server specific configuration options.
   controllerManager:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     image: registry.k8s.io/kube-controller-manager:v1.33.1 # The container image used in the controller manager manifest.
     extraArgs:
       bind-address: 0.0.0.0
   # Kube-proxy server-specific configuration options
   proxy:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     image: registry.k8s.io/kube-proxy:v1.33.1 # The container image used in the kube-proxy manifest.
     # # Disable kube-proxy deployment on cluster bootstrap.
     # disabled: false
     disabled: true
   # Scheduler server specific configuration options.
   scheduler:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     image: registry.k8s.io/kube-scheduler:v1.33.1 # The container image used in the scheduler manifest.
     extraArgs:
       bind-address: 0.0.0.0
