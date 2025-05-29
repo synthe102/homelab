@@ -6,17 +6,17 @@
   ],
   argocd: {
     managerFilePatterns: [
-      '/clusters/k8s-01/apps/.*\\.yaml$/',
+      '/clusters/.*\\.yaml$/',
     ],
   },
   'helm-values': {
     managerFilePatterns: [
-      '/clusters/k8s-01/apps/.*\\.yaml$/',
+      '/clusters/.*\\.yaml$/',
     ],
   },
   kubernetes: {
     managerFilePatterns: [
-      '/clusters/k8s-01/apps/.*\\.yaml$/',
+      '/clusters/.*\\.yaml$/',
     ],
   },
 }
