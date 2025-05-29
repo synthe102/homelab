@@ -20,6 +20,9 @@ spec:
           toolbox:
             enabled: true
           cephClusterSpec:
+            cephConfig:
+              global:
+                mon_pg_warn_max_per_osd: "300"
             dashboard:
               enabled: true
               urlPrefix: /
