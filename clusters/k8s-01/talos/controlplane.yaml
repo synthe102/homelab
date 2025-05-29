@@ -95,7 +95,7 @@ machine:
   # Used to provide instructions for installations.
   install:
     disk: /dev/nvme1n1 # The disk used for installations.
-    image: factory.talos.dev/metal-installer-secureboot/861de4a233bdf4e02deed4adb66885c0af40a93422997f68e84a04bed1010040:v1.10.2
+    image: factory.talos.dev/metal-installer-secureboot/861de4a233bdf4e02deed4adb66885c0af40a93422997f68e84a04bed1010040:v1.10.3
     wipe: false # Indicates if the installation disk should be wiped at installation time.
     # # Look up disk using disk attributes like model, size, serial and others.
     # diskSelector:
