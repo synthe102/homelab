@@ -24,6 +24,7 @@ spec:
                   name: immich-app
                   key: uri
           image:
+            # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
             tag: &tag v1.132.1
           redis:
             enabled: true
@@ -65,6 +66,7 @@ spec:
             controller:
               strategy: Recreate
             image:
+              # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
               tag: v1.132.1-openvino
             resources:
               requests:
