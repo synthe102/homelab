@@ -3,12 +3,17 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: telegram-bot-token
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=false
 spec:
   refreshInterval: 1h
   secretStoreRef:
     name: bitwarden-homelab
     kind: ClusterSecretStore
   data:
-  - secretKey: bot-token
-    remoteRef:
-      key: K8S_01_KUBE_MONITORING_TELEGRAM_BOT_TOKEN
+    - secretKey: bot-token
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: K8S_01_KUBE_MONITORING_TELEGRAM_BOT_TOKEN
+        metadataPolicy: None
