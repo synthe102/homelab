@@ -154,11 +154,11 @@ spec:
                   konghq.com/protocols: https
                   konghq.com/https-redirect-status-code: "301"
                 host:
-                  name: *host
+                  name: &wildcard '*.s3.k8s-01.suslian.engineer'
                 tls:
                   - hosts:
                       - *host
-                      - '*.s3.k8s-01.suslian.engineer'
+                      - *wildcard
                     secretName: rook-s3-tls
   destination:
     name: in-cluster
