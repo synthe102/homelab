@@ -17,7 +17,7 @@ spec:
               library:
                 existingClaim: photos-nfs
           env:
-            DB_VECTOR_EXTENSION: pgvecto.rs
+            DB_VECTOR_EXTENSION: vectorchord
             DB_URL:
               valueFrom:
                 secretKeyRef:
