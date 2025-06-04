@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ollama
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: inference
+  project: default
+  sources:
+    - repoURL: https://helm.otwld.com
+      targetRevision: 1.19.0
+      chart: ollama
+      helm:
+        valuesObject:
+          ollama:
+            models:
+              pull:
+                - 'qwen3:4b'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
