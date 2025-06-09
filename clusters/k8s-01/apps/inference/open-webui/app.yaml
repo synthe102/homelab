@@ -29,8 +29,8 @@ spec:
               cert-manager.io/cluster-issuer: letsencrypt-prod
               konghq.com/https-redirect-status-code: "301"
             tls: true
-        persistence:
-          size: 10Gi
+          persistence:
+            size: 10Gi
   syncPolicy:
     automated:
       prune: true
