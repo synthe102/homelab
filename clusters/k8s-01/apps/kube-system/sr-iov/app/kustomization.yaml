@@ -1,0 +1,7 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - https://raw.githubusercontent.com/k8snetworkplumbingwg/sriov-network-device-plugin/refs/tags/v3.9.0/deployments/configMap.yaml
+  - https://raw.githubusercontent.com/k8snetworkplumbingwg/sriov-network-device-plugin/refs/tags/v3.9.0/deployments/sriovdp-daemonset.yaml
+  - https://raw.githubusercontent.com/k8snetworkplumbingwg/sriov-cni/refs/tags/v2.9.0/images/sriov-cni-daemonset.yaml
