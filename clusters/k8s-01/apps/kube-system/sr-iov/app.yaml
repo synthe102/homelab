@@ -9,9 +9,9 @@ metadata:
 spec:
   project: default
   sources:
-    - path: clusters/k8s-01/apps/kube-system/sr-iov/app
-      repoURL: 'https://github.com/synthe102/homelab.git'
-      targetRevision: HEAD
+    - chart: sriov-network-operator-chart
+      repoURL: ghcr.io/k8snetworkplumbingwg
+      targetRevision: 1.5.0
   destination:
     name: in-cluster
     namespace: kube-system
