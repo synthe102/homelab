@@ -26,7 +26,7 @@ spec:
                   nameOverride: sonarr
                   image:
                     repository: ghcr.io/home-operations/sonarr
-                    tag: 4.0.14
+                    tag: 4.0.15
                   env:
                     SONARR__PORT: &port 8989
                     UMASK: "022"
