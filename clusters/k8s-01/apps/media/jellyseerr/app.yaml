@@ -26,7 +26,7 @@ spec:
                   nameOverride: jellyseerr
                   image:
                     repository: fallenbagel/jellyseerr
-                    tag: 2.5.2
+                    tag: 2.6.0
                   env:
                     UMASK: "022"
                     TZ: "Europe/Paris"
