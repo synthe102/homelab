@@ -16,6 +16,8 @@ spec:
         valuesObject:
           sriovOperatorConfig:
             deploy: true
+            configDaemonNodeSelector:
+              feature.node.kubernetes.io/network-sriov.capable: "true"
   destination:
     name: in-cluster
     namespace: kube-system
