@@ -71,7 +71,7 @@ spec:
               server: 192.168.1.252
               path: /mnt/MainHDD/Media
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 4.1.0
+      targetRevision: 4.1.1
   syncPolicy:
     automated:
       prune: true
