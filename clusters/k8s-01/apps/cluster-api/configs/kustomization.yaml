@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - core.yaml
   - kubevirt.yaml
+  - kamaji.yaml
