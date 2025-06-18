@@ -45,7 +45,7 @@ spec:
               serviceMonitor:
                 enabled: true
           bpf:
-            datapathMode: netkit
+            datapathMode: netkit-l2
             masquerade: true
             preallocateMaps: true
           autoDirectNodeRoutes: true
