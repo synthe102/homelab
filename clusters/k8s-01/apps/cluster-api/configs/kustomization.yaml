@@ -5,3 +5,4 @@ resources:
   - core.yaml
   - kubevirt.yaml
   - kamaji.yaml
+  - kubeadm.yaml
