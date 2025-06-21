@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -7,14 +8,13 @@ spec:
   template:
     spec:
       containers:
-      - name: kube-multus
-        resources:
-          limits:
-            cpu: 100m
-            memory: 250Mi
-          requests:
-            cpu: 100m
-            memory: 250Mi
+        - name: kube-multus
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 500Mi
       initContainers:
         - name: install-multus-binary
           command:
@@ -24,15 +24,15 @@ spec:
             - "-t"
             - "thick"
         - command:
-          - /install-cni.sh
+            - /install-cni.sh
           image: ghcr.io/siderolabs/install-cni:v1.9.0
           name: install-cni
           securityContext:
             privileged: true
           volumeMounts:
-          - mountPath: /host/opt/cni/bin
-            mountPropagation: Bidirectional
-            name: cnibin
+            - mountPath: /host/opt/cni/bin
+              mountPropagation: Bidirectional
+              name: cnibin
       volumes:
         - name: host-run-netns
           hostPath:
