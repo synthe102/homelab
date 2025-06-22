@@ -11,10 +11,11 @@ spec:
         - name: kube-multus
           resources:
             limits:
-              memory: 500Mi
+              memory: 1Gi
+              cpu: null
             requests:
               cpu: 100m
-              memory: 500Mi
+              memory: 250Mi
       initContainers:
         - name: install-multus-binary
           command:
