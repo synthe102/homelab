@@ -26,6 +26,8 @@ spec:
         apiVersions:
           - monitoring.coreos.com/v1
         valuesObject:
+          ipv6:
+            enabled: true
           dashboards:
             enabled: true
             annotations:
@@ -50,6 +52,7 @@ spec:
             preallocateMaps: true
           autoDirectNodeRoutes: true
           ipv4NativeRoutingCIDR: 10.244.0.0/16
+          ipv6NativeRoutingCIDR: 2a01:0e0a:0aec:f3d1:0000:0000:0010:0000/108
           routingMode: native
           bgpControlPlane:
             enabled: true
