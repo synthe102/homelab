@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: cluster-api-operator
       repoURL: https://kubernetes-sigs.github.io/cluster-api-operator
-      targetRevision: 0.20.0
+      targetRevision: 0.21.0
     - path: clusters/k8s-01/apps/cluster-api/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
