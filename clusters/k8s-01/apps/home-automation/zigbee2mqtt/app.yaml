@@ -29,7 +29,7 @@ spec:
                     ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_STATUS_TOPIC: homeassistant/status
                   image:
                     repository: ghcr.io/koenkk/zigbee2mqtt
-                    tag: 2.4.0
+                    tag: 2.5.1
           service:
             main:
               ports:
