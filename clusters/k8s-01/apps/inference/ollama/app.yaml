@@ -13,7 +13,7 @@ spec:
   project: default
   sources:
     - repoURL: https://helm.otwld.com
-      targetRevision: 1.23.0
+      targetRevision: 1.24.0
       chart: ollama
       helm:
         valuesObject:
