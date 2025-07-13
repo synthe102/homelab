@@ -19,6 +19,7 @@
     envsubst
     velero
     kopia
+    kubevirt
   ];
 
   git-hooks.hooks = {
@@ -26,5 +27,9 @@
       enable = true;
       settings.lint-only = false;
     };
+  };
+
+  env = {
+    COLORTERM = "truecolor";
   };
 }
