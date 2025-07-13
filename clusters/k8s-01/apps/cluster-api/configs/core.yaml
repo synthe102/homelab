@@ -11,3 +11,6 @@ metadata:
   namespace: capi-system
 spec:
   version: v1.10.3
+  manager:
+    featureGates:
+      ClusterTopology: true
