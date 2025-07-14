@@ -37,10 +37,10 @@ spec:
             serviceMonitor:
               enabled: true
           gatewayAPI:
-            enabled: false
-          tls:
-            secretsNamespace:
-              create: false
+            enabled: true
+            enableAlpn: true
+            gatewayClass:
+              create: "true"
           envoy:
             rollOutPods: true
             prometheus:
