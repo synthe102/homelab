@@ -14,6 +14,10 @@ spec:
       targetRevision: v1.18.2
       helm:
         valuesObject:
+          config:
+            apiVersion: controller.config.cert-manager.io/v1alpha1
+            kind: "ControllerConfiguration"
+            enableGatewayAPI: true
           crds:
             enabled: true
     - path: clusters/k8s-01/apps/cert-manager/configs
