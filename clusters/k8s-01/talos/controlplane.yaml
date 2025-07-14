@@ -294,6 +294,8 @@ machine:
   # # MachineSysctls usage example.
   sysctls:
     vm.nr_hugepages: "1024"
+    net.core.rmem_max: "7500000" # QUIC
+    net.core.wmem_max: "7500000" # QUIC
   # # Used to configure the machine's sysfs.
 
   # # MachineSysfs usage example.
