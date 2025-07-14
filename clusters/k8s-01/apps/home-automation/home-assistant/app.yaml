@@ -43,25 +43,6 @@ spec:
               runAsGroup: 568
               fsGroup: 568
               fsGroupChangePolicy: OnRootMismatch
-          ingress:
-            main:
-              enabled: true
-              className: "kong"
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - host: &host home-assistant.suslian.engineer
-                  paths:
-                    - path: /
-                      service:
-                        identifier: app
-                        port: http
-              tls:
-                - hosts:
-                    - *host
-                  secretName: home-assistant-tls
           persistence:
             config:
               enabled: true
@@ -83,6 +64,14 @@ spec:
               ports:
                 http:
                   port: 8123
+          route:
+            app:
+              hostnames:
+                - home-assistant.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
   destination:
     name: in-cluster
     namespace: home-automation

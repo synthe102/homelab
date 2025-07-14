@@ -35,25 +35,6 @@ spec:
               ports:
                 http:
                   port: 8080
-          ingress:
-            main:
-              enabled: true
-              className: "kong"
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - host: &host z2m.iot.suslian.engineer
-                  paths:
-                    - path: /
-                      service:
-                        identifier: main
-                        port: http
-              tls:
-                - hosts:
-                    - *host
-                  secretName: zigbee2mqtt-tls
           persistence:
             data:
               enabled: true
@@ -62,6 +43,14 @@ spec:
               size: 5Gi
               globalMounts:
                 - path: /app/data
+          route:
+            app:
+              hostnames:
+                - z2m.iot.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https-iot
     - path: clusters/k8s-01/apps/home-automation/zigbee2mqtt/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD

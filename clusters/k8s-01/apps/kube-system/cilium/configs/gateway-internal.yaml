@@ -37,3 +37,14 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-internal-tls
+    - name: https-iot
+      protocol: HTTPS
+      port: 443
+      hostname: "*.iot.suslian.engineer"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-internal-tls

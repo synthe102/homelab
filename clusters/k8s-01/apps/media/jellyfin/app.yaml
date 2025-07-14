@@ -43,25 +43,6 @@ spec:
               ports:
                 http:
                   port: 8096
-          ingress:
-            main:
-              enabled: true
-              className: "kong"
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - host: &host jellyfin.suslian.engineer
-                  paths:
-                    - path: /
-                      service:
-                        identifier: main
-                        port: http
-              tls:
-                - hosts:
-                    - *host
-                  secretName: jellyfin-tls
           persistence:
             config:
               suffix: config
@@ -73,6 +54,14 @@ spec:
               type: nfs
               server: 192.168.1.252
               path: /mnt/MainHDD/Media
+          route:
+            app:
+              hostnames:
+                - jellyfin.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
   destination:
     name: in-cluster
     namespace: media
