@@ -39,25 +39,6 @@ spec:
               ports:
                 http:
                   port: 6767
-          ingress:
-            main:
-              enabled: true
-              className: "kong"
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - host: &host bazarr.suslian.engineer
-                  paths:
-                    - path: /
-                      service:
-                        identifier: main
-                        port: http
-              tls:
-                - hosts:
-                    - *host
-                  secretName: bazarr-tls
           persistence:
             config:
               suffix: config
@@ -69,6 +50,14 @@ spec:
               type: nfs
               server: 192.168.1.252
               path: /mnt/MainHDD/Media
+          route:
+            app:
+              hostnames:
+                - bazarr.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.1.2
   syncPolicy:
