@@ -11,3 +11,4 @@ resources:
   - metrics-server
   - gateway-api
   - sr-iov
+  - cloudflared

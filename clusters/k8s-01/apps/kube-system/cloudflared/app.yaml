@@ -1,0 +1,86 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflared
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: app-template
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.1.2
+      helm:
+        valuesObject:
+          controllers:
+            cloudflared:
+              replicas: 2
+              strategy: RollingUpdate
+              annotations:
+                reloader.stakater.com/auto: "true"
+              containers:
+                app:
+                  image:
+                    repository: docker.io/cloudflare/cloudflared
+                    tag: 2025.7.0
+                  args:
+                    - tunnel
+                    - run
+                  env:
+                    NO_AUTOUPDATE: true
+                    TUNNEL_METRICS: 0.0.0.0:2000
+                    TUNNEL_ORIGIN_ENABLE_HTTP2: true
+                    TUNNEL_POST_QUANTUM: true
+                  envFrom:
+                    - secretRef:
+                        name: cloudflared-secret
+                  probes:
+                    liveness: &probes
+                      enabled: true
+                      custom: true
+                      spec:
+                        httpGet:
+                          path: /ready
+                          port: &port 2000
+                        initialDelaySeconds: 0
+                        periodSeconds: 10
+                        timeoutSeconds: 1
+                        failureThreshold: 3
+                    readiness: *probes 
+                  resources:
+                    requests:
+                      cpu: 10m
+                    limits:
+                      memory: 128Mi
+                  securityContext:
+                    allowPrivilegeEscalation: false
+                    readOnlyRootFilesystem: true
+                    capabilities: {drop: ["ALL"]}
+          defaultPodOptions:
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 568
+              runAsGroup: 568
+          service:
+            app:
+              ports:
+                http:
+                  port: *port 
+          serviceMonitor:
+            app:
+              endpoints:
+                - port: http
+    - path: clusters/k8s-01/apps/kube-system/cloudflared/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

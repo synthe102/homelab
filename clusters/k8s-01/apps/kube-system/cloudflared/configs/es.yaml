@@ -1,0 +1,14 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cloudflared-secret
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  data:
+    - secretKey: TUNNEL_TOKEN
+      remoteRef:
+        key: "K8S_01_KUBE_CLOUDFLARED"
