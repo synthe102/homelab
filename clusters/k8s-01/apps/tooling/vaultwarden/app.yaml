@@ -34,25 +34,6 @@ spec:
               ports:
                 http:
                   port: 80
-          ingress:
-            main:
-              enabled: true
-              className: "kong"
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/protocols: https
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - host: &host vaultwarden.suslian.engineer
-                  paths:
-                    - path: /
-                      service:
-                        identifier: main
-                        port: http
-              tls:
-                - hosts:
-                    - *host 
-                  secretName: vaultwarden-tls
           persistence:
             key:
               type: secret
@@ -66,7 +47,7 @@ spec:
           route:
             app:
               hostnames:
-                - *host 
+                - vaultwarden.suslian.engineer
               parentRefs:
                 - name: internal
                   namespace: kube-system
