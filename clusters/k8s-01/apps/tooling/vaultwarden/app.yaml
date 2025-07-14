@@ -51,7 +51,7 @@ spec:
                         port: http
               tls:
                 - hosts:
-                    - *host
+                    - *host 
                   secretName: vaultwarden-tls
           persistence:
             key:
@@ -63,6 +63,14 @@ spec:
                     - path: /data/rsa_key.pem
                       readOnly: true
                       subPath: rsa_key.pem
+          route:
+            app:
+              hostnames:
+                - *host 
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.1.2
     - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
