@@ -37,7 +37,7 @@ spec:
             serviceMonitor:
               enabled: true
           gatewayAPI:
-            enabled: true
+            enabled: false
           tls:
             secretsNamespace:
               create: false
