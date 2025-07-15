@@ -365,11 +365,9 @@ cluster:
     # The pod subnet CIDR.
     podSubnets:
       - 10.244.0.0/16
-      - 2a01:0e0a:0aec:f3d1:0000:0000:0010:0000/108
     # The service subnet CIDR.
     serviceSubnets:
       - 10.96.0.0/12
-      - 2a01:e0a:aec:f3d1::/108
     # # The CNI used.
     cni:
       name: none
@@ -451,7 +449,6 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.33.2 # The container image used in the controller manager manifest.
     extraArgs:
       bind-address: 0.0.0.0
-      node-cidr-mask-size-ipv6: "116"
   # Kube-proxy server-specific configuration options
   proxy:
     image: registry.k8s.io/kube-proxy:v1.33.2 # The container image used in the kube-proxy manifest.

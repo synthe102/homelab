@@ -12,11 +12,4 @@ router bgp 64513
     neighbor k8s activate
     neighbor k8s allowas-in
   exit-address-family
-
-  address-family ipv6 unicast
-    neighbor k8s next-hop-self
-    neighbor k8s soft-reconfiguration inbound
-    neighbor k8s activate
-    neighbor k8s allowas-in
-  exit-address-family
 exit

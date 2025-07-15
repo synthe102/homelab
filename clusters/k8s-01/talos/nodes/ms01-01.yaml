@@ -5,8 +5,6 @@ machine:
     interfaces:
       - interface: enp2s0f0np0
         dhcp: true
-        dhcpOptions:
-          ipv6: true
         vlans:
           - vlanId: 100
             dhcp: false

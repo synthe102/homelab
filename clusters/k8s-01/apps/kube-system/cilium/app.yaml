@@ -26,8 +26,6 @@ spec:
         apiVersions:
           - monitoring.coreos.com/v1
         valuesObject:
-          ipv6:
-            enabled: false
           dashboards:
             enabled: true
             annotations:
