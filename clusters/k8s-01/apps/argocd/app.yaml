@@ -8,39 +8,35 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: argo-cd
-    repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 8.1.3
-    helm:
-      valuesObject:
-        configs:
-          cm:
-            application.resourceTrackingMethod: annotation
-        global:
-          domain: &host argo.k8s-01.suslian.engineer
-        redis-ha:
-          enabled: true
-        controller:
-          replicas: 1
-        repoServer:
-          replicas: 2
-        applicationSet:
-          replicas: 2
-        server:
-          replicas: 2
-          service:
-            annotations:
-              konghq.com/protocol: https
-          ingress:
+  sources:
+    - chart: argo-cd
+      repoURL: https://argoproj.github.io/argo-helm
+      targetRevision: 8.1.3
+      helm:
+        valuesObject:
+          configs:
+            params:
+              server.insecure: true
+            cm:
+              application.resourceTrackingMethod: annotation
+          global:
+            domain: &host argo.k8s-01.suslian.engineer
+          redis-ha:
             enabled: true
-            ingressClassName: "kong"
-            annotations:
-              cert-manager.io/cluster-issuer: letsencrypt-prod
-              konghq.com/protocols: "https,grpcs"
-              konghq.com/https-redirect-status-code: "301"
-            tls: true
-            hostname: *host
+          controller:
+            replicas: 1
+          repoServer:
+            replicas: 2
+          applicationSet:
+            replicas: 2
+          server:
+            replicas: 2
+            service:
+              annotations:
+                konghq.com/protocol: https
+    - path: clusters/k8s-01/apps/argocd/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: argocd

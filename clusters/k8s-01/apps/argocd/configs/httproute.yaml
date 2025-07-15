@@ -1,0 +1,20 @@
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: argocd
+spec:
+  hostnames:
+    - argo.k8s-01.suslian.engineer
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https-k8s-01
+  rules:
+    - backendRefs:
+        - name: argocd-server
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
