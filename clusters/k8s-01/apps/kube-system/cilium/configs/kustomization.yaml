@@ -6,4 +6,5 @@ resources:
   - loadbalancerippool.yaml
   - vip.yaml
   - gateway-internal.yaml
+  - gateway-external.yaml
   - redirect.yaml
