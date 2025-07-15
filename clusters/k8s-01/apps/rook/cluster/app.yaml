@@ -146,20 +146,6 @@ spec:
                 hosting:
                   dnsNames:
                     - &host s3.k8s-01.suslian.engineer
-              ingress:
-                enabled: true
-                ingressClassName: kong
-                annotations:
-                  cert-manager.io/cluster-issuer: letsencrypt-prod
-                  konghq.com/protocols: https
-                  konghq.com/https-redirect-status-code: "301"
-                host:
-                  name: &wildcard '*.s3.k8s-01.suslian.engineer'
-                tls:
-                  - hosts:
-                      - *host
-                      - *wildcard
-                    secretName: rook-s3-tls
   destination:
     name: in-cluster
     namespace: rook-ceph
