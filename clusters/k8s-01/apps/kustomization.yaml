@@ -8,7 +8,6 @@ resources:
   - monitoring
   - rook
   - cnpg
-  - kong
   - external-dns
   - external-secrets
   - cert-manager
