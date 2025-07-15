@@ -7,13 +7,18 @@ spec:
   hostnames:
     - argo.k8s-01.suslian.engineer
   parentRefs:
-    - name: internal
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal
       namespace: kube-system
       sectionName: https-k8s-01
   rules:
     - backendRefs:
-        - name: argocd-server
+        - group: ''
+          kind: Service
+          name: argo-cd-argocd-server
           port: 80
+          weight: 1
       matches:
         - path:
             type: PathPrefix
