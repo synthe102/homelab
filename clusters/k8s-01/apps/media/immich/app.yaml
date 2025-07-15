@@ -45,23 +45,6 @@ spec:
               limits:
                 gpu.intel.com/i915: "1"
                 memory: 4Gi
-            ingress:
-              main:
-                enabled: true
-                className: "kong"
-                annotations:
-                  cert-manager.io/cluster-issuer: letsencrypt-prod
-                  kubernetes.io/ingress.class: kong
-                  konghq.com/protocols: https
-                  konghq.com/https-redirect-status-code: "301"
-                hosts:
-                  - host: &host photos.suslian.engineer
-                    paths:
-                      - path: "/"
-                tls:
-                  - hosts:
-                      - *host
-                    secretName: immich-tls
           machine-learning:
             controller:
               strategy: Recreate
