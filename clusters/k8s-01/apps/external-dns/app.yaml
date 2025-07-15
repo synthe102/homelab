@@ -16,6 +16,7 @@ spec:
         valuesObject:
           fullnameOverride: external-dns-unifi
           logLevel: &logLevel debug
+          triggerLoopOnEvent: true
           provider:
             name: webhook
             webhook:
