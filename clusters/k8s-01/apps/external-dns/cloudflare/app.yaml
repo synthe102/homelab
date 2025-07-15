@@ -1,0 +1,48 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: &name external-dns-cloudflare
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: external-dns
+      repoURL: https://kubernetes-sigs.github.io/external-dns/
+      targetRevision: 1.18.0
+      helm:
+        valuesObject:
+          fullnameOverride: *name 
+          logLevel: &logLevel debug
+          triggerLoopOnEvent: true
+          provider:
+            name: cloudflare
+          env:
+            - name: CF_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: external-dns-cloudflare-api-token
+                  key: api-token
+          extraArgs:
+            - --cloudflare-proxied
+            - --cloudflare-dns-records-per-page=1000
+            - --gateway-name=external
+          policy: sync
+          sources: ["gateway-httproute"]
+          txtOwnerId: default
+          txtPrefix: k8s.
+          domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
+    - path: clusters/k8s-01/apps/external-dns/cloudflare/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: external-dns
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

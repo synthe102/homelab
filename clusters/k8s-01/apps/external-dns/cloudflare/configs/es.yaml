@@ -1,0 +1,14 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: external-dns-cloudflare-api-token
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  data:
+    - secretKey: api-token
+      remoteRef:
+        key: "K8S_01_KUBE_EXTERNAL_DNS_CLOUDFLARE_API_TOKEN"

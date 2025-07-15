@@ -54,7 +54,7 @@ spec:
           txtOwnerId: default
           txtPrefix: k8s.
           domainFilters: ["suslian.engineer", "volcan.cloud"] # replace with your domain
-    - path: clusters/k8s-01/apps/external-dns/configs
+    - path: clusters/k8s-01/apps/external-dns/unifi/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
   destination:
