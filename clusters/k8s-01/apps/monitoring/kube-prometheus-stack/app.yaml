@@ -72,19 +72,19 @@ spec:
               - deployments=[*]
               - persistentvolumeclaims=[*]
             prometheus:
-              !!merge <<: *prometheus
+              !!merge <<: *prometheus 
           grafana:
-            ingress:
-              enabled: true
-              ingressClassName: kong
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-              hosts:
-                - &host grafana.k8s-01.suslian.engineer
-              tls:
-                - secretName: grafana-ingress-tls
-                  hosts:
-                    - *host
+            route:
+              main:
+                enabled: true
+                hostnames:
+                  - grafana.k8s-01.suslian.engineer
+                parentRefs:
+                  - group: gateway.networking.k8s.io
+                    kind: Gateway
+                    name: internal
+                    namespace: kube-system
+                    sectionName: https-k8s-01
             env:
               GF_SERVER_ROOT_URL: https://grafana.k8s-01.suslian.engineer
             datasources:
