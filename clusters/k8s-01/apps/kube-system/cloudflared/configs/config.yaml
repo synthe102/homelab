@@ -1,0 +1,9 @@
+---
+originRequest:
+  originServerName: external.suslian.engineer
+ingress:
+  - hostname: "*.suslian.engineer"
+    service: &service https://cilium-gateway-external.kube-system.svc.cluster.local
+  - hostname: "*.volcan.cloud"
+    service: *service
+  - service: http_status:404
