@@ -8,7 +8,13 @@ spec:
   secretStoreRef:
     name: bitwarden-homelab
     kind: ClusterSecretStore
-  data:
-    - secretKey: TUNNEL_TOKEN
-      remoteRef:
-        key: "K8S_01_KUBE_CLOUDFLARED"
+  target:
+    name: cloudflared-secret
+    creationPolicy: Owner
+    template:
+      data:
+        TUNNEL_TOKEN: |-
+          {{ toJson (dict "a" .CLOUDFLARE_ACCOUNT_ID "t" .CLOUDFLARE_TUNNEL_ID "s" .CLOUDFLARE_TUNNEL_SECRET) | b64enc }}
+  dataFrom:
+    - extract:
+        key: K8S_01_KUBE_CLOUDFLARED
