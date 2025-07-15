@@ -19,18 +19,15 @@ spec:
               user: file:///postgres-creds/username
               password: file:///postgres-creds/password
           server:
-            ingress:
-              enabled: true
-              ingressClassName: kong
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
-                konghq.com/https-redirect-status-code: "301"
-              hosts:
-                - &host auth.suslian.engineer
-              tls:
-                - hosts:
-                    - *host
-                  secretName: authentik-tls
+            route:
+              main:
+                enabled: true
+                hostnames:
+                  - auth.suslian.engineer
+                parentRefs:
+                  - name: internal
+                    namespace: kube-system
+                    sectionName: https
             volumes:
               - name: postgres-creds
                 secret:
@@ -69,7 +66,7 @@ spec:
       targetRevision: HEAD
   destination:
     name: in-cluster
-    namespace: *name
+    namespace: *name 
   syncPolicy:
     automated:
       prune: true
