@@ -1,3 +1,4 @@
+---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -8,6 +9,6 @@ spec:
     name: bitwarden-homelab
     kind: ClusterSecretStore
   data:
-  - secretKey: api-key
-    remoteRef:
-      key: "K8S_01_KUBE_EXTERNAL_DNS_UNIFI_API_KEY"
+    - secretKey: api-key
+      remoteRef:
+        key: "K8S_01_KUBE_EXTERNAL_DNS_UNIFI_API_KEY"
