@@ -27,6 +27,7 @@ spec:
                     tag: 2025.7.0
                   args:
                     - tunnel
+                    - --config=/etc/cloudflared/config.yaml
                     - run
                   env:
                     NO_AUTOUPDATE: true
