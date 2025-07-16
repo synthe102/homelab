@@ -12,3 +12,4 @@ resources:
   - gateway-api
   - sr-iov
   - cloudflared
+  - reloader
