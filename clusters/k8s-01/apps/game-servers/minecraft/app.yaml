@@ -1,0 +1,59 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minecraft-volcan
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: game-servers
+  project: default
+  sources:
+    - chart: app-template
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              pod:
+                securityContext:
+                  fsGroup: 568
+                  fsGroupChangePolicy: "OnRootMismatch"
+              containers:
+                main:
+                  nameOverride: minecraft-server
+                  image:
+                    repository: ghcr.io/itzg/minecraft-server
+                    tag: java21@sha256:71f150e73832ad0b6a0ef23321b1d3fca4a1a6e59a41aaa514d25efc935b3614
+                  env:
+                    EULA: "true"
+                  securityContext:
+                    runAsUser: 568
+                    runAsGroup: 568
+                  tty: true
+                  stdin: true
+          service:
+            main:
+              type: LoadBalancer
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: mc.volcan.cloud
+              controller: main
+              ports:
+                http:
+                  port: 25565
+          persistence:
+            data:
+              enabled: true
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
+              size: 10Gi
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.1.2
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
