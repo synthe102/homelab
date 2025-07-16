@@ -51,8 +51,12 @@ spec:
                     limits:
                       memory: 5Gi
                   securityContext:
+                    runAsNonRoot: true
                     runAsUser: 568
                     runAsGroup: 568
+                    allowPrivilegeEscalation: false
+                    readOnlyRootFilesystem: true
+                    capabilities: {drop: ["ALL"]}
                   tty: true
                   stdin: true
           service:
@@ -70,6 +74,16 @@ spec:
               type: persistentVolumeClaim
               accessMode: ReadWriteOnce
               size: 10Gi
+            tmp:
+              enabled: true
+              type: emptyDir
+              sizeLimit: 512Mi
+            dshm:
+              enabled: true
+              type: emptyDir
+              sizeLimit: 512Mi
+              globalMounts:
+                - path: /dev/shm
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.1.2
     - path: clusters/k8s-01/apps/game-servers/minecraft/configs
