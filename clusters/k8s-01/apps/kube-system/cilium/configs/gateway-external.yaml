@@ -4,7 +4,6 @@ kind: Gateway
 metadata:
   name: external
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     external-dns.alpha.kubernetes.io/target: &hostname external.suslian.engineer
 spec:
   gatewayClassName: cilium
@@ -29,7 +28,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-external-tls
+            name: gateway-tls
     - name: https-k8s-01
       protocol: HTTPS
       port: 443
@@ -40,7 +39,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-external-tls
+            name: gateway-tls
     - name: https-iot
       protocol: HTTPS
       port: 443
@@ -51,7 +50,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-external-tls
+            name: gateway-tls
     - name: https-volcan
       protocol: HTTPS
       port: 443
@@ -62,4 +61,4 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-external-tls
+            name: gateway-tls

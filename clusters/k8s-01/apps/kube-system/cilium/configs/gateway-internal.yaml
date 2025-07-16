@@ -3,8 +3,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: internal
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   gatewayClassName: cilium
   listeners:
@@ -25,7 +23,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-internal-tls
+            name: gateway-tls
     - name: https-k8s-01
       protocol: HTTPS
       port: 443
@@ -36,7 +34,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-internal-tls
+            name: gateway-tls
     - name: https-iot
       protocol: HTTPS
       port: 443
@@ -47,7 +45,7 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-internal-tls
+            name: gateway-tls
     - name: https-volcan
       protocol: HTTPS
       port: 443
@@ -58,4 +56,4 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-internal-tls
+            name: gateway-tls
