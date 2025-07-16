@@ -6,4 +6,6 @@ ingress:
     service: https://cilium-gateway-external.kube-system.svc.cluster.local
   - hostname: "*.volcan.cloud"
     service: https://cilium-gateway-external.kube-system.svc.cluster.local
+  - hostname: "mc.volcan.cloud"
+    service: tcp://minecraft-volcan.game-servers.svc.cluster.local:25565
   - service: http_status:404
