@@ -76,8 +76,8 @@ spec:
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    # automated:
+    #   prune: true
+    #   selfHeal: true
     syncOptions:
       - CreateNamespace=true
