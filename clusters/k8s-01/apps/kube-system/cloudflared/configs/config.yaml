@@ -4,4 +4,6 @@ originRequest:
 ingress:
   - hostname: "*.suslian.engineer"
     service: https://cilium-gateway-external.kube-system.svc.cluster.local
+  - hostname: "*.volcan.cloud"
+    service: https://cilium-gateway-external.kube-system.svc.cluster.local
   - service: http_status:404
