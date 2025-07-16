@@ -8,3 +8,4 @@ resources:
   - gateway-internal.yaml
   - gateway-external.yaml
   - redirect.yaml
+  - cert.yaml
