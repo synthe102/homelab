@@ -48,3 +48,14 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-internal-tls
+    - name: https-volcan
+      protocol: HTTPS
+      port: 443
+      hostname: "*.volcan.cloud"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-internal-tls
