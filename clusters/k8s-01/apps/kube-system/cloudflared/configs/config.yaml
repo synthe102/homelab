@@ -1,11 +1,11 @@
 ---
-originRequest:
-  originServerName: external.suslian.engineer
 ingress:
-  - hostname: "mc.volcan.cloud"
-    service: tcp://minecraft-volcan.game-servers.svc.cluster.local:25565
   - hostname: "*.suslian.engineer"
     service: https://cilium-gateway-external.kube-system.svc.cluster.local
+    originRequest:
+      originServerName: external.suslian.engineer
   - hostname: "*.volcan.cloud"
     service: https://cilium-gateway-external.kube-system.svc.cluster.local
+    originRequest:
+      originServerName: external.suslian.engineer
   - service: http_status:404
