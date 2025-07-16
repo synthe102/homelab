@@ -1,0 +1,13 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: minecraft-volcan
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  dataFrom:
+    - extract:
+        key: "K8S_01_KUBE_GAMESERVERS_MINECRAFT_VOLCAN"

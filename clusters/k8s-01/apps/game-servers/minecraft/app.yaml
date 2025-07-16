@@ -17,6 +17,7 @@ spec:
         valuesObject:
           controllers:
             main:
+              type: statefulset
               pod:
                 securityContext:
                   fsGroup: 568
@@ -31,8 +32,12 @@ spec:
                     EULA: "true"
                     TZ: "Europe/Paris"
                     ENABLE_ROLLING_LOGS: "true"
+                    SERVER_NAME: "Volcan"
                     MOTD: "Le serveur volcanique"
                     ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=6878aef8&is=68775d78&hm=d28c9c93523409e3495e48aa1acab4ea2f1798d482cef04d199614e83d405637&=&quality=lossless&width=1296&height=1296"
+                  envFrom:
+                    - secretRef:
+                        name: minecraft-volcan
                   securityContext:
                     runAsUser: 568
                     runAsGroup: 568
@@ -55,6 +60,9 @@ spec:
               size: 10Gi
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.1.2
+    - path: clusters/k8s-01/apps/game-servers/minecraft/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
