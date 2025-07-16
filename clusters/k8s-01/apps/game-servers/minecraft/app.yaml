@@ -29,6 +29,10 @@ spec:
                     tag: java21@sha256:71f150e73832ad0b6a0ef23321b1d3fca4a1a6e59a41aaa514d25efc935b3614
                   env:
                     EULA: "true"
+                    TZ: "Europe/Paris"
+                    ENABLE_ROLLING_LOGS: "true"
+                    MOTD: "Le serveur volcanique"
+                    ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=6878aef8&is=68775d78&hm=d28c9c93523409e3495e48aa1acab4ea2f1798d482cef04d199614e83d405637&=&quality=lossless&width=1296&height=1296"
                   securityContext:
                     runAsUser: 568
                     runAsGroup: 568
