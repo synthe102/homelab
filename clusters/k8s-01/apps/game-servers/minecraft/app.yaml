@@ -40,6 +40,7 @@ spec:
                     INIT_MEMORY: 1G
                     MAX_MEMORY: 4G
                     ONLINE_MODE: "false"
+                    TYPE: PAPER
                   envFrom:
                     - secretRef:
                         name: minecraft-volcan
