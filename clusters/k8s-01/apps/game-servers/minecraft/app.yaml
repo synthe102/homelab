@@ -41,6 +41,7 @@ spec:
                     MAX_MEMORY: 4G
                     ONLINE_MODE: "false"
                     TYPE: PAPER
+                    VERSION: "1.21.7"
                     MODRINTH_PROJECTS: "skinsrestorer,directionhud"
                     MODRINTH_ALLOWED_VERSION_TYPE: "beta"
                   envFrom:
