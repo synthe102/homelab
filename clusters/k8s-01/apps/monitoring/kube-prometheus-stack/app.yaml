@@ -144,6 +144,10 @@ spec:
                   gnetId: 22604
                   revision: 2
                   datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
+                minecraft:
+                  gnetId: 14756
+                  revision: 11
+                  datasource: Prometheus
             plugins:
               - grafana-piechart-panel
               - grafana-clock-panel
