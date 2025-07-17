@@ -73,11 +73,11 @@ spec:
           route:
             main:
               hostnames:
-                - "map.mc.volcan.cloud"
+                - "mc-map.volcan.cloud"
               parentRefs:
                 - name: external
                   namespace: kube-system
-                  sectionName: https-volcan-mc
+                  sectionName: https-volcan
           persistence:
             data:
               enabled: true
