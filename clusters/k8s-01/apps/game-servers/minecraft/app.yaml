@@ -66,8 +66,18 @@ spec:
                 external-dns.alpha.kubernetes.io/hostname: mc.volcan.cloud
               controller: main
               ports:
-                http:
+                map:
+                  port: 8123
+                server:
                   port: 25565
+          route:
+            main:
+              hostnames:
+                - "map.mc.volcan.cloud"
+              parentRefs:
+                - name: external
+                  namespace: kube-system
+                  sectionName: https-volcan-mc
           persistence:
             data:
               enabled: true
