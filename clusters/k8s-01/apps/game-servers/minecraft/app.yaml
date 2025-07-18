@@ -93,6 +93,17 @@ spec:
               type: persistentVolumeClaim
               accessMode: ReadWriteOnce
               size: 10Gi
+            whitelist:
+              enabled: true
+              type: custom
+              globalMounts:
+                - path: /data
+              volumeSpec:
+                secret:
+                  secretName: minecraft-volcan
+                  items:
+                    - key: WHITELIST_JSON
+                      path: whitelist.json
             tmp:
               enabled: true
               type: emptyDir
