@@ -7,7 +7,7 @@ spec:
   hostnames:
     - photos.suslian.engineer
   parentRefs:
-    - name: internal
+    - name: external
       namespace: kube-system
       sectionName: https
   rules:
