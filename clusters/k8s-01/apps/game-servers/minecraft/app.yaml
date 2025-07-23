@@ -69,10 +69,10 @@ spec:
                   nameOverride: volcan-bot
                   image:
                     repository: ghcr.io/synthe102/volcan-bot
-                    tag: "v0.0.1"
+                    tag: "v0.0.3"
                   env:
                     MINECRAFT_RCON_ADDRESS: localhost:25575
-                    MINECRAFT_WHITELIST_FILE: /data/whitelist-test.json
+                    MINECRAFT_WHITELIST_FILE: /data/whitelist.json
                     SQLITE_DATABASE: /data/volcan.db
                   envFrom:
                     - secretRef:
