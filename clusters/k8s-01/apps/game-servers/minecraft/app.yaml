@@ -15,6 +15,9 @@ spec:
     - chart: app-template
       helm:
         valuesObject:
+          defaultPodOptions:
+            imagePullSecrets:
+              - name: ghcr-synthe102
           controllers:
             main:
               annotations:
