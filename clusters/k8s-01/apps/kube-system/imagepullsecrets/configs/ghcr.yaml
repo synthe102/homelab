@@ -1,0 +1,24 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ClusterExternalSecret
+metadata:
+  name: ghcr-synthe102
+spec:
+  externalSecretName: ghcr-synthe102
+  namespaceSelectors:
+    - matchLabels: {}
+  refreshTime: "1m"
+  externalSecretSpec:
+    secretStoreRef:
+      name: bitwarden-homelab
+      kind: ClusterSecretStore
+    refreshInterval: "5m"
+    target:
+      template:
+        type: kubernetes.io/dockerconfigjson
+        data:
+          .dockerconfigjson: '{"auths":{"ghcr.io":{"username":"synthe102","password":"{{ .token }}","auth":"{{ printf "%s:%s" "synthe102" .token | b64enc }}"}}}'
+    data:
+      - secretKey: token
+        remoteRef:
+          key: K8S_01_GHCR_IMAGEPULLSECRET

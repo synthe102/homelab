@@ -13,3 +13,4 @@ resources:
   - sr-iov
   - cloudflared
   - reloader
+  - imagepullsecrets
