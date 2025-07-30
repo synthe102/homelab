@@ -21,7 +21,7 @@ spec:
       targetRevision: HEAD
     - chart: cilium
       repoURL: https://helm.cilium.io/
-      targetRevision: 1.17.6
+      targetRevision: 1.18.0
       helm:
         apiVersions:
           - monitoring.coreos.com/v1
@@ -68,7 +68,6 @@ spec:
           k8sServicePort: 7445
           operator:
             rollOutPods: true
-            tolerations: []
             dashboards:
               enabled: true
             prometheus:
