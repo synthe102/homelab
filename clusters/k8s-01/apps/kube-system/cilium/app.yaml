@@ -68,7 +68,6 @@ spec:
           k8sServicePort: 7445
           operator:
             rollOutPods: true
-            tolerations: []
             dashboards:
               enabled: true
             prometheus:
