@@ -1,0 +1,14 @@
+---
+apiVersion: kubevirt.io/v1
+kind: KubeVirt
+metadata:
+  name: kubevirt
+spec:
+  certificateRotateStrategy:
+    selfSigned:
+      ca:
+        duration: 504h
+        renewBefore: 168h
+      server:
+        duration: 336h
+        renewBefore: 168h
