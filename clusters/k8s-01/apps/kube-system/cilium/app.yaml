@@ -26,6 +26,13 @@ spec:
         apiVersions:
           - monitoring.coreos.com/v1
         valuesObject:
+          hubble:
+            relay:
+              enabled: true
+              rollOutPods: true
+            ui:
+              enabled: true
+              rollOutPods: true
           dashboards:
             enabled: true
             annotations:
