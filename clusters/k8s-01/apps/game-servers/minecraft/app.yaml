@@ -31,7 +31,7 @@ spec:
                   nameOverride: minecraft-server
                   image:
                     repository: ghcr.io/itzg/minecraft-server
-                    tag: java21@sha256:fad66b99d32321ed66aeab3b70e9b1f3d4ffab97efded197fb7cf894fa54733d
+                    tag: java21@sha256:25cf396b18be5f9ac02925d1d26daf6e7f299f5596d78afad75025a2ae512980
                   env:
                     EULA: "true"
                     TZ: "Europe/Paris"
