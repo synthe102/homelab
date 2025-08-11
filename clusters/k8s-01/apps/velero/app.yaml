@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: velero
       repoURL: https://vmware-tanzu.github.io/helm-charts
-      targetRevision: 10.0.12
+      targetRevision: 10.0.13
       helm:
         valuesObject:
           deployNodeAgent: true
