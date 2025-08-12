@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: falco
       repoURL: https://falcosecurity.github.io/charts
-      targetRevision: 6.2.2
+      targetRevision: 6.2.3
       helm:
         valuesObject:
           falco:
