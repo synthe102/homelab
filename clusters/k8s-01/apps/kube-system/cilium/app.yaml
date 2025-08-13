@@ -27,6 +27,13 @@ spec:
           - monitoring.coreos.com/v1
         valuesObject:
           hubble:
+            metrics:
+              enabled: [dns, drop, tcp, flow, port-distribution, icmp, 'httpV2:exemplars=true;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction']
+              enableOpenMetrics: true
+              serviceMonitor:
+                enabled: true
+              dashboards:
+                enabled: true
             relay:
               enabled: true
               rollOutPods: true
