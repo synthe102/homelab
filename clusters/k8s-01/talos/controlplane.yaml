@@ -19,7 +19,7 @@ machine:
 
   # Used to provide additional options to the kubelet.
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:v1.33.2 # The `image` field is an optional reference to an alternative kubelet image.
+    image: ghcr.io/siderolabs/kubelet:v1.33.4 # The `image` field is an optional reference to an alternative kubelet image.
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
     # # The `ClusterDNS` field is an optional reference to an alternative kubelet clusterDNS ip list.
@@ -266,6 +266,11 @@ machine:
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
+        [plugins]
+          [plugins."io.containerd.grpc.v1.cri"]
+            device_ownership_from_security_context = true
+          [plugins."io.containerd.cri.v1.runtime"]
+            device_ownership_from_security_context = true
   # # The `env` field allows for the addition of environment variables.
 
   # # Environment variables definition examples.
@@ -389,7 +394,7 @@ cluster:
     key: ${K8S_01_TALOS_CLUSTER_SERVICEACCOUNT_KEY}
   # API server specific configuration options.
   apiServer:
-    image: registry.k8s.io/kube-apiserver:v1.33.2 # The container image used in the API server manifest.
+    image: registry.k8s.io/kube-apiserver:v1.33.4 # The container image used in the API server manifest.
     # Extra certificate subject alternative names for the API server's certificate.
     certSANs:
       - api.k8s-01.suslian.engineer
@@ -446,18 +451,18 @@ cluster:
           #         timeout: 3s
   # Controller manager server specific configuration options.
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:v1.33.2 # The container image used in the controller manager manifest.
+    image: registry.k8s.io/kube-controller-manager:v1.33.4 # The container image used in the controller manager manifest.
     extraArgs:
       bind-address: 0.0.0.0
   # Kube-proxy server-specific configuration options
   proxy:
-    image: registry.k8s.io/kube-proxy:v1.33.2 # The container image used in the kube-proxy manifest.
+    image: registry.k8s.io/kube-proxy:v1.33.4 # The container image used in the kube-proxy manifest.
     # # Disable kube-proxy deployment on cluster bootstrap.
     # disabled: false
     disabled: true
   # Scheduler server specific configuration options.
   scheduler:
-    image: registry.k8s.io/kube-scheduler:v1.33.2 # The container image used in the scheduler manifest.
+    image: registry.k8s.io/kube-scheduler:v1.33.4 # The container image used in the scheduler manifest.
     extraArgs:
       bind-address: 0.0.0.0
       # Configures cluster member discovery.
