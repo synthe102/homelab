@@ -4,6 +4,10 @@ kind: KubeVirt
 metadata:
   name: kubevirt
 spec:
+  configuration:
+    developerConfiguration:
+      featureGates:
+        - HotplugVolumes
   certificateRotateStrategy:
     selfSigned:
       ca:
