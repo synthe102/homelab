@@ -16,6 +16,8 @@ spec:
             repo: openpbs-oci
           - org: synthe102
             repo: homelab
+          - org: synthe102
+            repo: volcan-bot
   template:
     metadata:
       name: 'gha-runner-{{.org}}-{{.repo}}'
