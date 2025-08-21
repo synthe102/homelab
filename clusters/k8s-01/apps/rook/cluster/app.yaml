@@ -31,8 +31,6 @@ spec:
             crashCollector:
               disable: false
             csi:
-              readAffinity:
-                enabled: true
               cephfs:
                 kernelMountOptions: "ms_mode=prefer-crc"
             mgr:
