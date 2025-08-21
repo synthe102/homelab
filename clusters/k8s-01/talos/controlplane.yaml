@@ -22,6 +22,10 @@ machine:
     image: ghcr.io/siderolabs/kubelet:v1.33.4 # The `image` field is an optional reference to an alternative kubelet image.
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
+    extraConfig:
+      featureGates:
+        UserNamespacesSupport: true
+        UserNamespacesPodSecurityStandards: true
     # # The `ClusterDNS` field is an optional reference to an alternative kubelet clusterDNS ip list.
     # clusterDNS:
     #     - 10.96.0.10
@@ -301,6 +305,7 @@ machine:
     vm.nr_hugepages: "1024"
     net.core.rmem_max: "7500000" # QUIC
     net.core.wmem_max: "7500000" # QUIC
+    user.max_user_namespaces: "11255"
   # # Used to configure the machine's sysfs.
 
   # # MachineSysfs usage example.
@@ -399,6 +404,8 @@ cluster:
     certSANs:
       - api.k8s-01.suslian.engineer
     disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
+    extraArgs:
+      feature-gates: UserNamespacesSupport=true,UserNamespacesPodSecurityStandards=true
     # Configure the API server admission plugins.
     admissionControl:
       - name: PodSecurity # Name is the name of the admission controller.
