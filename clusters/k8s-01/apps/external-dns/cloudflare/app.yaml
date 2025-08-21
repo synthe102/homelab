@@ -14,7 +14,7 @@ spec:
       targetRevision: 1.18.0
       helm:
         valuesObject:
-          fullnameOverride: *name 
+          fullnameOverride: *name
           logLevel: &logLevel debug
           triggerLoopOnEvent: true
           provider:
@@ -26,7 +26,6 @@ spec:
                   name: external-dns-cloudflare-api-token
                   key: api-token
           extraArgs:
-            - --cloudflare-proxied
             - --cloudflare-dns-records-per-page=1000
             - --gateway-name=external
           policy: sync
