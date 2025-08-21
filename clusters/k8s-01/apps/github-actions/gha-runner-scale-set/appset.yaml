@@ -42,6 +42,14 @@ spec:
                     - name: runner
                       image: ghcr.io/actions/actions-runner:2.328.0
                       command: ["/home/runner/run.sh"]
+                      volumeMounts:
+                        - name: certs
+                          readOnly: true
+                          mountPath: /certs
+                  volumes:
+                    - name: certs
+                      secret:
+                        secretName: buildkit-client-certs
       destination:
         name: in-cluster
         namespace: arc-system
