@@ -25,11 +25,11 @@ spec:
             - --addr
             - tcp://0.0.0.0:1234
             - --tlscacert
-            - /certs/ca.pem
+            - /certs/ca.crt
             - --tlscert
-            - /certs/cert.pem
+            - /certs/tls.crt
             - --tlskey
-            - /certs/key.pem
+            - /certs/tls.key
             - --oci-worker-no-process-sandbox
           # the probe below will only work after Release v0.6.3
           readinessProbe:
