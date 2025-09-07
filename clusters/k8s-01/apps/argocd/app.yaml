@@ -15,10 +15,28 @@ spec:
       helm:
         valuesObject:
           configs:
+            rbac:
+              policy.csv: |
+                g, ArgoCD Admins, role:admin
+                g, ArgoCD Viewers, role:readonly
             params:
               server.insecure: true
             cm:
               application.resourceTrackingMethod: annotation
+              dex.config: |
+                connectors:
+                - config:
+                    issuer: https://auth.suslian.engineer/application/o/argo-cd/
+                    clientID: $auth:clientId
+                    clientSecret: $auth:clientSecret
+                    insecureEnableGroups: true
+                    scopes:
+                      - openid
+                      - profile
+                      - email
+                  name: authentik
+                  type: oidc
+                  id: authentik
           global:
             domain: &host argo.k8s-01.suslian.engineer
           redis-ha:
