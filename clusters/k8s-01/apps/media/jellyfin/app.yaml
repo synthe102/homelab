@@ -59,7 +59,7 @@ spec:
               hostnames:
                 - jellyfin.suslian.engineer
               parentRefs:
-                - name: internal
+                - name: external
                   namespace: kube-system
                   sectionName: https
   destination:
