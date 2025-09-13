@@ -11,7 +11,7 @@ spec:
   source:
     chart: intel-device-plugins-operator
     repoURL: https://intel.github.io/helm-charts
-    targetRevision: 0.32.1
+    targetRevision: 0.34.0
     helm:
       valuesObject:
         manager:
