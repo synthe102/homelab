@@ -151,6 +151,18 @@ spec:
                   gnetId: 14756
                   revision: 11
                   datasource: Prometheus
+                argocd-operational:
+                  gnetId: 19993
+                  revision: 4
+                  datasource: Prometheus
+                argocd-applications:
+                  gnetId: 19974
+                  revision: 4
+                  datasource: Prometheus
+                argocd-notifications:
+                  gnetId: 19975
+                  revision: 4
+                  datasource: Prometheus
             plugins:
               - grafana-piechart-panel
               - grafana-clock-panel
