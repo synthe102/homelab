@@ -1,0 +1,16 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: auth
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  dataFrom:
+    - extract:
+        conversionStrategy: Default
+        decodingStrategy: None
+        key: "K8S_01_KUBE_GRAFANA_AUTH"
+        metadataPolicy: None
