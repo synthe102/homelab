@@ -12,6 +12,13 @@ spec:
     - path: clusters/k8s-01/apps/kubevirt/app
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
+  ignoreDifferences:
+    # WTF is that shit honnestly ? https://github.com/kubevirt/containerized-data-importer/blob/99bcc36a931be02418192135dff7776f8a74471f/pkg/operator/controller/cruft.go#L183
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: cdis.cdi.kubevirt.io
+      jqPathExpressions:
+        - .spec.versions[] | select(.name == "v1alpha1")
   destination:
     name: in-cluster
     namespace: kubevirt
