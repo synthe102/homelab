@@ -20,6 +20,7 @@ spec:
               - name: ghcr-synthe102
           controllers:
             main:
+              replicas: 0
               annotations:
                 reloader.stakater.com/auto: "true"
               pod:
