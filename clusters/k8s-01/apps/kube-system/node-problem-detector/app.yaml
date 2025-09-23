@@ -12,6 +12,14 @@ spec:
     chart: node-problem-detector
     repoURL: ghcr.io/deliveryhero/helm-charts
     targetRevision: 2.3.22
+    helm:
+      valuesObject:
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
+          prometheusRule:
+            enabled: true
   destination:
     name: in-cluster
     namespace: kube-system
