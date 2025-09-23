@@ -13,3 +13,4 @@ resources:
   - sr-iov
   - reloader
   - imagepullsecrets
+  - node-problem-detector
