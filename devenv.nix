@@ -20,6 +20,9 @@
     velero
     kopia
     kubevirt
+    kind
+    vcluster
+    opentofu
   ];
 
   git-hooks.hooks = {
