@@ -20,7 +20,7 @@ spec:
               - name: ghcr-synthe102
           controllers:
             main:
-              replicas: 0
+              replicas: 1
               annotations:
                 reloader.stakater.com/auto: "true"
               pod:
@@ -43,7 +43,7 @@ spec:
                     MEMORY: 4G
                     INIT_MEMORY: 1G
                     MAX_MEMORY: 4G
-                    ONLINE_MODE: "false"
+                    ONLINE_MODE: "true"
                     TYPE: PAPER
                     VERSION: "1.21.7"
                     MODRINTH_PROJECTS: "skinsrestorer,directionhud"
@@ -66,18 +66,18 @@ spec:
                     capabilities: {drop: ["ALL"]}
                   tty: true
                   stdin: true
-                volcan:
-                  nameOverride: volcan-bot
-                  image:
-                    repository: ghcr.io/synthe102/volcan-bot
-                    tag: "v0.0.3"
-                  env:
-                    MINECRAFT_RCON_ADDRESS: localhost:25575
-                    MINECRAFT_WHITELIST_FILE: /data/whitelist.json
-                    SQLITE_DATABASE: /data/volcan.db
-                  envFrom:
-                    - secretRef:
-                        name: minecraft-volcan
+                  # volcan:
+                  #   nameOverride: volcan-bot
+                  #   image:
+                  #     repository: ghcr.io/synthe102/volcan-bot
+                  #     tag: "v0.0.3"
+                  #   env:
+                  #     MINECRAFT_RCON_ADDRESS: localhost:25575
+                  #     MINECRAFT_WHITELIST_FILE: /data/whitelist.json
+                  #     SQLITE_DATABASE: /data/volcan.db
+                  #   envFrom:
+                  #     - secretRef:
+                  #         name: minecraft-volcan
           service:
             main:
               type: LoadBalancer
