@@ -41,10 +41,11 @@ spec:
             resources:
               requests:
                 gpu.intel.com/i915: "1"
-                memory: 4Gi
+                memory: 8Gi
+                cpu: 0.5
               limits:
                 gpu.intel.com/i915: "1"
-                memory: 4Gi
+                memory: 8Gi
           machine-learning:
             controller:
               strategy: Recreate
@@ -54,10 +55,11 @@ spec:
             resources:
               requests:
                 gpu.intel.com/i915: "1"
-                memory: 4Gi
+                memory: 8Gi
+                cpu: 0.5
               limits:
                 gpu.intel.com/i915: "1"
-                memory: 4Gi
+                memory: 8Gi
             persistence:
               cache:
                 enabled: true
