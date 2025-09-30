@@ -1,0 +1,17 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "minecraft-volcan"
+  namespace: game-servers
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: minecraft-volcan
+  egress:
+    - toEntities:
+        - world
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
