@@ -16,6 +16,8 @@ spec:
       valuesObject:
         cluster:
           name: k8s-01
+        alloy-singleton:
+          enabled: true
         destinations:
           - name: logs
             type: loki
