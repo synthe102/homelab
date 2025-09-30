@@ -8,6 +8,9 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: minecraft-volcan
+  egressDeny:
+    - toCIDR:
+        - 192.168.0.0/16
   egress:
     - toEntities:
         - world
