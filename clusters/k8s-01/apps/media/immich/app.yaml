@@ -51,14 +51,12 @@ spec:
               strategy: Recreate
             image:
               # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-              tag: v1.143.1-openvino
+              tag: v1.143.1
             resources:
               requests:
-                gpu.intel.com/i915: "1"
                 memory: 8Gi
                 cpu: 0.5
               limits:
-                gpu.intel.com/i915: "1"
                 memory: 8Gi
             persistence:
               cache:
