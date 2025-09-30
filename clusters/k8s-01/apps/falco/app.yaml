@@ -17,6 +17,9 @@ spec:
           falco:
             webserver:
               prometheus_metrics_enabled: true
+          falcosidekick:
+            enabled: true
+          tty: true
           collectors:
             kubernetes:
               enabled: true
