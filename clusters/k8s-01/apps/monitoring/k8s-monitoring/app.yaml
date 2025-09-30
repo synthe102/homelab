@@ -18,11 +18,15 @@ spec:
           name: k8s-01
         alloy-singleton:
           enabled: true
+        alloy-logs:
+          enabled: true
         destinations:
           - name: logs
             type: loki
             url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
         clusterEvents:
+          enabled: true
+        podLogs:
           enabled: true
   destination:
     name: in-cluster
