@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-monitoring
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: k8s-monitoring
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 3.5.2
+    helm:
+      valuesObject:
+        cluster:
+          name: k8s-01
+        destinations:
+          - name: logs
+            type: loki
+            url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        clusterEvents:
+          enabled: true
+  destination:
+    name: in-cluster
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
