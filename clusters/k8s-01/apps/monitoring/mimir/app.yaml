@@ -16,6 +16,12 @@ spec:
       valuesObject:
         minio:
           enabled: false
+        compactor:
+          enabled: false
+        distributor:
+          replicas: 2
+        store_gateway:
+          enabled: false
         mimir:
           structuredConfig:
             common:
