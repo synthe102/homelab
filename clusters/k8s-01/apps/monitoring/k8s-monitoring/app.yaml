@@ -20,10 +20,17 @@ spec:
           enabled: true
         alloy-logs:
           enabled: true
+        alloy-metrics:
+          enabled: true
         destinations:
           - name: logs
             type: loki
             url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+          - name: metrics
+            type: prometheus
+            url: http://mimir-nginx.monitoring.svc.cluster.local:80
+        clusterMetrics:
+          enabled: true
         clusterEvents:
           enabled: true
         podLogs:
