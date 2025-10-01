@@ -19,6 +19,13 @@ spec:
               prometheus_metrics_enabled: true
           falcosidekick:
             enabled: true
+            serviceMonitor:
+              enabled: true
+            prometheusRules:
+              enabled: true
+            grafana:
+              dashboards:
+                enabled: true
           tty: true
           collectors:
             kubernetes:
