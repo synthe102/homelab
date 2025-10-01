@@ -26,6 +26,9 @@ spec:
             grafana:
               dashboards:
                 enabled: true
+            config:
+              loki:
+                hostport: http://loki-headless.monitoring.svc.cluster.local:3100
           tty: true
           collectors:
             kubernetes:
