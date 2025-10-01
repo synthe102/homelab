@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - kube-prometheus-stack
   - loki
+  - mimir
   - unpoller
   - smartctl-exporter
   - k8s-monitoring
