@@ -14,21 +14,71 @@ spec:
     targetRevision: 5.8.0
     helm:
       valuesObject:
-        minio:
-          enabled: false
+        ingester:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir
+            - secretRef:
+                name: s3-mimir
+        store_gateway:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir
+            - secretRef:
+                name: s3-mimir
+        querier:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir
+            - secretRef:
+                name: s3-mimir
         compactor:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir
+            - secretRef:
+                name: s3-mimir
+        ruler:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir
+            - secretRef:
+                name: s3-mimir
+        alertmanager:
+          extraEnvFrom:
+            - configMapRef:
+                name: s3-mimir-misc
+            - secretRef:
+                name: s3-mimir-misc
+        minio:
           enabled: false
         distributor:
           replicas: 2
-        store_gateway:
-          enabled: false
         mimir:
           structuredConfig:
             common:
               storage:
-                backend: filesystem
+                backend: s3
+                s3:
+                  endpoint: ${BUCKET_HOST}
+                  bucket_name: mimir
+                  insecure: true
             blocks_storage:
+              backend: s3
+              s3:
+                endpoint: ${BUCKET_HOST}
+                bucket_name: mimir
+                insecure: true
+            ruler_storage:
               backend: filesystem
+              local:
+                directory: /tmp/rules
+            alertmanager_storage:
+              backend: s3
+              s3:
+                endpoint: ${BUCKET_HOST}
+                bucket_name: mimir-misc
+                insecure: true
             limits:
               ingestion_rate: 100000
               ingestion_burst_size: 300000
