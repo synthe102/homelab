@@ -132,6 +132,8 @@ spec:
                 enabled: true
                 name: ceph-objectstore
               spec:
+                allowUsersInNamespaces:
+                  - "*"
                 metadataPool:
                   failureDomain: host
                   replicated:
