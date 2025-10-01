@@ -33,6 +33,8 @@ spec:
           enabled: true
           node-exporter:
             deploy: false
+        prometheusOperatorObjects:
+          enabled: true
         clusterEvents:
           enabled: true
         podLogs:
