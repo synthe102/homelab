@@ -19,6 +19,23 @@ spec:
               prometheus_metrics_enabled: true
           driver:
             kind: modern_ebpf
+          tty: true
+          collectors:
+            kubernetes:
+              enabled: true
+          metrics:
+            enabled: true
+          serviceMonitor:
+            create: true
+          grafana:
+            dashboards:
+              enabled: true
+          customRules:
+            rules-custom.yaml: |-
+              - list: known_drop_and_execute_containers
+                items: ['ghcr.io/k8snetworkplumbingwg/multus-cni','docker.io/moby/buildkit']
+                override:
+                  items: append
           falcosidekick:
             enabled: true
             serviceMonitor:
@@ -31,17 +48,6 @@ spec:
             config:
               loki:
                 hostport: http://loki-headless.monitoring.svc.cluster.local:3100
-          tty: true
-          collectors:
-            kubernetes:
-              enabled: true
-          metrics:
-            enabled: true
-          serviceMonitor:
-            create: true
-          grafana:
-            dashboards:
-              enabled: true
   destination:
     name: in-cluster
     namespace: falco
