@@ -17,6 +17,8 @@ spec:
           falco:
             webserver:
               prometheus_metrics_enabled: true
+          driver:
+            kind: modern_ebpf
           falcosidekick:
             enabled: true
             serviceMonitor:
