@@ -31,6 +31,8 @@ spec:
             url: http://mimir-nginx.monitoring.svc.cluster.local:80
         clusterMetrics:
           enabled: true
+          node-exporter:
+            deploy: false
         clusterEvents:
           enabled: true
         podLogs:
