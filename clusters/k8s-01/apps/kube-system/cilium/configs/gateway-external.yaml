@@ -40,6 +40,17 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-tls
+    - name: https-s3-k8s-01
+      protocol: HTTPS
+      port: 443
+      hostname: "*.s3.k8s-01.suslian.engineer"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-tls
     - name: https-iot
       protocol: HTTPS
       port: 443
