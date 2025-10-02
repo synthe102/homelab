@@ -127,25 +127,11 @@ spec:
             labels:
               velero.io/csi-volumesnapshot-class: "true"
           cephObjectStores:
-            - name: ceph-objectstore
+            - name: s3
               storageClass:
                 enabled: true
-                name: ceph-objectstore
-              route:
-                enabled: true
-                host:
-                  name: &host "s3.k8s-01.suslian.engineer"
-                  path: /
-                  pathType: PathPrefix
-                parentRefs:
-                  - name: internal
-                    namespace: kube-system
-                    sectionName: https
-                annotations:
-                  external-dns.alpha.kubernetes.io/hostname: "s3.k8s-01.suslian.engineer,*.s3.k8s-01.suslian.engineer"
+                name: s3
               spec:
-                allowUsersInNamespaces:
-                  - "*"
                 metadataPool:
                   failureDomain: host
                   replicated:
@@ -158,10 +144,8 @@ spec:
                   port: 80
                   instances: 2
                 hosting:
-                  advertiseEndpoint:
-                    dnsName: *host
-                    port: 443
-                    useTls: true
+                  dnsNames:
+                    - &host s3.k8s-01.suslian.engineer
   destination:
     name: in-cluster
     namespace: rook-ceph
