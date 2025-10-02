@@ -14,7 +14,7 @@ spec:
       targetRevision: v1.18.2
       helm:
         valuesObject:
-          # obcAllowAdditionalConfigFields: "bucketOwner"
+          obcAllowAdditionalConfigFields: "bucketOwner"
           monitoring:
             enabled: true
   destination:
