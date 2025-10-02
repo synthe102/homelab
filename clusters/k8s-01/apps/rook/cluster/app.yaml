@@ -22,7 +22,7 @@ spec:
           cephClusterSpec:
             cephConfig:
               global:
-                mon_max_pg_per_osd: "300"
+                mon_max_pg_per_osd: "400"
             dashboard:
               enabled: true
               urlPrefix: /
