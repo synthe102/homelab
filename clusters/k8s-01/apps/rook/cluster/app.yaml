@@ -131,6 +131,18 @@ spec:
               storageClass:
                 enabled: true
                 name: ceph-objectstore
+              route:
+                enabled: true
+                host:
+                  name: &host "*.s3.k8s-01.suslian.engineer"
+                  path: /
+                  pathType: PathPrefix
+                parentRefs:
+                  - name: internal
+                    namespace: kube-system
+                    sectionName: https
+                annotations:
+                  external-dns.alpha.kubernetes.io/hostname: "s3.k8s-01.suslian.engineer,*.s3.k8s-01.suslian.engineer"
               spec:
                 allowUsersInNamespaces:
                   - "*"
@@ -147,7 +159,7 @@ spec:
                   instances: 2
                 hosting:
                   dnsNames:
-                    - &host s3.k8s-01.suslian.engineer
+                    - *host
   destination:
     name: in-cluster
     namespace: rook-ceph
