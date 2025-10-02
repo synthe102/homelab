@@ -127,10 +127,10 @@ spec:
             labels:
               velero.io/csi-volumesnapshot-class: "true"
           cephObjectStores:
-            - name: s3
+            - name: ceph-objectstore
               storageClass:
                 enabled: true
-                name: s3
+                name: ceph-objectstore
               spec:
                 metadataPool:
                   failureDomain: host
