@@ -134,7 +134,7 @@ spec:
               route:
                 enabled: true
                 host:
-                  name: &host "*.s3.k8s-01.suslian.engineer"
+                  name: &host "s3.k8s-01.suslian.engineer"
                   path: /
                   pathType: PathPrefix
                 parentRefs:
@@ -158,8 +158,10 @@ spec:
                   port: 80
                   instances: 2
                 hosting:
-                  dnsNames:
-                    - *host
+                  advertiseEndpoint:
+                    dnsName: *host
+                    port: 443
+                    useTls: true
   destination:
     name: in-cluster
     namespace: rook-ceph
