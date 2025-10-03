@@ -51,7 +51,7 @@ spec:
               strategy: Recreate
             image:
               # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-              tag: v2.0.0
+              tag: v2.0.1
             resources:
               requests:
                 memory: 8Gi
