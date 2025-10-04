@@ -33,7 +33,7 @@ spec:
           customRules:
             rules-custom.yaml: |-
               - list: known_drop_and_execute_containers
-                items: ['ghcr.io/k8snetworkplumbingwg/multus-cni','docker.io/moby/buildkit']
+                items: ['ghcr.io/k8snetworkplumbingwg/multus-cni','docker.io/moby/buildkit', 'docker.io/grafana/alloy']
                 override:
                   items: append
           falcosidekick:
