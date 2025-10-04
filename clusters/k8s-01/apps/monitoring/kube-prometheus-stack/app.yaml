@@ -118,8 +118,7 @@ spec:
                       maxLines: 250
                   - name: Pyroscope
                     type: phlare
-                    uid: pyroscope
-                    editable: true
+                    uid: phlare
                     access: proxy
                     url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
                     jsonData:
