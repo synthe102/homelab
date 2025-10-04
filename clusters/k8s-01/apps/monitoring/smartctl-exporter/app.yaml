@@ -11,7 +11,7 @@ spec:
   source:
     chart: prometheus-smartctl-exporter
     repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 0.15.4
+    targetRevision: 0.16.0
     helm:
       valuesObject:
         fullnameOverride: *app
