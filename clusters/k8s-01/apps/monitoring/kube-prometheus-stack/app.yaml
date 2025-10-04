@@ -116,6 +116,14 @@ spec:
                     url: http://loki-headless.monitoring.svc.cluster.local:3100
                     jsonData:
                       maxLines: 250
+                  - name: Pyroscope
+                    type: phlare
+                    uid: pyroscope
+                    access: proxy
+                    url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
+                    jsonData:
+                      minStep: '15s'
+                      backendType: 'pyroscope'
             dashboardProviders:
               dashboardproviders.yaml:
                 apiVersion: 1
