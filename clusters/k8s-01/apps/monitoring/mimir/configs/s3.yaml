@@ -1,0 +1,29 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: s3-mimir
+spec:
+  bucketName: mimir
+  storageClassName: ceph-objectstore
+  additionalConfig:
+    bucketOwner: mimir
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: s3-mimir-misc
+spec:
+  bucketName: mimir-misc
+  storageClassName: ceph-objectstore
+  additionalConfig:
+    bucketOwner: mimir
+---
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStoreUser
+metadata:
+  name: mimir
+spec:
+  clusterNamespace: rook-ceph
+  store: ceph-objectstore
+  displayName: "mimir"
