@@ -19,6 +19,10 @@ spec:
           pyroscope:
             persistence:
               enabled: true
+            podAnnotations:
+              profiles.grafana.com/cpu.scrape: "false"
+              profiles.grafana.com/memory.scrape: "false"
+              profiles.grafana.com/goroutine.scrape: "false"
   destination:
     name: in-cluster
     namespace: monitoring
