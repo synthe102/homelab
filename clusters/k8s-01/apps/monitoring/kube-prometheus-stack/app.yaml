@@ -189,6 +189,7 @@ spec:
             plugins:
               - grafana-piechart-panel
               - grafana-clock-panel
+              - grafana-llm-app
     - path: clusters/k8s-01/apps/monitoring/kube-prometheus-stack/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
