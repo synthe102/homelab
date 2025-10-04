@@ -16,12 +16,15 @@ spec:
         valuesObject:
           alloy:
             enabled: false
+          pyroscope:
+            persistence:
+              enabled: true
   destination:
     name: in-cluster
     namespace: monitoring
   syncPolicy:
-    # automated:
-    #   prune: true
-    #   selfHeal: true
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
