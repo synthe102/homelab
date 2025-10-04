@@ -8,3 +8,4 @@ resources:
   - unpoller
   - smartctl-exporter
   - k8s-monitoring
+  - pyroscope
