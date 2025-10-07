@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: projectsveltos
       repoURL: https://projectsveltos.github.io/helm-charts
-      targetRevision: 1.1.5
+      targetRevision: 1.1.7
       helm:
         valuesObject:
           agent:
