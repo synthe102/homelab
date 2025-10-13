@@ -16,48 +16,52 @@ spec:
             persistence:
               library:
                 existingClaim: photos-nfs
-          env:
-            DB_VECTOR_EXTENSION: vectorchord
-            DB_URL:
-              valueFrom:
-                secretKeyRef:
-                  name: immich-app
-                  key: uri
           valkey:
             enabled: true
-            master:
-              resources:
-                requests:
-                  cpu: 0.2
-                  memory: 256Mi
-                limits:
-                  memory: 256Mi
+            persistence:
+              data:
+                type: persistentVolumeClaim
+          controllers:
+            main:
+              containers:
+                main:
+                  image:
+                    # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
+                    tag: &tag v2.0.1
+                  env:
+                    IMMICH_MEDIA_LOCATION: /data
+                    DB_VECTOR_EXTENSION: vectorchord
+                    DB_URL:
+                      valueFrom:
+                        secretKeyRef:
+                          name: immich-app
+                          key: uri
           server:
-            image:
-              # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-              tag: &tag v2.0.1
-            controller:
-              strategy: Recreate
-            resources:
-              requests:
-                gpu.intel.com/i915: "1"
-                memory: 8Gi
-                cpu: 0.5
-              limits:
-                gpu.intel.com/i915: "1"
-                memory: 8Gi
+            controllers:
+              main:
+                strategy: Recreate
+                containers:
+                  main:
+                    resources:
+                      requests:
+                        gpu.intel.com/i915: "1"
+                        memory: 8Gi
+                        cpu: 0.5
+                      limits:
+                        gpu.intel.com/i915: "1"
+                        memory: 8Gi
           machine-learning:
-            controller:
-              strategy: Recreate
-            image:
-              # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-              tag: v2.0.1
-            resources:
-              requests:
-                memory: 8Gi
-                cpu: 0.5
-              limits:
-                memory: 8Gi
+            controllers:
+              main:
+                strategy: Recreate
+                containers:
+                  main:
+                    resources:
+                      requests:
+                        memory: 8Gi
+                        cpu: 0.5
+                      limits:
+                        memory: 8Gi
             persistence:
               cache:
                 enabled: true
