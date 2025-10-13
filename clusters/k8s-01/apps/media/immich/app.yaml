@@ -23,10 +23,7 @@ spec:
                 secretKeyRef:
                   name: immich-app
                   key: uri
-          image:
-            # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-            tag: &tag v2.0.1
-          redis:
+          valkey:
             enabled: true
             master:
               resources:
@@ -36,6 +33,9 @@ spec:
                 limits:
                   memory: 256Mi
           server:
+            image:
+              # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
+              tag: &tag v2.0.1
             controller:
               strategy: Recreate
             resources:
@@ -61,12 +61,11 @@ spec:
             persistence:
               cache:
                 enabled: true
-                size: 10Gi
-                # Optional: Set this to pvc to avoid downloading the ML models every start.
-                type: pvc
+                type: persistentVolumeClaim
                 accessMode: ReadWriteOnce
+                size: 10Gi
       repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.9.3
+      targetRevision: 0.10.0
     - path: clusters/k8s-01/apps/media/immich/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
