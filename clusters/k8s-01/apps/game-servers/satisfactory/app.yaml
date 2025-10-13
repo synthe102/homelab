@@ -52,6 +52,9 @@ spec:
                 external-dns.alpha.kubernetes.io/hostname: satisfactory.volcan.cloud
               controller: main
               ports:
+                admin:
+                  port: 8888
+                  protocol: TCP
                 server-tcp:
                   port: 7777
                   protocol: TCP
