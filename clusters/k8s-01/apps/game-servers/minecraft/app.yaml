@@ -108,7 +108,7 @@ spec:
               enabled: true
               type: persistentVolumeClaim
               accessMode: ReadWriteOnce
-              size: 10Gi
+              size: 25Gi
             tmp:
               enabled: true
               type: emptyDir
