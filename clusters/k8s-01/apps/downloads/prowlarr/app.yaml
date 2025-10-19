@@ -34,7 +34,7 @@ spec:
                   nameOverride: prowlarr
                   image:
                     repository: ghcr.io/home-operations/prowlarr
-                    tag: 2.1.3
+                    tag: 2.1.4
                   env:
                     TZ: "Europe/Paris"
                   securityContext:
