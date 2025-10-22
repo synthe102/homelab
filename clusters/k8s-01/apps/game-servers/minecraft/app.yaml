@@ -39,7 +39,7 @@ spec:
                     ENABLE_ROLLING_LOGS: "true"
                     SERVER_NAME: "Volcan"
                     MOTD: "Le serveur volcanique"
-                    ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=6878aef8&is=68775d78&hm=d28c9c93523409e3495e48aa1acab4ea2f1798d482cef04d199614e83d405637&=&quality=lossless&width=1296&height=1296"
+                    ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=68f9e1f8&is=68f89078&hm=49650956e6ae5ae9343391bf5464f27f6d6d1a7c4f2daaa0c1b12f98a1212006&=&format=webp&quality=lossless&width=1296&height=1296"
                     MEMORY: 4G
                     INIT_MEMORY: 1G
                     MAX_MEMORY: 4G
@@ -108,7 +108,7 @@ spec:
               enabled: true
               type: persistentVolumeClaim
               accessMode: ReadWriteOnce
-              size: 25Gi
+              size: 35Gi
             tmp:
               enabled: true
               type: emptyDir
