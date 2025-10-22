@@ -69,7 +69,7 @@ spec:
                 accessMode: ReadWriteOnce
                 size: 10Gi
       repoURL: https://immich-app.github.io/immich-charts
-      targetRevision: 0.10.0
+      targetRevision: 0.10.1
     - path: clusters/k8s-01/apps/media/immich/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
