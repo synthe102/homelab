@@ -5,6 +5,6 @@ resources:
   - serviceaccountsecret.yaml
 images:
   - name: ghcr.io/k8snetworkplumbingwg/multus-cni
-    newTag: v4.2.2-thick
+    newTag: v4.2.3-thick
 patches:
   - path: patch.yaml
