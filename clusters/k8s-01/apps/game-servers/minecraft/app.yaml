@@ -45,8 +45,8 @@ spec:
                     MAX_MEMORY: 4G
                     ONLINE_MODE: "true"
                     TYPE: PAPER
-                    PAPER_BUILD: 60
-                    VERSION: "1.21.8"
+                    PAPER_BUILD: 113
+                    VERSION: "1.21.10"
                     MODRINTH_PROJECTS: "directionhud,viaversion,tab-was-taken,chunky"
                     MODRINTH_ALLOWED_VERSION_TYPE: "beta"
                   envFrom:
