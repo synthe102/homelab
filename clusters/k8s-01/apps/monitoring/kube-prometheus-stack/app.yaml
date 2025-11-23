@@ -77,6 +77,9 @@ spec:
             prometheus:
               !!merge <<: *prometheus
           grafana:
+            sidecar:
+              datasources:
+                prometheusServiceName: mimir-gateway
             grafana.ini:
               auth:
                 signout_redirect_url: "https://auth.suslian.engineer/application/o/grafana/end-session/"
