@@ -27,8 +27,14 @@ spec:
             enabled: false
           prometheus:
             enabled: false
-          prometheus-node-exporter:
-            fullnameOverride: node-exporter
+          nodeExporter:
+            enabled: false
+          kube-state-metrics:
+            fullnameOverride: kube-state-metrics
+            metricLabelsAllowlist:
+              - pods=[*]
+              - deployments=[*]
+              - persistentvolumeclaims=[*]
             prometheus: &prometheus
               monitor:
                 enabled: true
@@ -39,14 +45,6 @@ spec:
                     sourceLabels:
                       - __meta_kubernetes_pod_node_name
                     targetLabel: kubernetes_node
-          kube-state-metrics:
-            fullnameOverride: kube-state-metrics
-            metricLabelsAllowlist:
-              - pods=[*]
-              - deployments=[*]
-              - persistentvolumeclaims=[*]
-            prometheus:
-              !!merge <<: *prometheus
           grafana:
             sidecar:
               datasources:

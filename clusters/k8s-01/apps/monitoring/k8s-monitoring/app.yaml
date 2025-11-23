@@ -42,7 +42,7 @@ spec:
         clusterMetrics:
           enabled: true
           node-exporter:
-            deploy: false
+            deploy: true
         prometheusOperatorObjects:
           enabled: true
         clusterEvents:
