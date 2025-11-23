@@ -35,7 +35,7 @@ spec:
             url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
           - name: metrics
             type: prometheus
-            url: http://mimir-nginx.monitoring.svc.cluster.local:80/api/v1/push
+            url: http://mimir-gateway.monitoring.svc.cluster.local:80/api/v1/push
           - name: profiles
             type: pyroscope
             url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
