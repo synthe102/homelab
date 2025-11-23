@@ -24,18 +24,7 @@ spec:
           kubeProxy:
             enabled: false
           alertmanager:
-            alertmanagerSpec:
-              alertmanagerConfiguration:
-                name: alertmanager
-                global:
-                  resolveTimeout: 5m
-              storage:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: ceph-block
-                    resources:
-                      requests:
-                        storage: 1Gi
+            enabled: false
           prometheus:
             enabled: false
           prometheus-node-exporter:
