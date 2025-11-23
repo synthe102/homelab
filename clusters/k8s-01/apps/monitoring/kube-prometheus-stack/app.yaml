@@ -61,7 +61,7 @@ spec:
           grafana:
             sidecar:
               datasources:
-                prometheusServiceName: mimir-gateway
+                url: http://mimir-gateway:80/prometheus
             grafana.ini:
               auth:
                 signout_redirect_url: "https://auth.suslian.engineer/application/o/grafana/end-session/"
