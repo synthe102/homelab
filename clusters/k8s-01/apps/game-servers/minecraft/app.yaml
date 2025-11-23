@@ -47,7 +47,7 @@ spec:
                     TYPE: PAPER
                     PAPER_BUILD: 113
                     VERSION: "1.21.10"
-                    MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky"
+                    MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,pl3xmap"
                     MODRINTH_ALLOWED_VERSION_TYPE: "beta"
                   envFrom:
                     - secretRef:
