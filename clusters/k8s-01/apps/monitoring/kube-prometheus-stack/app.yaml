@@ -29,6 +29,7 @@ spec:
             enabled: false
           nodeExporter:
             enabled: false
+            forceDeployDashboards: true
           kube-state-metrics:
             fullnameOverride: kube-state-metrics
             metricLabelsAllowlist:
