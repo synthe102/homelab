@@ -46,6 +46,11 @@ spec:
             prometheus:
               podMonitor:
                 enabled: true
+          kube-state-metrics:
+            deploy: true
+            prometheus:
+              monitor:
+                enabled: true
         prometheusOperatorObjects:
           enabled: true
         clusterEvents:
