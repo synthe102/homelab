@@ -36,6 +36,10 @@ spec:
             sidecar:
               datasources:
                 url: http://mimir-gateway:80/prometheus
+                implementation: mimir
+                alertmanager:
+                  url: http://mimir-gateway:80
+                  implementation: mimir
             grafana.ini:
               auth:
                 signout_redirect_url: "https://auth.suslian.engineer/application/o/grafana/end-session/"
