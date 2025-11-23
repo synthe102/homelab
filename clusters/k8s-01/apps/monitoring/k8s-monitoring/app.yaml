@@ -43,6 +43,8 @@ spec:
           enabled: true
           node-exporter:
             deploy: true
+            podMonitor:
+              enabled: true
         prometheusOperatorObjects:
           enabled: true
         clusterEvents:
