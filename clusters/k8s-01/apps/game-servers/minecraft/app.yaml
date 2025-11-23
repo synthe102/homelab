@@ -40,9 +40,9 @@ spec:
                     SERVER_NAME: "Volcan"
                     MOTD: "Le serveur volcanique"
                     ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=68f9e1f8&is=68f89078&hm=49650956e6ae5ae9343391bf5464f27f6d6d1a7c4f2daaa0c1b12f98a1212006&=&format=webp&quality=lossless&width=1296&height=1296"
-                    MEMORY: 4G
-                    INIT_MEMORY: 1G
-                    MAX_MEMORY: 4G
+                    MEMORY: 11G
+                    INIT_MEMORY: 5G
+                    MAX_MEMORY: 11G
                     ONLINE_MODE: "true"
                     TYPE: PAPER
                     PAPER_BUILD: 113
@@ -55,9 +55,9 @@ spec:
                   resources:
                     requests:
                       cpu: 1
-                      memory: 5Gi
+                      memory: 12Gi
                     limits:
-                      memory: 5Gi
+                      memory: 12Gi
                   securityContext:
                     runAsNonRoot: true
                     runAsUser: 568
