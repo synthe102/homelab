@@ -49,6 +49,10 @@ spec:
             enabled: false
           distributor:
             replicas: 2
+          kafka:
+            extraEnv:
+              - name: KAFKA_LOG_RETENTION_BYTES
+                value: "2000000000"
           mimir:
             structuredConfig:
               common:
