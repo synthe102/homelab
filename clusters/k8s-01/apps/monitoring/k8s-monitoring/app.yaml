@@ -18,10 +18,25 @@ spec:
           name: k8s-01
         alloy-singleton:
           enabled: true
+          alloy:
+            stabilityLevel: experimental
           extraConfig: |-
             mimir.rules.kubernetes "default" {
               address = "http://mimir-ruler.monitoring.svc:8080"
               tenant_id = "anonymous"
+            }
+
+            remote.kubernetes.configmap "default" {
+              namespace = "monitoring"
+              name      = "alertmgr-global"
+            }
+
+            mimir.alerts.kubernetes "default" {
+              address = "http://mimir-ruler.monitoring.svc:8080"
+              global_config = remote.kubernetes.configmap.default.data["glbl"]
+              alertmanagerconfig_selector  {
+                match_labels = {}
+              }
             }
         alloy-logs:
           enabled: true
