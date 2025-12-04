@@ -63,6 +63,7 @@ spec:
                 enabled: true
           kube-state-metrics:
             deploy: true
+            jobLabel: kube-state-metrics
             prometheus:
               monitor:
                 enabled: true
