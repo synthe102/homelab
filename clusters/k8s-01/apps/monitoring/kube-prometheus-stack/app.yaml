@@ -36,7 +36,8 @@ spec:
             sidecar:
               datasources:
                 url: http://mimir-gateway:80/prometheus
-                implementation: mimir
+                extraJsonData:
+                  prometheusType: Mimir
                 alertmanager:
                   url: http://mimir-gateway:80
                   implementation: mimir
