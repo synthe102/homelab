@@ -53,7 +53,7 @@ spec:
                   namespace: kube-system
                   sectionName: https
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 4.4.0
+      targetRevision: 4.5.0
     - path: clusters/k8s-01/apps/tooling/vaultwarden/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
