@@ -8,6 +8,11 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+  ignoreDifferences:
+    - kind: Secret
+      jsonPointers:
+        - /data/jwt_hs256.key
+        - /data/slurm.key
   sources:
     - chart: slurm
       repoURL: ghcr.io/slinkyproject/charts
