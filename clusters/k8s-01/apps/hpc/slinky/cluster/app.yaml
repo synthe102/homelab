@@ -12,6 +12,14 @@ spec:
     - chart: slurm
       repoURL: ghcr.io/slinkyproject/charts
       targetRevision: 1.0.0
+      helm:
+        valuesObject:
+          slurm-exporter:
+            enabled: true
+          loginsets:
+            slinky:
+              enabled: true
+              rootSshAuthorizedKeys: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPpImAuOJLlSWirZ4ZZVny3rycrioOJedfEx8I2BRRRD leonard@suslian.engineer
   destination:
     name: in-cluster
     namespace: slurm
