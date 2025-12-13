@@ -19,8 +19,11 @@ spec:
       targetRevision: 1.0.0
       helm:
         valuesObject:
-          slurm-exporter:
-            enabled: true
+          controller:
+            metrics:
+              enabled: true
+              serviceMonitor:
+                enabled: true
           loginsets:
             slinky:
               enabled: true
