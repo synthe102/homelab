@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: slurm-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: slurm-operator-crds
+      repoURL: ghcr.io/slinkyproject/charts
+      targetRevision: 1.0.0
+    - chart: slurm-operator
+      repoURL: ghcr.io/slinkyproject/charts
+      targetRevision: 1.0.0
+  destination:
+    name: in-cluster
+    namespace: slinky
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
