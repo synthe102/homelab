@@ -5,6 +5,9 @@ metadata:
   name: internal
 spec:
   gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      lbipam.cilium.io/sharing-key: "internal"
   listeners:
     - name: http
       protocol: HTTP

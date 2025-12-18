@@ -10,6 +10,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
+      lbipam.cilium.io/sharing-key: "external"
   listeners:
     - name: http
       protocol: HTTP
