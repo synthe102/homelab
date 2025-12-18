@@ -41,6 +41,9 @@ spec:
           grafana:
             dashboards:
               enabled: true
+    - path: clusters/k8s-01/apps/git/crowci/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true
