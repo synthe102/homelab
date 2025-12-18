@@ -36,6 +36,9 @@ spec:
             metrics:
               enabled: true
               port: 9001
+          agent:
+            env:
+              CROW_BACKEND_K8S_STORAGE_CLASS: ceph-filesystem
           prometheus:
             podmonitor:
               enabled: true
