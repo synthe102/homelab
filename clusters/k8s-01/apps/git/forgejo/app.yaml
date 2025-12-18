@@ -15,6 +15,16 @@ spec:
     - chart: forgejo
       repoURL: code.forgejo.org/forgejo-helm
       targetRevision: 15.0.3
+      helm:
+        valuesObject:
+          httpRoute:
+            enabled: true
+            hostnames:
+              - git.volcan.cloud
+            parentRefs:
+              - name: internal
+                namespace: kube-system
+                sectionName: https-volcan
   syncPolicy:
     automated:
       prune: true
