@@ -23,6 +23,9 @@ spec:
               CROW_OPEN: true
               CROW_ADMIN: synthe102
               CROW_FORGE_URL: https://git.volcan.cloud
+              CROW_HOST: https://ci.volcan.cloud
+            extraSecretNamesForEnvFrom:
+              - crow-forgejo
             podSecurityContext:
               fsGroup: 1000
               fsGroupChangePolicy: "OnRootMismatch"
