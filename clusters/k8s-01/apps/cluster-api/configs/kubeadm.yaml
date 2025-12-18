@@ -10,4 +10,4 @@ metadata:
   name: kubeadm
   namespace: capi-kubeadm-bootstrap-system
 spec:
-  version: v1.10.4
+  version: v1.12.0
