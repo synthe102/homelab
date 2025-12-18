@@ -41,8 +41,11 @@ spec:
             env:
               CROW_BACKEND_K8S_STORAGE_CLASS: ceph-filesystem
           prometheus:
-            podmonitor:
+            podMonitor:
               enabled: true
+            podmonitor:
+              labels: {}
+              interval: 60s
             rules:
               enabled: true
           grafana:
