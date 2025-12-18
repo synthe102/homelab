@@ -32,6 +32,8 @@ spec:
                 DOMAIN: git.volcan.cloud
               actions:
                 ENABLED: false
+              webhook:
+                ALLOWED_HOST_LIST: "*"
           service:
             ssh:
               type: LoadBalancer
