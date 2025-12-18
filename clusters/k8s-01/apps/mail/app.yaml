@@ -1,0 +1,78 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: stalwart
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: app-template
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.5.0
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              containers:
+                main:
+                  nameOverride: stalwart
+                  image:
+                    repository: stalwartlabs/stalwart
+                    tag: v0.15.1
+                  probes:
+                    liveness:
+                      enabled: true
+                      custom: true
+                      spec:
+                        httpGet:
+                          path: /healthz/live
+                          port: 8080
+                          initialDelaySeconds: 30
+                    readiness:
+                      enabled: true
+                      custom: true
+                      spec:
+                        httpGet:
+                          path: /healthz/ready
+                          port: 8080
+                          initialDelaySeconds: 5
+          service:
+            main:
+              controller: main
+              ports:
+                http:
+                  port: 8080
+                https:
+                  port: 443
+                smtp:
+                  port: 25
+                submission:
+                  port: 587
+                smtps:
+                  port: 465
+                imap:
+                  port: 143
+                imaps:
+                  port: 993
+                sieve:
+                  port: 4190
+          persistence:
+            data:
+              enabled: true
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              globalMounts:
+                - path: /opt/stalwart
+  destination:
+    name: in-cluster
+    namespace: mail
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
