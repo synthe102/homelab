@@ -17,11 +17,24 @@ spec:
       targetRevision: 0.4.9
       helm:
         valuesObject:
-          metrics:
-            enabled: true
-            port: 9001
+          server:
+            podSecurityContext:
+              fsGroup: 1000
+              fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+            metrics:
+              enabled: true
+              port: 9001
           prometheus:
             podmonitor:
+              enabled: true
+            rules:
+              enabled: true
+          grafana:
+            dashboards:
               enabled: true
   syncPolicy:
     automated:
