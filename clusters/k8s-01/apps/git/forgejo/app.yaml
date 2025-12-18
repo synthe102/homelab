@@ -25,6 +25,10 @@ spec:
               - name: internal
                 namespace: kube-system
                 sectionName: https-volcan
+          gitea:
+            config:
+              server:
+                ROOT_URL: https://git.volcan.cloud
   syncPolicy:
     automated:
       prune: true
