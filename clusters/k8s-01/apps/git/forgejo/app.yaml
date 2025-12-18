@@ -29,6 +29,9 @@ spec:
             config:
               server:
                 ROOT_URL: https://git.volcan.cloud
+                DOMAIN: git.volcan.cloud
+              actions:
+                ENABLED: false
           service:
             ssh:
               type: LoadBalancer
