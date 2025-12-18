@@ -11,6 +11,7 @@ spec:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/sharing-key: "external"
+      lbipam.cilium.io/sharing-cross-namespace: "*"
   listeners:
     - name: http
       protocol: HTTP
