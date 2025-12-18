@@ -18,6 +18,7 @@ spec:
       helm:
         valuesObject:
           server:
+            createAgentSecret: false
             env:
               CROW_FORGEJO: true
               CROW_OPEN: true
