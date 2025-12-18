@@ -18,6 +18,11 @@ spec:
       helm:
         valuesObject:
           server:
+            env:
+              CROW_FORGEJO: true
+              CROW_OPEN: true
+              CROW_ADMIN: synthe102
+              CROW_FORGE_URL: https://git.volcan.cloud
             podSecurityContext:
               fsGroup: 1000
               fsGroupChangePolicy: "OnRootMismatch"
