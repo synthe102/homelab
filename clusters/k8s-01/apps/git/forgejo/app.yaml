@@ -29,6 +29,11 @@ spec:
             config:
               server:
                 ROOT_URL: https://git.volcan.cloud
+          service:
+            ssh:
+              type: LoadBalancer
+              annotations:
+                lbipam.cilium.io/sharing-key: "internal"
   syncPolicy:
     automated:
       prune: true
