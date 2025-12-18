@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crow
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: crow
+  project: default
+  sources:
+    - chart: crow
+      repoURL: codeberg.org/crowci
+      targetRevision: 0.4.9
+      helm:
+        valuesObject:
+          metrics:
+            enabled: true
+            port: 9001
+          prometheus:
+            podmonitor:
+              enabled: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
