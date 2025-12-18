@@ -59,6 +59,14 @@ spec:
                   port: 993
                 sieve:
                   port: 4190
+          route:
+            main:
+              hostnames:
+                - "mail.volcan.cloud"
+              parentRefs:
+                - name: external
+                  namespace: kube-system
+                  sectionName: https-volcan
           persistence:
             data:
               enabled: true
