@@ -26,3 +26,4 @@ resources:
   - falco
   - projectsveltos
   - hpc
+  - git
