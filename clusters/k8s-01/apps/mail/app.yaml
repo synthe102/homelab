@@ -41,6 +41,7 @@ spec:
                           initialDelaySeconds: 5
           service:
             main:
+              type: LoadBalancer
               controller: main
               ports:
                 http:
