@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: slurm-operator-crds
       repoURL: ghcr.io/slinkyproject/charts
-      targetRevision: 1.0.0
+      targetRevision: 1.0.1
     - chart: slurm-operator
       repoURL: ghcr.io/slinkyproject/charts
       targetRevision: 1.0.0
