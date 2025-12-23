@@ -26,7 +26,7 @@ spec:
       sources:
         - chart: gha-runner-scale-set
           repoURL: ghcr.io/actions/actions-runner-controller-charts
-          targetRevision: 0.13.0
+          targetRevision: 0.13.1
           helm:
             valuesObject:
               githubConfigUrl: 'https://github.com/{{.org}}/{{.repo}}'
