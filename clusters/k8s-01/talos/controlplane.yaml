@@ -25,6 +25,7 @@ machine:
     extraConfig:
       featureGates:
         UserNamespacesSupport: true
+        GenericWorkload: true
     # # The `ClusterDNS` field is an optional reference to an alternative kubelet clusterDNS ip list.
     # clusterDNS:
     #     - 10.96.0.10
@@ -415,7 +416,8 @@ cluster:
       - api.k8s-01.suslian.engineer
     disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
     extraArgs:
-      feature-gates: UserNamespacesSupport=true
+      feature-gates: UserNamespacesSupport=true,GenericWorkload=true
+      runtime-config: scheduling.k8s.io/v1alpha1
     # Configure the API server admission plugins.
     admissionControl:
       - name: PodSecurity # Name is the name of the admission controller.
