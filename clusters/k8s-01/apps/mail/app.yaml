@@ -80,8 +80,8 @@ spec:
     name: in-cluster
     namespace: mail
   syncPolicy:
-    # automated:
-    #   selfHeal: true
-    #   prune: true
+    automated:
+      selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true
