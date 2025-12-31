@@ -45,7 +45,7 @@ spec:
                     MAX_MEMORY: 11G
                     ONLINE_MODE: "true"
                     TYPE: PAPER
-                    PAPER_BUILD: 113
+                    PAPER_BUILD: 129
                     VERSION: "1.21.10"
                     MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,pl3xmap"
                     MODRINTH_ALLOWED_VERSION_TYPE: "beta"
