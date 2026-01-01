@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - es.yaml
   - netpol.yaml
+  - dashboard.yaml
