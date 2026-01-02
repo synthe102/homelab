@@ -30,8 +30,9 @@ spec:
           grafana:
             dashboards:
               enabled: true
-              annotations:
-                k8s-sidecar-target-directory: /tmp/dashboards/Falco
+              configMaps:
+                falco:
+                  folder: Falco
           customRules:
             rules-custom.yaml: |-
               - list: known_drop_and_execute_containers
@@ -47,8 +48,9 @@ spec:
             grafana:
               dashboards:
                 enabled: true
-                annotations:
-                  k8s-sidecar-target-directory: /tmp/dashboards/Falco
+                configMaps:
+                  falcosidekick:
+                    folder: Falco
             config:
               loki:
                 hostport: http://loki-headless.monitoring.svc.cluster.local:3100
