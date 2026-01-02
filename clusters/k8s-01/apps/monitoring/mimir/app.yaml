@@ -17,6 +17,13 @@ spec:
       targetRevision: 6.0.5
       helm:
         valuesObject:
+          metaMonitoring:
+            dashboards:
+              enabled: true
+            serviceMonitor:
+              enabled: true
+            prometheusRule:
+              enabled: true
           ingester:
             persistentVolume:
               size: 10Gi
