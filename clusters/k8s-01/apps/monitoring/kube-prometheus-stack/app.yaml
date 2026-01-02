@@ -99,14 +99,43 @@ spec:
                 providers:
                   - name: default
                     orgId: 1
-                    folder: "foo"
+                    folder: ""
                     type: file
                     disableDeletion: false
                     editable: false
                     options:
                       path: /var/lib/grafana/dashboards/default
+                  - name: unifi
+                    orgId: 1
+                    folder: "Unifi"
+                    type: file
+                    disableDeletion: false
+                    editable: false
+                    options:
+                      path: /var/lib/grafana/dashboards/unifi
+                  - name: argocd
+                    orgId: 1
+                    folder: "ArgoCD"
+                    type: file
+                    disableDeletion: false
+                    editable: false
+                    options:
+                      path: /var/lib/grafana/dashboards/argocd
+                  - name: ceph
+                    orgId: 1
+                    folder: "Ceph"
+                    type: file
+                    disableDeletion: false
+                    editable: false
+                    options:
+                      path: /var/lib/grafana/dashboards/ceph
             dashboards:
               default:
+                smartctl-exporter:
+                  gnetId: 22604
+                  revision: 2
+                  datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
+              unifi:
                 unifi-insights:
                   gnetId: 11315
                   revision: 9
@@ -123,6 +152,7 @@ spec:
                   gnetId: 11312
                   revision: 9
                   datasource: Prometheus
+              ceph:
                 ceph-cluster:
                   gnetId: 2842
                   revision: 18
@@ -135,10 +165,7 @@ spec:
                   gnetId: 5342
                   revision: 9
                   datasource: Prometheus
-                smartctl-exporter:
-                  gnetId: 22604
-                  revision: 2
-                  datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
+              argocd:
                 argocd-operational:
                   gnetId: 19993
                   revision: 4
