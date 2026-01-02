@@ -35,6 +35,8 @@ spec:
           grafana:
             sidecar:
               dashboards:
+                annotations:
+                  k8s-sidecar-target-directory: /tmp/dashboards/Kube Prometheus Stack
                 provider:
                   foldersFromFilesStructure: true
               datasources:
