@@ -54,6 +54,9 @@ spec:
             config:
               loki:
                 hostport: http://loki-headless.monitoring.svc.cluster.local:3100
+                grafanaDashboard:
+                  configMap:
+                    folder: Falco
   destination:
     name: in-cluster
     namespace: falco
