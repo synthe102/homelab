@@ -33,6 +33,8 @@ spec:
               serviceMonitor:
                 enabled: true
               dashboards:
+                annotations:
+                  k8s-sidecar-target-directory: /tmp/dashboards/Cilium
                 enabled: true
             relay:
               enabled: true
@@ -44,6 +46,7 @@ spec:
             enabled: true
             annotations:
               argocd.argoproj.io/sync-options: ServerSideApply=true
+              k8s-sidecar-target-directory: /tmp/dashboards/Cilium
           prometheus:
             enabled: true
             serviceMonitor:
@@ -86,6 +89,8 @@ spec:
           operator:
             rollOutPods: true
             dashboards:
+              annotations:
+                k8s-sidecar-target-directory: /tmp/dashboards/Cilium
               enabled: true
             prometheus:
               serviceMonitor:
