@@ -130,11 +130,7 @@ spec:
                     options:
                       path: /var/lib/grafana/dashboards/ceph
             dashboards:
-              default:
-                smartctl-exporter:
-                  gnetId: 22604
-                  revision: 2
-                  datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
+              default: {}
               unifi:
                 unifi-insights:
                   gnetId: 11315
@@ -165,6 +161,10 @@ spec:
                   gnetId: 5342
                   revision: 9
                   datasource: Prometheus
+                smartctl-exporter:
+                  gnetId: 22604
+                  revision: 2
+                  datasource: [{name: DS_PROMETHEUS, value: Prometheus}]
               argocd:
                 argocd-operational:
                   gnetId: 19993
