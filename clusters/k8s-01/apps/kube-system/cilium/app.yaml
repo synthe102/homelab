@@ -27,8 +27,10 @@ spec:
           - monitoring.coreos.com/v1
         valuesObject:
           hubble:
+            bufferSize: 16384 # default is 4096, increase based on your flow rate
+            eventQueueSize: 50000 # default is 2048
             metrics:
-              enabled: [dns, drop, tcp, flow, port-distribution, icmp, 'httpV2:exemplars=true;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction']
+              enabled: ['dns:query;ignoreAAAA;labelsContext=source_namespace,source_workload,destination_namespace,destination_workload', drop, tcp, flow, port-distribution, icmp, 'httpV2:exemplars=true;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction']
               serviceMonitor:
                 enabled: true
               dashboards:
