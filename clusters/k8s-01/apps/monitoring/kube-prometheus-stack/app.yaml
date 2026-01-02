@@ -99,7 +99,7 @@ spec:
                 providers:
                   - name: default
                     orgId: 1
-                    folder: ""
+                    folder: "foo"
                     type: file
                     disableDeletion: false
                     editable: false
