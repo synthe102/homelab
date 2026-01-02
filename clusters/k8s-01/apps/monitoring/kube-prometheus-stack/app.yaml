@@ -34,6 +34,9 @@ spec:
             enabled: false
           grafana:
             sidecar:
+              dashboards:
+                provider:
+                  foldersFromFilesStructure: true
               datasources:
                 url: http://mimir-gateway:80/prometheus
                 extraJsonData:
