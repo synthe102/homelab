@@ -1,0 +1,47 @@
+authentik:
+  secret_key: file:///secret-key/secret-key
+  postgresql:
+    host: authentik-db-rw
+    user: file:///postgres-creds/username
+    password: file:///postgres-creds/password
+server:
+  route:
+    main:
+      enabled: true
+      hostnames:
+        - auth.suslian.engineer
+      parentRefs:
+        - name: internal
+          namespace: kube-system
+          sectionName: https
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-db-app
+    - name: secret-key
+      secret:
+        secretName: authentik-secret-key
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
+    - name: secret-key
+      mountPath: /secret-key
+      readOnly: true
+worker:
+  volumes:
+    - name: postgres-creds
+      secret:
+        secretName: authentik-db-app
+    - name: secret-key
+      secret:
+        secretName: authentik-secret-key
+  volumeMounts:
+    - name: postgres-creds
+      mountPath: /postgres-creds
+      readOnly: true
+    - name: secret-key
+      mountPath: /secret-key
+      readOnly: true
+redis:
+  enabled: true

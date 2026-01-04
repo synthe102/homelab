@@ -1,0 +1,48 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    containers:
+      main:
+        resources:
+          requests:
+            gpu.intel.com/i915: 1
+          limits:
+            gpu.intel.com/i915: 1
+        nameOverride: jellyfin
+        env:
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        image:
+          repository: jellyfin/jellyfin
+          tag: 10.11.5
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 8096
+persistence:
+  config:
+    suffix: config
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media
+route:
+  app:
+    hostnames:
+      - jellyfin.suslian.engineer
+    parentRefs:
+      - name: external
+        namespace: kube-system
+        sectionName: https

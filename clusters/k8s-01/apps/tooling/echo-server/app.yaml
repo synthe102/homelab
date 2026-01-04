@@ -9,69 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
       helm:
-        valuesObject:
-          controllers:
-            echo-server:
-              replicas: 2
-              strategy: RollingUpdate
-              containers:
-                app:
-                  image:
-                    repository: ghcr.io/mendhak/http-https-echo
-                    tag: 38
-                  env:
-                    PORT: &port 8080
-                    LOG_WITHOUT_NEWLINE: true
-                    LOG_IGNORE_PATH: &path /healthz
-                    PROMETHEUS_ENABLED: true
-                  probes:
-                    liveness: &probes
-                      enabled: true
-                      custom: true
-                      spec:
-                        httpGet:
-                          path: *path 
-                          port: *port 
-                        initialDelaySeconds: 0
-                        periodSeconds: 10
-                        timeoutSeconds: 1
-                        failureThreshold: 3
-                    readiness: *probes 
-                  resources:
-                    requests:
-                      cpu: 10m
-                    limits:
-                      memory: 64Mi
-                  securityContext:
-                    allowPrivilegeEscalation: false
-                    readOnlyRootFilesystem: true
-                    capabilities: {drop: ["ALL"]}
-          defaultPodOptions:
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 568
-              runAsGroup: 568
-          route:
-            app:
-              hostnames:
-                - "echo-server.suslian.engineer"
-              parentRefs:
-                - name: external
-                  namespace: kube-system
-                  sectionName: https
-          service:
-            app:
-              ports:
-                http:
-                  port: *port 
-          serviceMonitor:
-            app:
-              endpoints:
-                - port: http
+        valueFiles:
+          - $values/clusters/k8s-01/apps/tooling/echo-server/values.yaml
   destination:
     name: in-cluster
     namespace: tooling

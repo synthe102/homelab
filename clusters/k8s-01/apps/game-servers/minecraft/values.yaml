@@ -1,0 +1,105 @@
+defaultPodOptions:
+  imagePullSecrets:
+    - name: ghcr-synthe102
+controllers:
+  main:
+    replicas: 1
+    annotations:
+      reloader.stakater.com/auto: "true"
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    containers:
+      main:
+        nameOverride: minecraft-server
+        image:
+          repository: ghcr.io/itzg/minecraft-server
+          tag: 2025.12.1-java21
+        env:
+          EULA: "true"
+          TZ: "Europe/Paris"
+          ENABLE_ROLLING_LOGS: "true"
+          SERVER_NAME: "Volcan"
+          MOTD: "Le serveur volcanique"
+          ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=68f9e1f8&is=68f89078&hm=49650956e6ae4c50f19dac80eadb2a805c5b885e179ae2a40850e967bf189efd&=&format=webp&quality=lossless&width=1296&height=1296"
+          MEMORY: 11G
+          INIT_MEMORY: 5G
+          MAX_MEMORY: 11G
+          ONLINE_MODE: "true"
+          TYPE: PAPER
+          PAPER_BUILD: 129
+          VERSION: "1.21.10"
+          MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,pl3xmap"
+          MODRINTH_ALLOWED_VERSION_TYPE: "beta"
+        envFrom:
+          - secretRef:
+              name: minecraft-volcan
+        resources:
+          requests:
+            cpu: 1
+            memory: 12Gi
+          limits:
+            memory: 12Gi
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 568
+          runAsGroup: 568
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+        tty: true
+        stdin: true
+        # volcan:
+        #   nameOverride: volcan-bot
+        #   image:
+        #     repository: ghcr.io/synthe102/volcan-bot
+        #     tag: "v0.0.3"
+        #   env:
+        #     MINECRAFT_RCON_ADDRESS: localhost:25575
+        #     MINECRAFT_WHITELIST_FILE: /data/whitelist.json
+        #     SQLITE_DATABASE: /data/volcan.db
+        #   envFrom:
+        #     - secretRef:
+        #         name: minecraft-volcan
+service:
+  main:
+    type: LoadBalancer
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: mc.volcan.cloud
+    controller: main
+    ports:
+      map:
+        port: 8123
+      server:
+        port: 25565
+      metrics:
+        port: 9100
+serviceMonitor:
+  app:
+    endpoints:
+      - port: metrics
+route:
+  main:
+    hostnames:
+      - "mc-map.volcan.cloud"
+    parentRefs:
+      - name: external
+        namespace: kube-system
+        sectionName: https-volcan
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 35Gi
+  tmp:
+    enabled: true
+    type: emptyDir
+    sizeLimit: 512Mi
+  dshm:
+    enabled: true
+    type: emptyDir
+    sizeLimit: 512Mi
+    globalMounts:
+      - path: /dev/shm

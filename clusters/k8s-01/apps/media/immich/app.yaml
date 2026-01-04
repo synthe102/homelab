@@ -9,67 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: immich
-      helm:
-        valuesObject:
-          immich:
-            persistence:
-              library:
-                existingClaim: photos-nfs
-          valkey:
-            enabled: true
-            persistence:
-              data:
-                type: persistentVolumeClaim
-          controllers:
-            main:
-              containers:
-                main:
-                  image:
-                    # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-                    tag: &tag v2.4.1
-                  env:
-                    IMMICH_MEDIA_LOCATION: /data
-                    DB_VECTOR_EXTENSION: vectorchord
-                    DB_URL:
-                      valueFrom:
-                        secretKeyRef:
-                          name: immich-app
-                          key: uri
-          server:
-            controllers:
-              main:
-                strategy: Recreate
-                containers:
-                  main:
-                    resources:
-                      requests:
-                        gpu.intel.com/i915: "1"
-                        memory: 8Gi
-                        cpu: 0.5
-                      limits:
-                        gpu.intel.com/i915: "1"
-                        memory: 8Gi
-          machine-learning:
-            controllers:
-              main:
-                strategy: Recreate
-                containers:
-                  main:
-                    resources:
-                      requests:
-                        memory: 8Gi
-                        cpu: 0.5
-                      limits:
-                        memory: 8Gi
-            persistence:
-              cache:
-                enabled: true
-                type: persistentVolumeClaim
-                accessMode: ReadWriteOnce
-                size: 10Gi
       repoURL: https://immich-app.github.io/immich-charts
       targetRevision: 0.10.3
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/media/immich/values.yaml
     - path: clusters/k8s-01/apps/media/immich/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD

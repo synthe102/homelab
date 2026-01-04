@@ -8,37 +8,16 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: app-template
-    repoURL: https://bjw-s-labs.github.io/helm-charts
-    targetRevision: 4.5.0
-    helm:
-      valuesObject:
-        controllers:
-          irqbalance:
-            type: daemonset
-            containers:
-              app:
-                image:
-                  repository: ghcr.io/home-operations/irqbalance
-                  tag: 1.9.4
-                env:
-                  IRQBALANCE_BANNED_CPULIST: 12-19 # 12-19 are E-cores
-                resources:
-                  requests:
-                    cpu: 10m
-                  limits:
-                    memory: 32Mi
-                securityContext:
-                  privileged: true
-        defaultPodOptions:
-          hostIPC: true
-          hostPID: true
-        persistence:
-          run:
-            type: emptyDir
-            globalMounts:
-              - path: /run/irqbalance
+  sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
+    - chart: app-template
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.5.0
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/kube-system/irq-balance/values.yaml
   destination:
     name: in-cluster
     namespace: kube-system

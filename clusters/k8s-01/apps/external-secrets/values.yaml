@@ -1,0 +1,8 @@
+grafanaDashboard:
+  enabled: true
+  annotations:
+    k8s-sidecar-target-directory: /tmp/dashboards/External Secrets
+serviceMonitor:
+  enabled: true
+bitwarden-sdk-server:
+  enabled: true

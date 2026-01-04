@@ -9,69 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
       helm:
-        valuesObject:
-          controllers:
-            home-assistant:
-              containers:
-                app:
-                  image:
-                    repository: ghcr.io/home-operations/home-assistant
-                    tag: 2025.12.5
-                  env:
-                    HOME_ASSISTANT_EXTERNAL_URL: https://home-assistant.suslian.engineer
-                    HOME_ASSISTANT_PURGE_KEEP_DAYS: 30
-                    HOME_ASSISTANT_TRUSTED_PROXIES: 10.244.0.0/16
-                    TZ: Europe/Paris
-                  resources:
-                    requests:
-                      cpu: 10m
-                      memory: 1Gi
-                    limits:
-                      memory: 1Gi
-                  securityContext:
-                    allowPrivilegeEscalation: false
-                    readOnlyRootFilesystem: true
-                    capabilities: {drop: ["ALL"]}
-          defaultPodOptions:
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 568
-              runAsGroup: 568
-              fsGroup: 568
-              fsGroupChangePolicy: OnRootMismatch
-          persistence:
-            config:
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 10Gi
-            config-logs:
-              type: emptyDir
-              globalMounts:
-                - path: /config/logs
-            config-tts:
-              type: emptyDir
-              globalMounts:
-                - path: /config/tts
-            tmp:
-              type: emptyDir
-          service:
-            app:
-              ports:
-                http:
-                  port: 8123
-          route:
-            app:
-              hostnames:
-                - home-assistant.suslian.engineer
-              parentRefs:
-                - name: internal
-                  namespace: kube-system
-                  sectionName: https
+        valueFiles:
+          - $values/clusters/k8s-01/apps/home-automation/home-assistant/values.yaml
   destination:
     name: in-cluster
     namespace: home-automation

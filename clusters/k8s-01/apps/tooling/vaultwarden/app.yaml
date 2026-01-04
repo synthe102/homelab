@@ -12,46 +12,13 @@ spec:
     namespace: tooling
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
       helm:
-        valuesObject:
-          controllers:
-            main:
-              containers:
-                main:
-                  nameOverride: vaultwarden
-                  image:
-                    repository: ghcr.io/dani-garcia/vaultwarden
-                    tag: 1.35.1
-                  env:
-                    DATABASE_URL:
-                      secretKeyRef:
-                        name: vaultwarden
-                        key: DATABASE_URL
-          service:
-            main:
-              controller: main
-              ports:
-                http:
-                  port: 80
-          persistence:
-            key:
-              type: secret
-              name: vaultwarden
-              advancedMounts:
-                main:
-                  main:
-                    - path: /data/rsa_key.pem
-                      readOnly: true
-                      subPath: rsa_key.pem
-          route:
-            app:
-              hostnames:
-                - vaultwarden.suslian.engineer
-              parentRefs:
-                - name: internal
-                  namespace: kube-system
-                  sectionName: https
+        valueFiles:
+          - $values/clusters/k8s-01/apps/tooling/vaultwarden/values.yaml
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
     - path: clusters/k8s-01/apps/tooling/vaultwarden/configs

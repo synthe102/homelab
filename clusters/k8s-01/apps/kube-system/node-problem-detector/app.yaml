@@ -8,18 +8,16 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: node-problem-detector
-    repoURL: ghcr.io/deliveryhero/helm-charts
-    targetRevision: 2.3.22
-    helm:
-      valuesObject:
-        metrics:
-          enabled: true
-          serviceMonitor:
-            enabled: true
-          prometheusRule:
-            enabled: true
+  sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
+    - chart: node-problem-detector
+      repoURL: ghcr.io/deliveryhero/helm-charts
+      targetRevision: 2.3.22
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/kube-system/node-problem-detector/values.yaml
   destination:
     name: in-cluster
     namespace: kube-system

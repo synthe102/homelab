@@ -9,19 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: external-secrets
       repoURL: https://charts.external-secrets.io
       targetRevision: 1.2.0
       helm:
-        valuesObject:
-          grafanaDashboard:
-            enabled: true
-            annotations:
-              k8s-sidecar-target-directory: /tmp/dashboards/External Secrets
-          serviceMonitor:
-            enabled: true
-          bitwarden-sdk-server:
-            enabled: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/external-secrets/values.yaml
     - path: clusters/k8s-01/apps/external-secrets/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD

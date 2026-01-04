@@ -1,0 +1,62 @@
+controllers:
+  main:
+    containers:
+      main:
+        nameOverride: stalwart
+        image:
+          repository: stalwartlabs/stalwart
+          tag: v0.15.3
+          # probes:
+          #   liveness:
+          #     enabled: true
+          #     custom: true
+          #     spec:
+          #       httpGet:
+          #         path: /healthz/live
+          #         port: 8080
+          #         initialDelaySeconds: 30
+          #   readiness:
+          #     enabled: true
+          #     custom: true
+          #     spec:
+          #       httpGet:
+          #         path: /healthz/ready
+          #         port: 8080
+          #         initialDelaySeconds: 5
+service:
+  main:
+    type: LoadBalancer
+    controller: main
+    ports:
+      http:
+        port: 8080
+      https:
+        port: 443
+      smtp:
+        port: 25
+      submission:
+        port: 587
+      smtps:
+        port: 465
+      imap:
+        port: 143
+      imaps:
+        port: 993
+      sieve:
+        port: 4190
+route:
+  main:
+    hostnames:
+      - "mail.volcan.cloud"
+    parentRefs:
+      - name: external
+        namespace: kube-system
+        sectionName: https-volcan
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+    globalMounts:
+      - path: /opt/stalwart

@@ -12,54 +12,15 @@ spec:
     namespace: media
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
-      helm:
-        valuesObject:
-          controllers:
-            main:
-              pod:
-                securityContext:
-                  fsGroup: 568
-                  fsGroupChangePolicy: "OnRootMismatch"
-              containers:
-                main:
-                  nameOverride: jellyseerr
-                  image:
-                    repository: fallenbagel/jellyseerr
-                    tag: 2.7.3
-                  env:
-                    UMASK: "022"
-                    TZ: "Europe/Paris"
-                  securityContext:
-                    runAsUser: 568
-                    runAsGroup: 568
-          service:
-            main:
-              controller: main
-              ports:
-                http:
-                  port: 5055
-          persistence:
-            config:
-              suffix: config
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              advancedMounts:
-                main:
-                  main:
-                    - path: /app/config
-          route:
-            app:
-              hostnames:
-                - requests.suslian.engineer
-              parentRefs:
-                - name: internal
-                  namespace: kube-system
-                  sectionName: https
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/media/jellyseerr/values.yaml
   syncPolicy:
     automated:
       prune: true

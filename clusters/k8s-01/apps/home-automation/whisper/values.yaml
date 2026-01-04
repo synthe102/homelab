@@ -1,0 +1,25 @@
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: rhasspy/wyoming-whisper-cpp
+          tag: 1.1.0
+        args:
+          - --language
+          - en
+          - --model
+          - small
+          - --data-dir
+          - /data
+service:
+  main:
+    ports:
+      http:
+        port: 10300
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi

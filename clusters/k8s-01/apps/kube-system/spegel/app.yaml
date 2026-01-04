@@ -8,23 +8,16 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: spegel
-    repoURL: ghcr.io/spegel-org/helm-charts
-    targetRevision: 0.6.0
-    helm:
-      valuesObject:
-        grafanaDashboard:
-          enabled: true
-        serviceMonitor:
-          enabled: true
-        spegel:
-          prependExisting: true
-          containerdSock: /run/containerd/containerd.sock
-          containerdRegistryConfigPath: /etc/cri/conf.d/hosts
-        service:
-          registry:
-            hostPort: 29999
+  sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
+    - chart: spegel
+      repoURL: ghcr.io/spegel-org/helm-charts
+      targetRevision: 0.6.0
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/kube-system/spegel/values.yaml
   destination:
     name: in-cluster
     namespace: kube-system

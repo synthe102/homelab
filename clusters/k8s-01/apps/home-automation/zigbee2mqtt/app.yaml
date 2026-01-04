@@ -12,45 +12,15 @@ spec:
     namespace: home-automation
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
       chart: app-template
       helm:
-        valuesObject:
-          controllers:
-            main:
-              containers:
-                main:
-                  env:
-                    ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://xzg.iot.suslian.engineer:6638
-                    ZIGBEE2MQTT_CONFIG_MQTT_SERVER: mqtt://mosquitto.home-automation.svc.cluster.local
-                    ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED: true
-                    ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_DISCOVERY_TOPIC: homeassistant
-                    ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_STATUS_TOPIC: homeassistant/status
-                  image:
-                    repository: ghcr.io/koenkk/zigbee2mqtt
-                    tag: 2.7.2
-          service:
-            main:
-              ports:
-                http:
-                  port: 8080
-          persistence:
-            data:
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 5Gi
-              globalMounts:
-                - path: /app/data
-          route:
-            app:
-              hostnames:
-                - z2m.iot.suslian.engineer
-              parentRefs:
-                - name: internal
-                  namespace: kube-system
-                  sectionName: https-iot
+        valueFiles:
+          - $values/clusters/k8s-01/apps/home-automation/zigbee2mqtt/values.yaml
     - path: clusters/k8s-01/apps/home-automation/zigbee2mqtt/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD

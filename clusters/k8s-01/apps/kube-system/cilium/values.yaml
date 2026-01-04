@@ -1,0 +1,73 @@
+hubble:
+  bufferSize: 16384 # default is 4096, increase based on your flow rate
+  eventQueueSize: 50000 # default is 2048
+  metrics:
+    enabled: [dns, drop, tcp, flow, port-distribution, icmp, 'httpV2:exemplars=true;labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction']
+    serviceMonitor:
+      enabled: true
+    dashboards:
+      annotations:
+        k8s-sidecar-target-directory: /tmp/dashboards/Cilium
+      enabled: true
+  relay:
+    enabled: true
+    rollOutPods: true
+  ui:
+    enabled: true
+    rollOutPods: true
+dashboards:
+  enabled: true
+  annotations:
+    argocd.argoproj.io/sync-options: ServerSideApply=true
+    k8s-sidecar-target-directory: /tmp/dashboards/Cilium
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+gatewayAPI:
+  enabled: true
+  enableAlpn: true
+  gatewayClass:
+    create: "true"
+envoy:
+  rollOutPods: true
+  prometheus:
+    serviceMonitor:
+      enabled: true
+bpf:
+  datapathMode: netkit-l2
+  masquerade: true
+  preallocateMaps: true
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+routingMode: native
+bgpControlPlane:
+  enabled: true
+ipam:
+  mode: kubernetes
+kubeProxyReplacement: true
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+securityContext:
+  capabilities:
+    ciliumAgent: [CHOWN, KILL, NET_ADMIN, NET_RAW, IPC_LOCK, SYS_ADMIN, SYS_RESOURCE, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    cleanCiliumState: [NET_ADMIN, SYS_ADMIN, SYS_RESOURCE]
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+k8sServiceHost: localhost
+k8sServicePort: 7445
+operator:
+  rollOutPods: true
+  dashboards:
+    annotations:
+      k8s-sidecar-target-directory: /tmp/dashboards/Cilium
+    enabled: true
+  prometheus:
+    serviceMonitor:
+      enabled: true
+rollOutCiliumPods: true
+cni:
+  exclusive: false

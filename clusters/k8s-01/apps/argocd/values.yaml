@@ -1,0 +1,64 @@
+configs:
+  rbac:
+    policy.csv: |
+      g, ArgoCD Admins, role:admin
+      g, ArgoCD Viewers, role:readonly
+  params:
+    server.insecure: true
+  cm:
+    admin.enabled: false
+    application.resourceTrackingMethod: annotation
+    dex.config: |
+      connectors:
+      - config:
+          issuer: https://auth.suslian.engineer/application/o/argo-cd/
+          clientID: $auth:clientId
+          clientSecret: $auth:clientSecret
+          insecureEnableGroups: true
+          scopes:
+            - openid
+            - profile
+            - email
+        name: authentik
+        type: oidc
+        id: authentik
+global:
+  domain: &host argo.k8s-01.suslian.engineer
+redis-ha:
+  enabled: true
+  exporter:
+    enabled: true
+controller:
+  replicas: 1
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+dex:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+repoServer:
+  replicas: 2
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+applicationSet:
+  replicas: 2
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+server:
+  replicas: 2
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+notification:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true

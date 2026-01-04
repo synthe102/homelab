@@ -12,36 +12,15 @@ spec:
     namespace: home-automation
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
       chart: app-template
       helm:
-        valuesObject:
-          controllers:
-            main:
-              containers:
-                main:
-                  image:
-                    repository: rhasspy/wyoming-whisper-cpp
-                    tag: 1.1.0
-                  args:
-                    - --language
-                    - en
-                    - --model
-                    - small
-                    - --data-dir
-                    - /data
-          service:
-            main:
-              ports:
-                http:
-                  port: 10300
-          persistence:
-            data:
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 5Gi
+        valueFiles:
+          - $values/clusters/k8s-01/apps/home-automation/whisper/values.yaml
   syncPolicy:
     automated:
       prune: true

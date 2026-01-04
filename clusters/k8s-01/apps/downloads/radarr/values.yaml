@@ -1,0 +1,44 @@
+controllers:
+  main:
+    pod:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+    containers:
+      main:
+        nameOverride: radarr
+        image:
+          repository: ghcr.io/home-operations/radarr
+          tag: 6.1.0
+        env:
+          RADARR__PORT: &port 7878
+          UMASK: "022"
+          TZ: "Europe/Paris"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: *port
+persistence:
+  config:
+    suffix: config
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    size: 5Gi
+  media:
+    type: nfs
+    server: 192.168.1.252
+    path: /mnt/MainHDD/Media
+route:
+  app:
+    hostnames:
+      - radarr.suslian.engineer
+    parentRefs:
+      - name: internal
+        namespace: kube-system
+        sectionName: https

@@ -1,0 +1,23 @@
+httpRoute:
+  enabled: true
+  hostnames:
+    - git.volcan.cloud
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https-volcan
+gitea:
+  config:
+    server:
+      ROOT_URL: https://git.volcan.cloud
+      DOMAIN: git.volcan.cloud
+    actions:
+      ENABLED: false
+    webhook:
+      ALLOWED_HOST_LIST: "*"
+service:
+  ssh:
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/sharing-key: "internal"
+      lbipam.cilium.io/sharing-cross-namespace: "*"

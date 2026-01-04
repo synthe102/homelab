@@ -9,100 +9,18 @@ metadata:
 spec:
   project: default
   sources:
-    - path: clusters/k8s-01/apps/monitoring/mimir/configs
-      repoURL: 'https://github.com/synthe102/homelab.git'
+    - repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
+      ref: values
     - chart: mimir-distributed
       repoURL: https://grafana.github.io/helm-charts
       targetRevision: 6.0.5
       helm:
-        valuesObject:
-          metaMonitoring:
-            dashboards:
-              enabled: true
-            serviceMonitor:
-              enabled: true
-            prometheusRule:
-              enabled: true
-          ingester:
-            persistentVolume:
-              size: 10Gi
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          store_gateway:
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          querier:
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          compactor:
-            extraArgs:
-              "compactor.blocks-retention-period": "720h"
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          ruler:
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          alertmanager:
-            extraEnvFrom:
-              - secretRef:
-                  name: rook-ceph-object-user-ceph-objectstore-mimir
-          minio:
-            enabled: false
-          distributor:
-            replicas: 2
-          kafka:
-            extraEnv:
-              - name: KAFKA_LOG_RETENTION_BYTES
-                value: "2000000000"
-          mimir:
-            structuredConfig:
-              common:
-                storage:
-                  backend: s3
-                  s3:
-                    endpoint: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-                    bucket_name: mimir
-                    insecure: true
-                    secret_access_key: ${SecretKey}
-                    access_key_id: ${AccessKey}
-              blocks_storage:
-                backend: s3
-                s3:
-                  endpoint: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-                  bucket_name: mimir
-                  insecure: true
-                  secret_access_key: ${SecretKey}
-                  access_key_id: ${AccessKey}
-              ruler_storage:
-                backend: s3
-                s3:
-                  endpoint: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-                  bucket_name: mimir-misc
-                  insecure: true
-                  secret_access_key: ${SecretKey}
-                  access_key_id: ${AccessKey}
-              alertmanager_storage:
-                backend: s3
-                s3:
-                  endpoint: rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
-                  bucket_name: mimir-misc
-                  insecure: true
-                  secret_access_key: ${SecretKey}
-                  access_key_id: ${AccessKey}
-              limits:
-                ingestion_rate: 100000
-                ingestion_burst_size: 300000
-                max_label_names_per_series: 60
-                max_global_series_per_user: 0
-                ruler_max_rules_per_rule_group: 0
-                ruler_max_rule_groups_per_tenant: 0
-                cardinality_analysis_enabled: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/monitoring/mimir/values.yaml
+    - path: clusters/k8s-01/apps/monitoring/mimir/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
   destination:
     name: in-cluster
     namespace: monitoring

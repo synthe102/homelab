@@ -1,0 +1,11 @@
+grafanaDashboard:
+  enabled: true
+serviceMonitor:
+  enabled: true
+spegel:
+  prependExisting: true
+  containerdSock: /run/containerd/containerd.sock
+  containerdRegistryConfigPath: /etc/cri/conf.d/hosts
+service:
+  registry:
+    hostPort: 29999

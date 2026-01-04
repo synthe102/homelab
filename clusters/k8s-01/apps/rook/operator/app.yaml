@@ -9,14 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: rook-ceph
       repoURL: https://charts.rook.io/release
       targetRevision: v1.18.8
       helm:
-        valuesObject:
-          obcAllowAdditionalConfigFields: "bucketOwner"
-          monitoring:
-            enabled: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/rook/operator/values.yaml
   destination:
     name: in-cluster
     namespace: rook-ceph

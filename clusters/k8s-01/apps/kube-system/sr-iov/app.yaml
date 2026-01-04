@@ -9,15 +9,15 @@ metadata:
 spec:
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: sriov-network-operator-chart
       repoURL: ghcr.io/k8snetworkplumbingwg
       targetRevision: 1.6.0
       helm:
-        valuesObject:
-          sriovOperatorConfig:
-            deploy: true
-            configDaemonNodeSelector:
-              feature.node.kubernetes.io/network-sriov.capable: "true"
+        valueFiles:
+          - $values/clusters/k8s-01/apps/kube-system/sr-iov/values.yaml
   destination:
     name: in-cluster
     namespace: kube-system

@@ -1,0 +1,19 @@
+fullnameOverride: external-dns-cloudflare
+logLevel: &logLevel debug
+triggerLoopOnEvent: true
+provider:
+  name: cloudflare
+env:
+  - name: CF_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: external-dns-cloudflare-api-token
+        key: api-token
+extraArgs:
+  - --cloudflare-dns-records-per-page=1000
+  - --gateway-name=external
+policy: sync
+sources: ["gateway-httproute"]
+txtOwnerId: default
+txtPrefix: k8s.
+domainFilters: ["suslian.engineer", "volcan.cloud"]

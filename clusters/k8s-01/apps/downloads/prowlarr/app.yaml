@@ -12,55 +12,13 @@ spec:
     namespace: downloads
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
       helm:
-        valuesObject:
-          defaultPodOptions:
-            annotations:
-              k8s.v1.cni.cncf.io/networks: |
-                [{
-                  "name": "multus-vpn-routed",
-                  "namespace": "kube-system",
-                  "ips": ["10.0.100.3/24"]
-                }]
-          controllers:
-            main:
-              pod:
-                securityContext:
-                  fsGroup: 568
-                  fsGroupChangePolicy: "OnRootMismatch"
-              containers:
-                main:
-                  nameOverride: prowlarr
-                  image:
-                    repository: ghcr.io/home-operations/prowlarr
-                    tag: 2.3.1
-                  env:
-                    TZ: "Europe/Paris"
-                  securityContext:
-                    runAsUser: 568
-                    runAsGroup: 568
-          service:
-            main:
-              controller: main
-              ports:
-                http:
-                  port: 9696
-          persistence:
-            config:
-              suffix: config
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 5Gi
-          route:
-            app:
-              hostnames:
-                - prowlarr.suslian.engineer
-              parentRefs:
-                - name: internal
-                  namespace: kube-system
-                  sectionName: https
+        valueFiles:
+          - $values/clusters/k8s-01/apps/downloads/prowlarr/values.yaml
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
   syncPolicy:

@@ -1,0 +1,54 @@
+controllers:
+  unpoller:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/unpoller/unpoller
+          tag: v2.21.0
+        env:
+          TZ: Europe/Paris
+          UP_UNIFI_DEFAULT_ROLE: Monitoring
+          UP_UNIFI_DEFAULT_VERIFY_SSL: false
+          UP_INFLUXDB_DISABLE: true
+          UP_LOKI_DISABLE: "false"
+          UP_LOKI_URL: "http://loki:3100"
+          UP_UNIFI_DEFAULT_SAVE_ALARMS: "true"
+          UP_UNIFI_DEFAULT_SAVE_ANOMALIES: "true"
+          UP_UNIFI_DEFAULT_SAVE_DPI: "true"
+          UP_UNIFI_DEFAULT_SAVE_EVENTS: "true"
+          UP_UNIFI_DEFAULT_SAVE_IDS: "true"
+        envFrom:
+          - secretRef:
+              name: unpoller
+        probes:
+          liveness:
+            enabled: true
+          readiness:
+            enabled: true
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 568
+    runAsGroup: 568
+service:
+  app:
+    controller: unpoller
+    ports:
+      http:
+        port: 9130
+serviceMonitor:
+  app:
+    serviceName: unpoller
+    endpoints:
+      - port: http
+        interval: 30s
+        scrapeTimeout: 10s

@@ -1,0 +1,25 @@
+controllers:
+  irqbalance:
+    type: daemonset
+    containers:
+      app:
+        image:
+          repository: ghcr.io/home-operations/irqbalance
+          tag: 1.9.4
+        env:
+          IRQBALANCE_BANNED_CPULIST: 12-19 # 12-19 are E-cores
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 32Mi
+        securityContext:
+          privileged: true
+defaultPodOptions:
+  hostIPC: true
+  hostPID: true
+persistence:
+  run:
+    type: emptyDir
+    globalMounts:
+      - path: /run/irqbalance

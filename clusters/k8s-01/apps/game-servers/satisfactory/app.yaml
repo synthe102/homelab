@@ -12,71 +12,13 @@ spec:
     namespace: game-servers
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: app-template
       helm:
-        valuesObject:
-          controllers:
-            main:
-              replicas: 1
-              pod:
-                securityContext:
-                  fsGroup: 1000
-                  fsGroupChangePolicy: "OnRootMismatch"
-              containers:
-                main:
-                  nameOverride: satisfactory-server
-                  image:
-                    repository: wolveix/satisfactory-server
-                    tag: v1.9@sha256:e103700ae6ae4c50f19dac80eadb2a805c5b885e179ae2a40850e967bf189efd
-                  env:
-                    MAXPLAYERS: 10
-                    PGID: 1000
-                    PUID: 1000
-                    STEAMBETA: false
-                  resources:
-                    requests:
-                      cpu: 1
-                      memory: 8Gi
-                    limits:
-                      memory: 8Gi
-                  securityContext:
-                    runAsNonRoot: true
-                    runAsUser: 1000
-                    runAsGroup: 1000
-                    allowPrivilegeEscalation: false
-                    capabilities: {drop: ["ALL"]}
-          service:
-            main:
-              type: LoadBalancer
-              annotations:
-                external-dns.alpha.kubernetes.io/hostname: satisfactory.volcan.cloud
-              controller: main
-              ports:
-                admin:
-                  port: 8888
-                  protocol: TCP
-                server-tcp:
-                  port: 7777
-                  protocol: TCP
-                server-udp:
-                  port: 7777
-                  protocol: UDP
-          persistence:
-            config:
-              enabled: true
-              type: persistentVolumeClaim
-              accessMode: ReadWriteOnce
-              size: 10Gi
-            tmp:
-              enabled: true
-              type: emptyDir
-              sizeLimit: 512Mi
-            dshm:
-              enabled: true
-              type: emptyDir
-              sizeLimit: 512Mi
-              globalMounts:
-                - path: /dev/shm
+        valueFiles:
+          - $values/clusters/k8s-01/apps/game-servers/satisfactory/values.yaml
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 4.5.0
     - path: clusters/k8s-01/apps/game-servers/satisfactory/configs

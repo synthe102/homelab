@@ -12,34 +12,15 @@ spec:
     namespace: forgejo
   project: default
   sources:
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
     - chart: forgejo
       repoURL: code.forgejo.org/forgejo-helm
       targetRevision: 15.0.3
       helm:
-        valuesObject:
-          httpRoute:
-            enabled: true
-            hostnames:
-              - git.volcan.cloud
-            parentRefs:
-              - name: internal
-                namespace: kube-system
-                sectionName: https-volcan
-          gitea:
-            config:
-              server:
-                ROOT_URL: https://git.volcan.cloud
-                DOMAIN: git.volcan.cloud
-              actions:
-                ENABLED: false
-              webhook:
-                ALLOWED_HOST_LIST: "*"
-          service:
-            ssh:
-              type: LoadBalancer
-              annotations:
-                lbipam.cilium.io/sharing-key: "internal"
-                lbipam.cilium.io/sharing-cross-namespace: "*"
+        valueFiles:
+          - $values/clusters/k8s-01/apps/git/forgejo/values.yaml
   syncPolicy:
     automated:
       prune: true
