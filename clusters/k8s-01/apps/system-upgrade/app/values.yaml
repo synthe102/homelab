@@ -10,7 +10,7 @@ controllers:
           tag: v0.18.0
         env:
           SYSTEM_UPGRADE_CONTROLLER_LEADER_ELECT: true
-          SYSTEM_UPGRADE_CONTROLLER_NAME: *app
+          SYSTEM_UPGRADE_CONTROLLER_NAME: system-upgrade-controller
           SYSTEM_UPGRADE_CONTROLLER_NAMESPACE:
             valueFrom:
               fieldRef:
