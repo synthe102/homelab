@@ -78,7 +78,7 @@ spec:
               globalMounts:
                 - path: /dev/shm
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 4.5.0
+      targetRevision: 4.6.0
     - path: clusters/k8s-01/apps/game-servers/satisfactory/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
