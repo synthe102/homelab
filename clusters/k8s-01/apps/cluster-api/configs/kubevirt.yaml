@@ -10,4 +10,4 @@ metadata:
   name: kubevirt
   namespace: capk-system
 spec:
-  version: v0.1.10
+  version: v0.11.0
