@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kamaji
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: kamaji
+      repoURL: https://clastix.github.io/charts
+      targetRevision: 0.0.0+latest
+      helm:
+        valuesObject:
+          image:
+            tag: edge-26.1.2
+  destination:
+    name: in-cluster
+    namespace: kamaji-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
