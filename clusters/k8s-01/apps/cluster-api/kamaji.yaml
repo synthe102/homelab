@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: kamaji
       repoURL: https://clastix.github.io/charts
-      targetRevision: 0.0.0+latest
+      targetRevision: 0.16.1
       helm:
         valuesObject:
           image:
