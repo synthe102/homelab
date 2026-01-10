@@ -9,9 +9,9 @@ metadata:
 spec:
   project: default
   sources:
-    - chart: kamaji
-      repoURL: https://clastix.github.io/charts
-      targetRevision: 0.0.0+latest
+    - path: charts/kamaji
+      repoURL: https://github.com/clastix/kamaji.git
+      targetRevision: edge-25.12.3
       helm:
         valuesObject:
           image:
