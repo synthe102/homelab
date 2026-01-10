@@ -22,7 +22,7 @@ spec:
                 app:
                   image:
                     repository: ghcr.io/mendhak/http-https-echo
-                    tag: 38
+                    tag: 39
                   env:
                     PORT: &port 8080
                     LOG_WITHOUT_NEWLINE: true
