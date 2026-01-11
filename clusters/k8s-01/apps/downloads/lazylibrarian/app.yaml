@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: readarr
+  name: lazylibrarian
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -20,26 +20,24 @@ spec:
               pod:
                 securityContext:
                   fsGroup: 568
-                  fsGroupChangePolicy: "OnRootMismatch"
+                  fsGroupChangePolicy: "Always"
               containers:
                 main:
-                  nameOverride: readarr
+                  nameOverride: lazylibrarian
                   image:
-                    repository: ghcr.io/home-operations/readarr
-                    tag: 0.4.18.2805
+                    repository: lscr.io/linuxserver/lazylibrarian
+                    tag: version-24e9733b
                   env:
                     UMASK: "022"
                     TZ: "Europe/Paris"
-                    RADARR__INSTANCE_NAME: Radarr
-                  securityContext:
-                    runAsUser: 568
-                    runAsGroup: 568
+                    PGID: 568
+                    PUID: 568
           service:
             main:
               controller: main
               ports:
                 http:
-                  port: 8787
+                  port: 5299
           persistence:
             config:
               suffix: config
@@ -54,7 +52,7 @@ spec:
           route:
             app:
               hostnames:
-                - readarr.suslian.engineer
+                - lazylibrarian.suslian.engineer
               parentRefs:
                 - name: internal
                   namespace: kube-system

@@ -7,4 +7,5 @@ resources:
   - prowlarr
   - qbittorrent
   - bazarr
-  - readarr
+  - lazylibrarian
+  - audiobookshelf
