@@ -1,0 +1,69 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: readarr
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: downloads
+  project: default
+  sources:
+    - chart: app-template
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              pod:
+                securityContext:
+                  fsGroup: 568
+                  fsGroupChangePolicy: "OnRootMismatch"
+              containers:
+                main:
+                  nameOverride: readarr
+                  image:
+                    repository: ghcr.io/home-operations/readarr
+                    tag: 0.4.18.2805
+                  env:
+                    UMASK: "022"
+                    TZ: "Europe/Paris"
+                    RADARR__INSTANCE_NAME: Radarr
+                  securityContext:
+                    runAsUser: 568
+                    runAsGroup: 568
+          service:
+            main:
+              controller: main
+              ports:
+                http:
+                  port: 8787
+          persistence:
+            config:
+              suffix: config
+              enabled: true
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
+              size: 5Gi
+            media:
+              type: nfs
+              server: 192.168.1.252
+              path: /mnt/MainHDD/Media
+          route:
+            app:
+              hostnames:
+                - readarr.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 4.6.0
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
