@@ -36,7 +36,6 @@ spec:
                   env:
                     EULA: "true"
                     TZ: "Europe/Paris"
-                    ENABLE_ROLLING_LOGS: "true"
                     SERVER_NAME: "Volcan"
                     MOTD: "Le serveur volcanique"
                     ICON: "https://media.discordapp.net/attachments/860158395628650537/955376790543691816/Untitled-1-01.png?ex=68f9e1f8&is=68f89078&hm=49650956e6ae5ae9343391bf5464f27f6d6d1a7c4f2daaa0c1b12f98a1212006&=&format=webp&quality=lossless&width=1296&height=1296"
@@ -45,9 +44,9 @@ spec:
                     MAX_MEMORY: 11G
                     ONLINE_MODE: "true"
                     TYPE: PAPER
-                    PAPER_BUILD: 129
-                    VERSION: "1.21.10"
-                    MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,pl3xmap"
+                    PAPER_BUILD: 92
+                    VERSION: "1.21.11"
+                    MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky"
                     MODRINTH_ALLOWED_VERSION_TYPE: "beta"
                   envFrom:
                     - secretRef:
