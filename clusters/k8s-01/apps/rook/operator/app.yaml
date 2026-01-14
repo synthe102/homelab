@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: rook-ceph
       repoURL: https://charts.rook.io/release
-      targetRevision: v1.18.8
+      targetRevision: v1.18.9
       helm:
         valuesObject:
           obcAllowAdditionalConfigFields: "bucketOwner"
