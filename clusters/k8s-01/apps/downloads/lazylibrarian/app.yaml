@@ -58,7 +58,7 @@ spec:
                   namespace: kube-system
                   sectionName: https
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 4.6.0
+      targetRevision: 4.6.2
   syncPolicy:
     automated:
       prune: true
