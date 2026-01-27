@@ -27,7 +27,7 @@ spec:
                 main:
                   image:
                     # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-                    tag: &tag v2.4.1
+                    tag: &tag v2.5.0
                   env:
                     IMMICH_MEDIA_LOCATION: /data
                     DB_VECTOR_EXTENSION: vectorchord
