@@ -60,7 +60,7 @@ spec:
           redis:
             enabled: true
       repoURL: https://charts.goauthentik.io/
-      targetRevision: 2025.12.1
+      targetRevision: 2025.12.2
     - path: clusters/k8s-01/apps/authentik/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
