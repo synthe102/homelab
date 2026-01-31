@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: kube-vip
   annotations:
-    lbipam.cilium.io/ips: 10.0.10.3
+    lbipam.cilium.io/ips: 10.0.1.3
     external-dns.alpha.kubernetes.io/hostname: api.k8s-01.suslian.engineer
 spec:
   type: LoadBalancer
