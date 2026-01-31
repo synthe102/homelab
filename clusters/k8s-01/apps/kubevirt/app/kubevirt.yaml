@@ -8,6 +8,7 @@ spec:
     developerConfiguration:
       featureGates:
         - HotplugVolumes
+        - Snapshot
   certificateRotateStrategy:
     selfSigned:
       ca:
