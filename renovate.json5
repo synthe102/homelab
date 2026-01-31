@@ -4,6 +4,22 @@
     'config:recommended',
     'github>synthe102/homelab//.renovate/customManagers.json5',
   ],
+  packageRules: [
+    {
+      description: 'Group KubeVirt CDI updates together',
+      matchDatasources: ['github-releases'],
+      matchPackageNames: ['kubevirt/containerized-data-importer'],
+      groupName: 'kubevirt-cdi',
+      commitMessageTopic: 'KubeVirt CDI',
+    },
+    {
+      description: 'Require approval for KubeVirt major updates',
+      matchDatasources: ['github-releases'],
+      matchPackageNames: ['kubevirt/kubevirt', 'kubevirt/containerized-data-importer'],
+      matchUpdateTypes: ['major'],
+      dependencyDashboardApproval: true,
+    },
+  ],
   argocd: {
     managerFilePatterns: [
       '/clusters/k8s-01/apps/.*\\.yaml$/',
