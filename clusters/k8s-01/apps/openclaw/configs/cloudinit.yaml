@@ -12,12 +12,15 @@ stringData:
       - curl
       - git
       - build-essential
+      - qemu-guest-agent
 
     users:
       - name: openclaw
         shell: /bin/bash
         sudo: ALL=(ALL) NOPASSWD:ALL
         lock_passwd: true
+        ssh_authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPpImAuOJLlSWirZ4ZZVny3rycrioOJedfEx8I2BRRRD leonard@suslian.engineer
 
     runcmd:
       # Install Node.js 22.x
