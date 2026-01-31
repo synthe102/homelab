@@ -5,4 +5,5 @@ resources:
   - cloudinit.yaml
   - vm.yaml
   - service.yaml
+  - netpol.yaml
   - httproute.yaml

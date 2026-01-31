@@ -10,8 +10,6 @@ stringData:
     package_update: true
     packages:
       - curl
-      - git
-      - build-essential
       - qemu-guest-agent
 
     users:
@@ -30,15 +28,13 @@ stringData:
       - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
       - apt-get install -y nodejs
 
-      # Install pnpm
-      - npm install -g pnpm
+      # Install OpenClaw
+      - npm install -g openclaw@latest
 
-      # Clone and build OpenClaw
-      - git clone https://github.com/openclaw/openclaw.git /opt/openclaw
-      - cd /opt/openclaw && npm install && npm run build
-
-      # Set ownership
-      - chown -R openclaw:openclaw /opt/openclaw
+      # Configure gateway to trust Cilium envoy proxy
+      - mkdir -p /home/openclaw/.openclaw
+      - echo '{"gateway":{"trustedProxies":["10.244.0.0/16"]}}' > /home/openclaw/.openclaw/openclaw.json
+      - chown -R openclaw:openclaw /home/openclaw/.openclaw
 
       # Create systemd service
       - |
@@ -51,8 +47,7 @@ stringData:
         [Service]
         Type=simple
         User=openclaw
-        WorkingDirectory=/opt/openclaw
-        ExecStart=/usr/bin/node dist/entry.js gateway --port 18789 --bind lan --allow-unconfigured --auth password --password openclaw
+        ExecStart=/usr/bin/openclaw gateway --port 18789 --bind lan --allow-unconfigured --auth password --password openclaw
         Restart=on-failure
         RestartSec=5
 
