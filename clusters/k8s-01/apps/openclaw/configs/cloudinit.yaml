@@ -23,13 +23,19 @@ stringData:
           - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPpImAuOJLlSWirZ4ZZVny3rycrioOJedfEx8I2BRRRD leonard@suslian.engineer
 
     runcmd:
+      # Enable qemu-guest-agent
+      - systemctl enable --now qemu-guest-agent
+
       # Install Node.js 22.x
       - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
       - apt-get install -y nodejs
 
+      # Install pnpm
+      - npm install -g pnpm
+
       # Clone and build OpenClaw
-      - git clone https://github.com/openclaw-ai/openclaw.git /opt/openclaw
-      - cd /opt/openclaw && npm ci && npm run build
+      - git clone https://github.com/openclaw/openclaw.git /opt/openclaw
+      - cd /opt/openclaw && npm install && npm run build
 
       # Set ownership
       - chown -R openclaw:openclaw /opt/openclaw
