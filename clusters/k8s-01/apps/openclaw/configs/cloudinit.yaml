@@ -52,7 +52,7 @@ stringData:
         Type=simple
         User=openclaw
         WorkingDirectory=/opt/openclaw
-        ExecStart=/usr/bin/node dist/main.js
+        ExecStart=/usr/bin/node dist/entry.js
         Restart=on-failure
         RestartSec=5
 
