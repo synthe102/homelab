@@ -52,7 +52,7 @@ stringData:
         Type=simple
         User=openclaw
         WorkingDirectory=/opt/openclaw
-        ExecStart=/usr/bin/node dist/entry.js
+        ExecStart=/usr/bin/node dist/entry.js gateway --port 18789
         Restart=on-failure
         RestartSec=5
 
