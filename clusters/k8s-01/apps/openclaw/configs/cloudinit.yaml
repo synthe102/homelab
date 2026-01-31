@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openclaw-cloudinit
+type: Opaque
+stringData:
+  userdata: |
+    #cloud-config
+    package_update: true
+    packages:
+      - curl
+      - git
+      - build-essential
+
+    users:
+      - name: openclaw
+        shell: /bin/bash
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        lock_passwd: true
+
+    runcmd:
+      # Install Node.js 22.x
+      - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+      - apt-get install -y nodejs
+
+      # Clone and build OpenClaw
+      - git clone https://github.com/openclaw-ai/openclaw.git /opt/openclaw
+      - cd /opt/openclaw && npm ci && npm run build
+
+      # Set ownership
+      - chown -R openclaw:openclaw /opt/openclaw
+
+      # Create systemd service
+      - |
+        cat <<'EOF' > /etc/systemd/system/openclaw.service
+        [Unit]
+        Description=OpenClaw AI Assistant
+        After=network-online.target
+        Wants=network-online.target
+
+        [Service]
+        Type=simple
+        User=openclaw
+        WorkingDirectory=/opt/openclaw
+        ExecStart=/usr/bin/node dist/main.js
+        Restart=on-failure
+        RestartSec=5
+
+        [Install]
+        WantedBy=multi-user.target
+        EOF
+      - systemctl daemon-reload
+      - systemctl enable --now openclaw.service

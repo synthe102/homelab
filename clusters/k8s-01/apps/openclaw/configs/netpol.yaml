@@ -1,0 +1,36 @@
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: openclaw
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: openclaw
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+      toPorts:
+        - ports:
+            - port: "18789"
+              protocol: TCP
+  egressDeny:
+    - toCIDR:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+        - 169.254.0.0/16
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+    - toEntities:
+        - world

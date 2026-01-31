@@ -1,0 +1,58 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: openclaw
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openclaw
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        memory:
+          guest: 4Gi
+        resources:
+          requests:
+            memory: 2Gi
+          limits:
+            memory: 4Gi
+        devices:
+          disks:
+            - name: rootdisk
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+          interfaces:
+            - name: default
+              masquerade: {}
+      networks:
+        - name: default
+          pod: {}
+      volumes:
+        - name: rootdisk
+          dataVolume:
+            name: openclaw-root
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            secretRef:
+              name: openclaw-cloudinit
+  dataVolumeTemplates:
+    - metadata:
+        name: openclaw-root
+      spec:
+        storage:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi
+          storageClassName: ceph-block-xfs
+        source:
+          registry:
+            url: docker://quay.io/containerdisks/ubuntu:24.04
