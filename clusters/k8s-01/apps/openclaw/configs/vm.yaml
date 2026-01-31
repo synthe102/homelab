@@ -31,6 +31,8 @@ spec:
           interfaces:
             - name: default
               masquerade: {}
+              ports:
+                - port: 18789
       networks:
         - name: default
           pod: {}

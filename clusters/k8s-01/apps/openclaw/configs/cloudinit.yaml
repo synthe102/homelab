@@ -52,8 +52,7 @@ stringData:
         Type=simple
         User=openclaw
         WorkingDirectory=/opt/openclaw
-        Environment=OPENCLAW_GATEWAY_AUTH=none
-        ExecStart=/usr/bin/node dist/entry.js gateway --port 18789 --allow-unconfigured
+        ExecStart=/usr/bin/node dist/entry.js gateway --port 18789 --bind lan --allow-unconfigured --auth password --password openclaw
         Restart=on-failure
         RestartSec=5
 
