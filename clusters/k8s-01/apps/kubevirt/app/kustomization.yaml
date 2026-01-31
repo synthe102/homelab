@@ -6,6 +6,6 @@ resources:
   - https://github.com/kubevirt/kubevirt/releases/download/v1.6.0/kubevirt-operator.yaml
   - kubevirt.yaml
   # renovate: datasource=github-releases depName=kubevirt/containerized-data-importer
-  - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.63.0/cdi-operator.yaml
+  - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.64.0/cdi-operator.yaml
   # renovate: datasource=github-releases depName=kubevirt/containerized-data-importer
-  - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.63.0/cdi-cr.yaml
+  - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.64.0/cdi-cr.yaml
