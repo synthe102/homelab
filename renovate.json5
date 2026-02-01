@@ -6,6 +6,11 @@
   ],
   packageRules: [
     {
+      description: 'Automerge patch and minor updates',
+      matchUpdateTypes: ['minor', 'patch'],
+      automerge: true,
+    },
+    {
       description: 'Group KubeVirt CDI updates together',
       matchDatasources: ['github-releases'],
       matchPackageNames: ['kubevirt/containerized-data-importer'],
