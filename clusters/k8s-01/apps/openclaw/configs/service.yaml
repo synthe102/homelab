@@ -7,7 +7,11 @@ metadata:
     app.kubernetes.io/name: openclaw
 spec:
   ports:
-    - port: 18789
+    - port: 22
       protocol: TCP
+      name: ssh
+    - port: 9100
+      protocol: TCP
+      name: node-exporter
   selector:
     app.kubernetes.io/name: openclaw

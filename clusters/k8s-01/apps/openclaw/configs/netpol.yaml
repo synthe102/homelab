@@ -9,16 +9,12 @@ spec:
       app.kubernetes.io/name: openclaw
   ingress:
     - fromEntities:
-        - ingress
-      toPorts:
-        - ports:
-            - port: "18789"
-              protocol: TCP
-    - fromEntities:
         - cluster
       toPorts:
         - ports:
             - port: "22"
+              protocol: TCP
+            - port: "9100"
               protocol: TCP
   egressDeny:
     - toCIDR:
