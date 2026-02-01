@@ -1,0 +1,13 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: openclaw
+  labels:
+    app.kubernetes.io/name: openclaw
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openclaw
+  endpoints:
+    - port: node-exporter

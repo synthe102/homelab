@@ -6,3 +6,4 @@ resources:
   - vm.yaml
   - service.yaml
   - netpol.yaml
+  - servicemonitor.yaml
