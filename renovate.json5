@@ -11,6 +11,11 @@
       automerge: true,
     },
     {
+      description: 'Disable automerge for Talos packages',
+      matchPackageNames: ['ghcr.io/siderolabs/talosctl', 'ghcr.io/siderolabs/installer'],
+      automerge: false,
+    },
+    {
       description: 'Group KubeVirt CDI updates together',
       matchDatasources: ['github-releases'],
       matchPackageNames: ['kubevirt/containerized-data-importer'],
