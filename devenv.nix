@@ -4,7 +4,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
@@ -23,6 +24,7 @@
     kind
     vcluster
     opentofu
+    uv
   ];
 
   git-hooks.hooks = {
