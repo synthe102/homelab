@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: buildkite-agent
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: buildkite
+  project: default
+  sources:
+    - chart: agent-stack-k8s
+      helm:
+        valuesObject:
+          agentStackSecret: buildkite-agent
+          config:
+            tags:
+              - queue=k8s-01
+      repoURL: ghcr.io/buildkite/helm
+      targetRevision: 0.37.1
+    - path: clusters/k8s-01/apps/buildkite/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

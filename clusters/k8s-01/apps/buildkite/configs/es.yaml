@@ -1,0 +1,19 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: buildkite-agent
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  target:
+    template:
+      type: Opaque
+      data:
+        BUILDKITE_AGENT_TOKEN: "{{ .buildkite_agent_token}}"
+  data:
+    - secretKey: buildkite_agent_token
+      remoteRef:
+        key: "K8s_01_KUBE_BUILDKITE_AGENT_SECRET"
