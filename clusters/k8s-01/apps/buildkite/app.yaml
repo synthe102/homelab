@@ -20,7 +20,7 @@ spec:
             tags:
               - queue=k8s-01
       repoURL: ghcr.io/buildkite/helm
-      targetRevision: 0.37.1
+      targetRevision: 0.38.0
     - path: clusters/k8s-01/apps/buildkite/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
