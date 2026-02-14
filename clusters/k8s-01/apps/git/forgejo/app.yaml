@@ -14,7 +14,7 @@ spec:
   sources:
     - chart: forgejo
       repoURL: code.forgejo.org/forgejo-helm
-      targetRevision: 16.0.2
+      targetRevision: 16.2.0
       helm:
         valuesObject:
           httpRoute:
