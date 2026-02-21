@@ -11,6 +11,7 @@ spec:
     - '*.iot.suslian.engineer'
     - '*.s3.k8s-01.suslian.engineer'
     - '*.volcan.cloud'
+    - '*.chat.volcan.cloud'
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
