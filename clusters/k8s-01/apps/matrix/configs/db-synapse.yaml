@@ -1,0 +1,24 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ess-synapse-db
+spec:
+  instances: 2
+  managed:
+    roles:
+      - name: &name synapse
+        superuser: true
+        login: true
+  bootstrap:
+    initdb:
+      database: *name
+      owner: *name
+      encoding: UTF8
+      localeCollate: C
+      localeCType: C
+  storage:
+    size: 10Gi
+  resources:
+    requests:
+      memory: "512Mi"

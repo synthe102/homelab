@@ -1,0 +1,67 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: &name ess
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: matrix-stack
+      helm:
+        valuesObject:
+          serverName: chat.volcan.cloud
+          postgres:
+            enabled: false
+          matrixRTC:
+            enabled: false
+          hookshot:
+            enabled: false
+          synapse:
+            ingress:
+              host: synapse.chat.volcan.cloud
+            postgres:
+              host: ess-synapse-db-rw
+              port: 5432
+              user: synapse
+              database: synapse
+              sslMode: prefer
+              password:
+                secret: ess-synapse-db-app
+                secretKey: password
+          matrixAuthenticationService:
+            ingress:
+              host: account.chat.volcan.cloud
+            postgres:
+              host: ess-mas-db-rw
+              port: 5432
+              user: mas
+              database: mas
+              sslMode: prefer
+              password:
+                secret: ess-mas-db-app
+                secretKey: password
+          elementWeb:
+            ingress:
+              host: element.chat.volcan.cloud
+          elementAdmin:
+            ingress:
+              host: admin.chat.volcan.cloud
+          wellKnownDelegation:
+            enabled: true
+      repoURL: ghcr.io/element-hq/ess-helm
+      targetRevision: 26.2.2
+    - path: clusters/k8s-01/apps/matrix/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: *name
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
