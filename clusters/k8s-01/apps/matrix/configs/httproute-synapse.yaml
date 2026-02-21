@@ -7,7 +7,7 @@ spec:
   hostnames:
     - synapse.chat.volcan.cloud
   parentRefs:
-    - name: internal
+    - name: external
       namespace: kube-system
       sectionName: https-chat-volcan
   rules:

@@ -16,7 +16,24 @@ spec:
           postgres:
             enabled: false
           matrixRTC:
-            enabled: false
+            enabled: true
+            ingress:
+              host: rtc.chat.volcan.cloud
+            sfu:
+              exposedServices:
+                rtcTcp:
+                  enabled: true
+                  portType: LoadBalancer
+                rtcMuxedUdp:
+                  enabled: true
+                  portType: LoadBalancer
+                turn:
+                  enabled: true
+                  portType: LoadBalancer
+                turnTLS:
+                  enabled: true
+                  portType: LoadBalancer
+                  domain: turn.chat.volcan.cloud
           hookshot:
             enabled: false
           synapse:
@@ -40,6 +57,9 @@ spec:
                   account:
                     password_registration_enabled: true
                     registration_token_required: true
+              2-email:
+                configSecret: ess-smtp-credentials
+                configSecretKey: email-config
             postgres:
               host: ess-mas-db-rw
               port: 5432

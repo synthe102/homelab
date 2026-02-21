@@ -2,19 +2,19 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: ess-well-known
+  name: ess-rtc
 spec:
   hostnames:
-    - chat.volcan.cloud
+    - rtc.chat.volcan.cloud
   parentRefs:
     - name: external
       namespace: kube-system
-      sectionName: https-volcan
+      sectionName: https-chat-volcan
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: ess-well-known
-          port: 8010
+        - name: ess-lk-jwt-service
+          port: 8080
