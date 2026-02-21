@@ -75,3 +75,14 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-tls
+    - name: https-chat-volcan
+      protocol: HTTPS
+      port: 443
+      hostname: "*.chat.volcan.cloud"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-tls
