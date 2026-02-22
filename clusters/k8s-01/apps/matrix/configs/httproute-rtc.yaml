@@ -14,7 +14,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /sfu/get
+      backendRefs:
+        - name: ess-matrix-rtc-authorisation-service
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
             value: /
       backendRefs:
-        - name: ess-lk-jwt-service
-          port: 8080
+        - name: ess-matrix-rtc-sfu
+          port: 7880
