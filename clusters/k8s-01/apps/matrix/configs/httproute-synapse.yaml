@@ -17,6 +17,46 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /_matrix/client/api/v1/login
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/api/v1/refresh
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/api/v1/logout
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/r0/login
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/r0/refresh
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/r0/logout
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/v3/login
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/v3/refresh
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/v3/logout
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/unstable/login
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/unstable/refresh
+        - path:
+            type: PathPrefix
+            value: /_matrix/client/unstable/logout
+      backendRefs:
+        - name: ess-matrix-authentication-service
+          port: 8080
+    - matches:
+        - path:
+            type: PathPrefix
             value: /
       backendRefs:
         - name: ess-synapse
