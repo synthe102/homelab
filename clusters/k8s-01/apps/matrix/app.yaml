@@ -22,18 +22,25 @@ spec:
             sfu:
               exposedServices:
                 rtcTcp:
+                  annotations:
+                    lbipam.cilium.io/sharing-key: "external"
+                    lbipam.cilium.io/sharing-cross-namespace: '*'
                   enabled: true
                   portType: LoadBalancer
                 rtcMuxedUdp:
+                  annotations:
+                    lbipam.cilium.io/sharing-key: "external"
+                    lbipam.cilium.io/sharing-cross-namespace: '*'
                   enabled: true
                   portType: LoadBalancer
                 turn:
+                  annotations:
+                    lbipam.cilium.io/sharing-key: "external"
+                    lbipam.cilium.io/sharing-cross-namespace: '*'
                   enabled: true
                   portType: LoadBalancer
                 turnTLS:
-                  enabled: true
-                  portType: LoadBalancer
-                  domain: turn.chat.volcan.cloud
+                  enabled: false
           hookshot:
             enabled: false
           synapse:
