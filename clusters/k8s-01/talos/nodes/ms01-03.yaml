@@ -13,6 +13,9 @@ machine:
             routes:
               - network: 0.0.0.0/0 # The route's network (destination).
                 gateway: 10.0.100.1
+                metric: 2048
+      - interface: enp89s0
+        dhcp: false
       - # m1
         deviceSelector: {busPath: 1-1.0}
         dhcp: false
