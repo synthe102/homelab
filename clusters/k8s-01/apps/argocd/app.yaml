@@ -24,6 +24,11 @@ spec:
             cm:
               admin.enabled: false
               application.resourceTrackingMethod: annotation
+              resource.customizations.health.networking.k8s.io_Ingress: |
+                hs = {}
+                hs.status = "Healthy"
+                hs.message = "Ingress not used"
+                return hs
               dex.config: |
                 connectors:
                 - config:
