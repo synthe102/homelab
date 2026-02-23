@@ -22,7 +22,7 @@ spec:
                   nameOverride: vaultwarden
                   image:
                     repository: ghcr.io/dani-garcia/vaultwarden
-                    tag: 1.35.3
+                    tag: 1.35.4
                   env:
                     DATABASE_URL:
                       secretKeyRef:
