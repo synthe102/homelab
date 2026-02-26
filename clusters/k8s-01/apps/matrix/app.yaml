@@ -85,7 +85,7 @@ spec:
           wellKnownDelegation:
             enabled: true
       repoURL: ghcr.io/element-hq/ess-helm
-      targetRevision: 26.2.2
+      targetRevision: 26.2.3
     - path: clusters/k8s-01/apps/matrix/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
