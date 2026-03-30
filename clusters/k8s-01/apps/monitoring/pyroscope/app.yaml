@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: pyroscope
       repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 1.19.1
+      targetRevision: 1.19.2
       helm:
         valuesObject:
           alloy:
