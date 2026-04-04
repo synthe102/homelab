@@ -28,6 +28,5 @@ resources:
   - hpc
   - git
   - mail
-  - openclaw
   - buildkite
   - matrix
