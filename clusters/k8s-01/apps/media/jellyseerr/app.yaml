@@ -25,7 +25,7 @@ spec:
                 main:
                   nameOverride: seerr
                   image:
-                    repository: seerr/seerr
+                    repository: ghcr.io/seerr-team/seerr
                     tag: 3.1.0
                   env:
                     UMASK: "022"
