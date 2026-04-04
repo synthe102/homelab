@@ -38,7 +38,7 @@ jobs:
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=${{ github.head_ref }} \
             -e REPO=${{ github.repository }} \
-            dagandersen/argocd-diff-preview:v0.1.8 --kind-options '--config /base-branch/.github/hack/kind.yaml'
+            dagandersen/argocd-diff-preview:v0.2.2 --kind-options '--config /base-branch/.github/hack/kind.yaml'
       - name: Post diff as comment
         run: |
           gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md --edit-last || \
