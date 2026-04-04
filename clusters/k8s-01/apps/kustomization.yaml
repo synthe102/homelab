@@ -25,7 +25,6 @@ resources:
   - game-servers
   - falco
   - projectsveltos
-  - hpc
   - git
   - mail
   - buildkite

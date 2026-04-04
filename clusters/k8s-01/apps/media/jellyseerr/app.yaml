@@ -23,10 +23,10 @@ spec:
                   fsGroupChangePolicy: "OnRootMismatch"
               containers:
                 main:
-                  nameOverride: jellyseerr
+                  nameOverride: seerr
                   image:
-                    repository: fallenbagel/jellyseerr
-                    tag: 2.7.3
+                    repository: ghcr.io/seerr-team/seerr
+                    tag: v3.1.0
                   env:
                     UMASK: "022"
                     TZ: "Europe/Paris"
