@@ -44,6 +44,7 @@ spec:
             url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
         clusterMetrics:
           enabled: true
+          collector: alloy-metrics
         telemetryServices:
           node-exporter:
             deploy: true
@@ -51,12 +52,16 @@ spec:
             deploy: true
         prometheusOperatorObjects:
           enabled: true
+          collector: alloy-singleton
         clusterEvents:
           enabled: true
+          collector: alloy-singleton
         podLogsViaLoki:
           enabled: true
+          collector: alloy-logs
         profiling:
           enabled: true
+          collector: alloy-profiles
   destination:
     name: in-cluster
     namespace: monitoring
