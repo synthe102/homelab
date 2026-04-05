@@ -19,6 +19,12 @@ spec:
           config:
             tags:
               - queue=k8s-01
+            pod-spec-patch:
+              containers:
+                - name: checkout
+                  envFrom:
+                    - secretRef:
+                        name: git-ssh-credentials
       repoURL: ghcr.io/buildkite/helm
       targetRevision: 0.40.0
     - path: clusters/k8s-01/apps/buildkite/configs
