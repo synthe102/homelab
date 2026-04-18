@@ -1,0 +1,102 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openbao
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: openbao
+      repoURL: https://openbao.github.io/openbao-helm
+      targetRevision: 0.4.0
+      helm:
+        valuesObject:
+          global:
+            enabled: true
+          injector:
+            enabled: false
+          csi:
+            enabled: false
+          ui:
+            enabled: true
+            serviceType: ClusterIP
+          server:
+            ingress:
+              enabled: false
+            standalone:
+              enabled: false
+            serviceAccount:
+              create: true
+              serviceDiscovery:
+                enabled: true
+            dataStorage:
+              enabled: true
+              size: 10Gi
+              mountPath: /openbao/data
+              storageClass: ceph-block
+              accessMode: ReadWriteOnce
+            auditStorage:
+              enabled: false
+            extraSecretEnvironmentVars:
+              - envName: BAO_SEAL_UNSEAL_KEY
+                secretName: openbao-unseal
+                secretKey: key
+            ha:
+              enabled: true
+              replicas: 3
+              raft:
+                enabled: true
+                setNodeId: true
+                config: |
+                  ui = true
+
+                  listener "tcp" {
+                    tls_disable     = 1
+                    address         = "[::]:8200"
+                    cluster_address = "[::]:8201"
+                    telemetry {
+                      unauthenticated_metrics_access = "true"
+                    }
+                  }
+
+                  storage "raft" {
+                    path = "/openbao/data"
+
+                    retry_join {
+                      leader_api_addr = "http://openbao-0.openbao-internal:8200"
+                    }
+                    retry_join {
+                      leader_api_addr = "http://openbao-1.openbao-internal:8200"
+                    }
+                    retry_join {
+                      leader_api_addr = "http://openbao-2.openbao-internal:8200"
+                    }
+                  }
+
+                  seal "static" {
+                    current_key_id = "homelab-v1"
+                    current_key    = "env://BAO_SEAL_UNSEAL_KEY"
+                  }
+
+                  telemetry {
+                    prometheus_retention_time = "30s"
+                    disable_hostname          = true
+                  }
+
+                  service_registration "kubernetes" {}
+    - path: clusters/k8s-01/apps/security/openbao/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  destination:
+    name: in-cluster
+    namespace: openbao
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
