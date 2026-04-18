@@ -29,3 +29,4 @@ resources:
   - mail
   - buildkite
   - matrix
+  - security
