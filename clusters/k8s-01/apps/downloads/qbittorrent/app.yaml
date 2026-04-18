@@ -34,7 +34,7 @@ spec:
                   nameOverride: qbittorrent
                   image:
                     repository: ghcr.io/home-operations/qbittorrent
-                    tag: 5.1.4
+                    tag: 5.1.3
                   env:
                     UMASK: "022"
                     QBITTORRENT__PORT: &port 8080
@@ -51,7 +51,7 @@ spec:
                   port: 8888
                   protocol: UDP
                 http:
-                  port: *port 
+                  port: *port
           persistence:
             config:
               suffix: config
