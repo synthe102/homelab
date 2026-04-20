@@ -26,7 +26,7 @@ spec:
                   nameOverride: audiobookshelf
                   image:
                     repository: ghcr.io/advplyr/audiobookshelf
-                    tag: 2.33.1
+                    tag: 2.33.2
                   env:
                     UMASK: "022"
                     TZ: "Europe/Paris"
