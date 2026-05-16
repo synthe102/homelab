@@ -42,6 +42,7 @@ spec:
               serviceAccount:
                 identifier: system-upgrade-controller
           defaultPodOptions:
+            automountServiceAccountToken: true
             securityContext:
               runAsNonRoot: true
               runAsUser: 568
