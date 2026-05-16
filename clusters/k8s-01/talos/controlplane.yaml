@@ -19,7 +19,7 @@ machine:
 
   # Used to provide additional options to the kubelet.
   kubelet:
-    image: ghcr.io/siderolabs/kubelet:v1.35.1 # The `image` field is an optional reference to an alternative kubelet image.
+    image: ghcr.io/siderolabs/kubelet:v1.36.1 # The `image` field is an optional reference to an alternative kubelet image.
     defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
     disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
     extraConfig:
@@ -212,7 +212,7 @@ machine:
         - system-upgrade
   # Configures the node labels for the machine.
   nodeLabels:
-    feature.node.kubernetes.io/network-sriov.capable: "false"
+    feature.node.kubernetes.io/network-sriov.capable: "true"
     node.kubernetes.io/exclude-from-external-load-balancers: ""
     intel.feature.node.kubernetes.io/gpu: 'true'
   # # Provides machine specific control plane configuration options.
@@ -323,12 +323,12 @@ machine:
   # sysfs:
   #     devices.system.cpu.cpu0.cpufreq.scaling_governor: performance
 
-  # # Configures the udev system.
-  # udev:
-  #     # List of udev rules to apply to the udev system
-  #     rules:
-  #         - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
-
+  # Configures the udev system.
+  udev:
+    rules:
+      # Create 4 SR-IOV VFs on the primary NIC PF at boot.
+      # sriov-device-plugin advertises them as intel.com/x710; sriov-cni consumes them per-NAD.
+      - SUBSYSTEM=="net", ACTION=="add", KERNEL=="enp2s0f0np0", ATTR{device/sriov_numvfs}="4"
   # # Configures the logging system.
   # logging:
   #     # Logging destination.
@@ -410,14 +410,14 @@ cluster:
     key: ${K8S_01_TALOS_CLUSTER_SERVICEACCOUNT_KEY}
   # API server specific configuration options.
   apiServer:
-    image: registry.k8s.io/kube-apiserver:v1.35.1 # The container image used in the API server manifest.
+    image: registry.k8s.io/kube-apiserver:v1.36.1 # The container image used in the API server manifest.
     # Extra certificate subject alternative names for the API server's certificate.
     certSANs:
       - api.k8s-01.suslian.engineer
     disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
     extraArgs:
       feature-gates: UserNamespacesSupport=true,GenericWorkload=true
-      runtime-config: scheduling.k8s.io/v1alpha1
+      runtime-config: scheduling.k8s.io/v1alpha2=true
     # Configure the API server admission plugins.
     admissionControl:
       - name: PodSecurity # Name is the name of the admission controller.
@@ -470,18 +470,18 @@ cluster:
           #         timeout: 3s
   # Controller manager server specific configuration options.
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:v1.35.1 # The container image used in the controller manager manifest.
+    image: registry.k8s.io/kube-controller-manager:v1.36.1 # The container image used in the controller manager manifest.
     extraArgs:
       bind-address: 0.0.0.0
   # Kube-proxy server-specific configuration options
   proxy:
-    image: registry.k8s.io/kube-proxy:v1.35.1 # The container image used in the kube-proxy manifest.
+    image: registry.k8s.io/kube-proxy:v1.36.1 # The container image used in the kube-proxy manifest.
     # # Disable kube-proxy deployment on cluster bootstrap.
     # disabled: false
     disabled: true
   # Scheduler server specific configuration options.
   scheduler:
-    image: registry.k8s.io/kube-scheduler:v1.35.1 # The container image used in the scheduler manifest.
+    image: registry.k8s.io/kube-scheduler:v1.36.1 # The container image used in the scheduler manifest.
     extraArgs:
       bind-address: 0.0.0.0
       # Configures cluster member discovery.
