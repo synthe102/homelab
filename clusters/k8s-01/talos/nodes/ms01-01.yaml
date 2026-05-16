@@ -14,6 +14,12 @@ machine:
               - network: 0.0.0.0/0 # The route's network (destination).
                 gateway: 10.0.100.1
                 metric: 2048
+      - # SR-IOV VFs on enp2s0f0np0 — bound to iavf, claimed by sriov-cni per-pod.
+        # Without ignore, Talos DHCPs them onto the LAN and steals the egress
+        # route to the BGP peer, breaking Cilium BGP.
+        deviceSelector: {driver: iavf}
+        dhcp: false
+        ignore: true
       - interface: enp89s0
         dhcp: false
       - # m3
