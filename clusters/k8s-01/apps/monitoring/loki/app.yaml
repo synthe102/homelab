@@ -10,8 +10,8 @@ spec:
   project: default
   source:
     chart: loki
-    repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 7.0.0
+    repoURL: ghcr.io/grafana-community/helm-charts
+    targetRevision: 14.2.1
     helm:
       valuesObject:
         monitoring:
@@ -85,7 +85,8 @@ spec:
           enabled: false
         sidecar:
           image:
-            repository: ghcr.io/kiwigrid/k8s-sidecar
+            registry: ghcr.io
+            repository: kiwigrid/k8s-sidecar
           enableUniqueFilenames: true
           rules:
             searchNamespace: ALL
