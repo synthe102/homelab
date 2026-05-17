@@ -30,6 +30,16 @@ spec:
               "auth": {
                 "htpasswd": {
                   "path": "/etc/zot/htpasswd"
+                },
+                "openid": {
+                  "providers": {
+                    "oidc": {
+                      "issuer": "https://auth.suslian.engineer/application/o/zot/",
+                      "clientid": "{{ .oidcClientId }}",
+                      "clientsecret": "{{ .oidcClientSecret }}",
+                      "scopes": ["openid", "profile", "email", "groups"]
+                    }
+                  }
                 }
               },
               "accessControl": {
