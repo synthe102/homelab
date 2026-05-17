@@ -1,0 +1,96 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fileflows
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: media
+  project: default
+  sources:
+    - chart: app-template
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 5.0.1
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              pod:
+                securityContext:
+                  fsGroup: 568
+                  fsGroupChangePolicy: OnRootMismatch
+              containers:
+                main:
+                  nameOverride: fileflows
+                  image:
+                    repository: revenz/fileflows
+                    # renovate: datasource=docker depName=revenz/fileflows
+                    tag: "26.05"
+                  env:
+                    TZ: "Europe/Paris"
+                    PUID: "568"
+                    PGID: "568"
+                  resources:
+                    requests:
+                      gpu.intel.com/i915: 1
+                      memory: 1Gi
+                    limits:
+                      gpu.intel.com/i915: 1
+                      memory: 4Gi
+          service:
+            main:
+              controller: main
+              ports:
+                http:
+                  port: 5000
+          persistence:
+            data:
+              enabled: true
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
+              size: 5Gi
+              advancedMounts:
+                main:
+                  main:
+                    - path: /app/Data
+            logs:
+              enabled: true
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              advancedMounts:
+                main:
+                  main:
+                    - path: /app/Logs
+            temp:
+              type: emptyDir
+              advancedMounts:
+                main:
+                  main:
+                    - path: /temp
+            media:
+              type: nfs
+              server: 192.168.1.252
+              path: /mnt/MainHDD/Media
+              advancedMounts:
+                main:
+                  main:
+                    - path: /media
+          route:
+            app:
+              hostnames:
+                - fileflows.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
