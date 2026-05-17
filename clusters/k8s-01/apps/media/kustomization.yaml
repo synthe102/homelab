@@ -5,5 +5,4 @@ resources:
   - jellyfin
   - immich
   - jellyseerr
-  - tdarr
   - fileflows
