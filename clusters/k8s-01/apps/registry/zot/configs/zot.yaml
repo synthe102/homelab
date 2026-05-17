@@ -72,6 +72,11 @@ spec:
                 "enable": true,
                 "cve": {"updateInterval": "24h"}
               },
+              "trust": {
+                "enable": true,
+                "cosign": true,
+                "notation": true
+              },
               "metrics": {"enable": true, "prometheus": {"path": "/metrics"}}
             }
           }
