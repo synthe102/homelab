@@ -52,7 +52,10 @@ spec:
             },
             "extensions": {
               "ui": {"enable": true},
-              "search": {"enable": true},
+              "search": {
+                "enable": true,
+                "cve": {"updateInterval": "24h"}
+              },
               "metrics": {"enable": true, "prometheus": {"path": "/metrics"}}
             }
           }
