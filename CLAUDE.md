@@ -40,7 +40,7 @@ Uses [devenv](https://devenv.sh/) (Nix-based) with direnv integration. Enter the
 
 ### Available Tools (via devenv)
 
-`talosctl`, `clusterctl`, `just`, `k9s`, `cilium-cli`, `argocd`, `bws`, `velero`, `kopia`, `kubevirt`, `kind`, `vcluster`, `opentofu`, `uv`, `golangci-lint`
+`talosctl`, `just`, `k9s`, `cilium-cli`, `argocd`, `bws`, `velero`, `kopia`, `kubevirt`, `kind`, `vcluster`, `opentofu`, `uv`, `golangci-lint`
 
 ### YAML Formatting
 
