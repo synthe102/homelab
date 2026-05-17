@@ -19,7 +19,6 @@
     envsubst
     velero
     kopia
-    kubevirt
     kind
     vcluster
     opentofu

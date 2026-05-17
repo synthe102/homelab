@@ -40,7 +40,7 @@ Uses [devenv](https://devenv.sh/) (Nix-based) with direnv integration. Enter the
 
 ### Available Tools (via devenv)
 
-`talosctl`, `just`, `k9s`, `cilium-cli`, `argocd`, `bws`, `velero`, `kopia`, `kubevirt`, `kind`, `vcluster`, `opentofu`, `uv`, `golangci-lint`
+`talosctl`, `just`, `k9s`, `cilium-cli`, `argocd`, `bws`, `velero`, `kopia`, `kind`, `vcluster`, `opentofu`, `uv`, `golangci-lint`
 
 ### YAML Formatting
 
@@ -53,7 +53,7 @@ All YAML files must pass yamlfmt before committing.
 ## CI/CD
 
 - **ArgoCD Diff Preview**: GitHub Actions workflow (`.github/workflows/argocd-diff.yaml`) runs on PRs to `main`, spins up a Kind cluster, and posts rendered ArgoCD diffs as PR comments. Runner: `gha-runner-synthe102-homelab` (self-hosted).
-- **Renovate**: Auto-updates dependencies. Patch/minor versions auto-merge. Talos and KubeVirt major updates require manual approval. Custom regex manager handles YAML-annotated deps (`# renovate: datasource=... depName=...`).
+- **Renovate**: Auto-updates dependencies. Patch/minor versions auto-merge. Talos major updates require manual approval. Custom regex manager handles YAML-annotated deps (`# renovate: datasource=... depName=...`).
 
 ## Common Patterns
 
