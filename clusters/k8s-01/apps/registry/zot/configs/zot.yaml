@@ -19,7 +19,23 @@ spec:
             "storage": {
               "rootDirectory": "/var/lib/registry",
               "gc": true,
-              "dedupe": true
+              "dedupe": true,
+              "retention": {
+                "dryRun": false,
+                "delay": "24h",
+                "policies": [
+                  {
+                    "repositories": ["**"],
+                    "deleteUntagged": true,
+                    "deleteReferrers": false,
+                    "keepTags": [
+                      {"patterns": ["^(latest|main)$"]},
+                      {"patterns": ["^v?\\d+\\.\\d+\\.\\d+$"], "mostRecentlyPushedCount": 10},
+                      {"mostRecentlyPushedCount": 5}
+                    ]
+                  }
+                ]
+              }
             },
             "http": {
               "address": "0.0.0.0",
