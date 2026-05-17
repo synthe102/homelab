@@ -1,0 +1,55 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: zot
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  target:
+    name: zot
+    template:
+      engineVersion: v2
+      data:
+        htpasswd: |
+          {{ .htpasswd }}
+        config.json: |
+          {
+            "distSpecVersion": "1.1.0",
+            "storage": {
+              "rootDirectory": "/var/lib/registry",
+              "gc": true,
+              "dedupe": true
+            },
+            "http": {
+              "address": "0.0.0.0",
+              "port": "5000",
+              "externalUrl": "https://registry.k8s-01.suslian.engineer",
+              "auth": {
+                "htpasswd": {
+                  "path": "/etc/zot/htpasswd"
+                }
+              },
+              "accessControl": {
+                "repositories": {
+                  "**": {
+                    "anonymousPolicy": ["read"],
+                    "defaultPolicy": ["read", "create", "update", "delete"]
+                  }
+                }
+              }
+            },
+            "log": {
+              "level": "info"
+            },
+            "extensions": {
+              "ui": {"enable": true},
+              "search": {"enable": true},
+              "metrics": {"enable": true, "prometheus": {"path": "/metrics"}}
+            }
+          }
+  dataFrom:
+    - extract:
+        key: K8S_01_REGISTRY_ZOT

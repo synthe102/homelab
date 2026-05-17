@@ -1,0 +1,59 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zot
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: registry
+  sources:
+    - chart: zot
+      repoURL: https://zotregistry.dev/helm-charts
+      # renovate: datasource=helm depName=zot registryUrl=https://zotregistry.dev/helm-charts
+      targetRevision: 0.1.114
+      helm:
+        valuesObject:
+          image:
+            # renovate: datasource=docker depName=ghcr.io/project-zot/zot
+            tag: v2.1.16
+          service:
+            type: ClusterIP
+            port: 5000
+          persistence: true
+          pvc:
+            create: true
+            storage: 50Gi
+            storageClassName: ceph-block
+            accessMode: ReadWriteOnce
+          mountConfig: false
+          mountSecret: false
+          externalSecrets:
+            - secretName: zot
+              mountPath: /etc/zot
+          httproute:
+            enabled: true
+            hostnames:
+              - registry.k8s-01.suslian.engineer
+            parentRefs:
+              - name: internal
+                namespace: kube-system
+                sectionName: https-k8s-01
+          serviceMonitor:
+            enabled: true
+          metrics:
+            enabled: true
+    - path: clusters/k8s-01/apps/registry/zot/configs
+      repoURL: https://github.com/synthe102/homelab.git
+      targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
