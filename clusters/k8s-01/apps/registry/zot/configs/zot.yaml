@@ -13,8 +13,6 @@ spec:
     template:
       engineVersion: v2
       data:
-        htpasswd: |
-          {{ .htpasswd }}
         config.json: |
           {
             "distSpecVersion": "1.1.0",
@@ -28,9 +26,7 @@ spec:
               "port": "5000",
               "externalUrl": "https://registry.k8s-01.suslian.engineer",
               "auth": {
-                "htpasswd": {
-                  "path": "/etc/zot/htpasswd"
-                },
+                "apikey": true,
                 "openid": {
                   "providers": {
                     "oidc": {
