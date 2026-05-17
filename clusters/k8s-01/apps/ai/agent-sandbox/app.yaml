@@ -15,7 +15,13 @@ spec:
       path: helm
       helm:
         releaseName: agent-sandbox
-        valuesObject: {}
+        valuesObject:
+          image:
+            # renovate: datasource=github-releases depName=kubernetes-sigs/agent-sandbox
+            tag: v0.4.6
+          namespace:
+            create: true
+            name: agent-sandbox
     - repoURL: https://github.com/synthe102/homelab.git
       targetRevision: HEAD
       path: clusters/k8s-01/apps/ai/agent-sandbox/configs
