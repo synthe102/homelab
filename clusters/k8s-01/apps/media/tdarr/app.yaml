@@ -29,7 +29,7 @@ spec:
                   image:
                     repository: ghcr.io/haveagitgat/tdarr
                     # renovate: datasource=docker depName=ghcr.io/haveagitgat/tdarr
-                    tag: 2.46.01
+                    tag: 2.74.01
                   env:
                     TZ: "Europe/Paris"
                     UMASK_SET: "022"
