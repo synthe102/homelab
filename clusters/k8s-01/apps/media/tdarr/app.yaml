@@ -130,6 +130,9 @@ spec:
               server: 192.168.1.252
               path: /mnt/MainHDD/Media
               advancedMounts:
+                server:
+                  main:
+                    - path: /media
                 node:
                   main:
                     - path: /media
