@@ -39,9 +39,6 @@ spec:
                     serverPort: "8266"
                     webUIPort: "8265"
                     internalNode: "false"
-                  securityContext:
-                    runAsUser: 568
-                    runAsGroup: 568
             node:
               pod:
                 securityContext:
@@ -60,7 +57,7 @@ spec:
                     PUID: "568"
                     PGID: "568"
                     nodeName: k8s-01
-                    serverIP: tdarr-server.media.svc.cluster.local
+                    serverIP: tdarr.media.svc.cluster.local
                     serverPort: "8266"
                     inContainer: "true"
                   resources:
@@ -68,9 +65,6 @@ spec:
                       gpu.intel.com/i915: 1
                     limits:
                       gpu.intel.com/i915: 1
-                  securityContext:
-                    runAsUser: 568
-                    runAsGroup: 568
           service:
             server:
               controller: server
