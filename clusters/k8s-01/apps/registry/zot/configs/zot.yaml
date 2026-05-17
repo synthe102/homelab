@@ -55,6 +55,10 @@ spec:
                 }
               },
               "accessControl": {
+                "adminPolicy": {
+                  "users": ["account+authentik@suslian.engineer"],
+                  "actions": ["read", "create", "update", "delete"]
+                },
                 "repositories": {
                   "**": {
                     "anonymousPolicy": ["read"],
