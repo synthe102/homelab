@@ -9,7 +9,6 @@
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
-    clusterctl
     talosctl
     just
     k9s
@@ -20,7 +19,6 @@
     envsubst
     velero
     kopia
-    kubevirt
     kind
     vcluster
     opentofu

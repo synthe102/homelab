@@ -1,0 +1,89 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: zot
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  target:
+    name: zot
+    template:
+      engineVersion: v2
+      data:
+        config.json: |
+          {
+            "distSpecVersion": "1.1.0",
+            "storage": {
+              "rootDirectory": "/var/lib/registry",
+              "gc": true,
+              "dedupe": true,
+              "retention": {
+                "dryRun": false,
+                "delay": "24h",
+                "policies": [
+                  {
+                    "repositories": ["**"],
+                    "deleteUntagged": true,
+                    "deleteReferrers": false,
+                    "keepTags": [
+                      {"patterns": ["^(latest|main)$"]},
+                      {"patterns": ["^v?\\d+\\.\\d+\\.\\d+$"], "mostRecentlyPushedCount": 10},
+                      {"mostRecentlyPushedCount": 5}
+                    ]
+                  }
+                ]
+              }
+            },
+            "http": {
+              "address": "0.0.0.0",
+              "port": "5000",
+              "externalUrl": "https://registry.k8s-01.suslian.engineer",
+              "auth": {
+                "apikey": true,
+                "openid": {
+                  "providers": {
+                    "oidc": {
+                      "issuer": "https://auth.suslian.engineer/application/o/zot/",
+                      "clientid": "{{ .oidcClientId }}",
+                      "clientsecret": "{{ .oidcClientSecret }}",
+                      "scopes": ["openid", "profile", "email", "groups"]
+                    }
+                  }
+                }
+              },
+              "accessControl": {
+                "adminPolicy": {
+                  "users": ["account+authentik@suslian.engineer"],
+                  "actions": ["read", "create", "update", "delete"]
+                },
+                "repositories": {
+                  "**": {
+                    "anonymousPolicy": ["read"],
+                    "defaultPolicy": ["read", "create", "update", "delete"]
+                  }
+                }
+              }
+            },
+            "log": {
+              "level": "info"
+            },
+            "extensions": {
+              "ui": {"enable": true},
+              "search": {
+                "enable": true,
+                "cve": {"updateInterval": "24h"}
+              },
+              "trust": {
+                "enable": true,
+                "cosign": true,
+                "notation": true
+              },
+              "metrics": {"enable": true, "prometheus": {"path": "/metrics"}}
+            }
+          }
+  dataFrom:
+    - extract:
+        key: K8S_01_REGISTRY_ZOT
