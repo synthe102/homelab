@@ -15,7 +15,7 @@ spec:
     - chart: zot
       repoURL: https://zotregistry.dev/helm-charts
       # renovate: datasource=helm depName=zot registryUrl=https://zotregistry.dev/helm-charts
-      targetRevision: 0.1.114
+      targetRevision: 0.1.115
       helm:
         valuesObject:
           image:
