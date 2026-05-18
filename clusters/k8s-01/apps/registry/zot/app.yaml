@@ -20,7 +20,7 @@ spec:
         valuesObject:
           image:
             # renovate: datasource=docker depName=ghcr.io/project-zot/zot
-            tag: v2.1.16
+            tag: v2.1.17
           service:
             type: ClusterIP
             port: 5000
