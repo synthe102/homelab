@@ -1,0 +1,38 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-ceph-csi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: ceph-csi-drivers
+      repoURL: https://ceph.github.io/ceph-csi-operator
+      targetRevision: 1.0.1
+      helm:
+        valuesObject:
+          # Match the driver names old Rook (<v1.20) generated, i.e.
+          # <operatorNamespace>.<driver>.csi.ceph.com. Existing PVs have this
+          # baked into spec.csi.driver and the rook-ceph-cluster StorageClasses
+          # render provisioners as rook-ceph.*.csi.ceph.com. Without this the
+          # operator registers the unprefixed default and volumes fail to attach.
+          drivers:
+            rbd:
+              name: rook-ceph.rbd.csi.ceph.com
+            cephfs:
+              name: rook-ceph.cephfs.csi.ceph.com
+          operatorConfig:
+            driverSpecDefaults:
+              deployCsiAddons: true
+              controllerPlugin:
+                replicas: 2
+  destination:
+    name: in-cluster
+    namespace: rook-ceph
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
