@@ -22,6 +22,11 @@ spec:
           drivers:
             rbd:
               name: rook-ceph.rbd.csi.ceph.com
+              # Chart default for rbd is "none", which drops the csi-snapshotter
+              # sidecar and leaves Velero/CSI VolumeSnapshots stuck (never
+              # readyToUse), pinning source PVCs in Terminating. cephfs/nfs
+              # default to volumeSnapshot already.
+              snapshotPolicy: volumeSnapshot
             cephfs:
               name: rook-ceph.cephfs.csi.ceph.com
           operatorConfig:
