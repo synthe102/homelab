@@ -8,6 +8,19 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: minecraft-volcan
+  # Drop known FifthColumnMC griefer/scanner source IPs at L3, before traffic
+  # ever reaches the JVM. This is a deny-only ingress rule: enableDefaultDeny.ingress
+  # is set to false so the endpoint stays open to everyone else (legit players, the
+  # LoadBalancer, metrics scraping). Without that, a lone ingressDeny rule would flip
+  # the endpoint into ingress default-deny and lock the whole server out.
+  enableDefaultDeny:
+    ingress: false
+    egress: true
+  ingressDeny:
+    - fromCIDR:
+        - 213.152.161.54/32 # FifthColumnMC - main campaign (~1167 attempts)
+        - 176.65.148.154/32 # FifthColumnMC - secondary (~372 attempts)
+        - 204.76.203.35/32 # FifthColumnMC - original prober/recon (Feb 2026)
   egressDeny:
     - toCIDR:
         - 192.168.0.0/16
