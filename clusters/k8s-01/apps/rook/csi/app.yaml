@@ -1,0 +1,28 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rook-ceph-csi
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: ceph-csi-drivers
+      repoURL: https://ceph.github.io/ceph-csi-operator
+      targetRevision: 1.0.1
+      helm:
+        valuesObject:
+          operatorConfig:
+            driverSpecDefaults:
+              deployCsiAddons: true
+              controllerPlugin:
+                replicas: 2
+  destination:
+    name: in-cluster
+    namespace: rook-ceph
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

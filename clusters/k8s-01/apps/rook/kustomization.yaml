@@ -5,3 +5,4 @@ resources:
   - ./cluster/app.yaml
   - ./operator/app.yaml
   - ./storage/app.yaml
+  - ./csi/app.yaml
