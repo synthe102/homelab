@@ -11,7 +11,7 @@ spec:
   source:
     chart: loki
     repoURL: ghcr.io/grafana-community/helm-charts
-    targetRevision: 17.3.1
+    targetRevision: 17.3.2
     helm:
       valuesObject:
         monitoring:
