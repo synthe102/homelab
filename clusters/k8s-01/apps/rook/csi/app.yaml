@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: ceph-csi-drivers
       repoURL: https://ceph.github.io/ceph-csi-operator
-      targetRevision: 1.0.1
+      targetRevision: 1.0.3
       helm:
         valuesObject:
           # Match the driver names old Rook (<v1.20) generated, i.e.
