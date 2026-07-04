@@ -11,13 +11,15 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           path: pull-request
-      - uses: actions/checkout@v7
+          persist-credentials: false
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           ref: main
           path: main
+          persist-credentials: false
       - name: Install GH cli
         run: |
           (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
@@ -32,6 +34,8 @@ jobs:
         env:
           # renovate: datasource=docker depName=dagandersen/argocd-diff-preview
           ARGOCD_DIFF_PREVIEW_VERSION: v0.2.11
+          TARGET_BRANCH: ${{ github.head_ref }}
+          REPO: ${{ github.repository }}
         run: |
           docker run \
             --network=host \
@@ -39,14 +43,16 @@ jobs:
             -v $(pwd)/main:/base-branch \
             -v $(pwd)/pull-request:/target-branch \
             -v $(pwd)/output:/output \
-            -e TARGET_BRANCH=${{ github.head_ref }} \
-            -e REPO=${{ github.repository }} \
+            -e TARGET_BRANCH \
+            -e REPO \
             dagandersen/argocd-diff-preview:${ARGOCD_DIFF_PREVIEW_VERSION} \
             --kind-options '--config /base-branch/.github/hack/kind.yaml' \
             --diff-ignore '([a-z0-9]{5}-[bt]-[a-z]|checksum/(secret|init-config):)'
       - name: Post diff as comment
-        run: |
-          gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md --edit-last || \
-          gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --body-file output/diff.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body-file output/diff.md --edit-last || \
+          gh pr comment "${PR_NUMBER}" --repo "${REPO}" --body-file output/diff.md
