@@ -1,0 +1,143 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mimir-kafka-metrics
+data:
+  kafka-metrics-config.yml: |
+    lowercaseOutputName: true
+    rules:
+      - pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+), (.+)=(.+)><>Value
+        name: kafka_$1_$2_$3
+        type: GAUGE
+        labels:
+          "$4": "$5"
+          "$6": "$7"
+      - pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+)><>Value
+        name: kafka_$1_$2_$3
+        type: GAUGE
+        labels:
+          "$4": "$5"
+      - pattern: kafka.(\w+)<type=(.+), name=(.+)><>Value
+        name: kafka_$1_$2_$3
+        type: GAUGE
+      - pattern: kafka.(\w+)<type=(.+), name=(.+), (.+)=(.+)><>Count
+        name: kafka_$1_$2_$3_total
+        type: COUNTER
+        labels:
+          "$4": "$5"
+      - pattern: kafka.(\w+)<type=(.+), name=(.+)><>Count
+        name: kafka_$1_$2_$3_total
+        type: COUNTER
+      - pattern: "kafka.server<type=raft-metrics><>(.+):"
+        name: kafka_server_raftmetrics_$1
+        type: GAUGE
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: mixed
+  labels:
+    strimzi.io/cluster: mimir
+spec:
+  replicas: 3
+  roles:
+    - broker
+    - controller
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+  jvmOptions:
+    -Xms: 768m
+    -Xmx: 768m
+    gcLoggingEnabled: false
+  storage:
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 20Gi
+        class: ceph-block-xfs
+        deleteClaim: false
+        kraftMetadata: shared
+  template:
+    pod:
+      terminationGracePeriodSeconds: 60
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  strimzi.io/name: mimir-kafka
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: kafka.strimzi.io/v1
+kind: Kafka
+metadata:
+  name: mimir
+spec:
+  kafka:
+    version: 4.2.1
+    metadataVersion: 4.2-IV1
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      auto.create.topics.enable: false
+      default.replication.factor: 3
+      min.insync.replicas: 2
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      log.cleanup.policy: delete
+      log.retention.hours: 24
+      log.retention.check.interval.ms: 300000
+      log.segment.bytes: 268435456
+      log.segment.ms: 3600000
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: mimir-kafka-metrics
+          key: kafka-metrics-config.yml
+  entityOperator:
+    topicOperator:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+  kafkaExporter:
+    topicRegex: mimir-.*
+    groupRegex: mimir-.*
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
+---
+apiVersion: kafka.strimzi.io/v1
+kind: KafkaTopic
+metadata:
+  name: mimir-ingest
+  labels:
+    strimzi.io/cluster: mimir
+spec:
+  topicName: mimir-ingest
+  partitions: 12
+  replicas: 3
+  config:
+    cleanup.policy: delete
+    min.insync.replicas: 2
+    retention.ms: 86400000
+    segment.ms: 3600000

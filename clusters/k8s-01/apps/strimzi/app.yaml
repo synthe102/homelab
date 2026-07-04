@@ -1,0 +1,39 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: strimzi
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: strimzi-kafka-operator
+    repoURL: https://strimzi.io/charts
+    targetRevision: 1.1.0
+    helm:
+      releaseName: strimzi-cluster-operator
+      valuesObject:
+        watchNamespaces:
+          - monitoring
+        dashboards:
+          enabled: true
+          namespace: monitoring
+          annotations:
+            k8s-sidecar-target-directory: /tmp/dashboards/Kafka
+        podDisruptionBudget:
+          enabled: true
+          minAvailable: 1
+  destination:
+    name: in-cluster
+    namespace: strimzi-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

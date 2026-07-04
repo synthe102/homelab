@@ -1,0 +1,119 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: mimir-kafka
+spec:
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      strimzi.io/cluster: mimir
+  podMetricsEndpoints:
+    - path: /metrics
+      port: tcp-prometheus
+      relabelings:
+        - action: labelmap
+          regex: __meta_kubernetes_pod_label_(strimzi_io_.+)
+        - action: replace
+          sourceLabels:
+            - __meta_kubernetes_namespace
+          targetLabel: namespace
+        - action: replace
+          sourceLabels:
+            - __meta_kubernetes_pod_name
+          targetLabel: kubernetes_pod_name
+        - action: replace
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: node_name
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: mimir-kafka
+spec:
+  groups:
+    - name: mimir-kafka
+      rules:
+        - alert: MimirKafkaDiskSpaceLow
+          expr: |
+            (
+              kubelet_volume_stats_available_bytes{
+                namespace="monitoring",
+                persistentvolumeclaim=~"data-0-mimir-mixed-[0-9]+"
+              }
+              /
+              kubelet_volume_stats_capacity_bytes{
+                namespace="monitoring",
+                persistentvolumeclaim=~"data-0-mimir-mixed-[0-9]+"
+              }
+            ) < 0.20
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: Mimir Kafka is running low on disk space
+            description: >-
+              Kafka PVC {{ $labels.persistentvolumeclaim }} has less than 20% free space remaining.
+        - alert: MimirKafkaDiskSpaceCritical
+          expr: |
+            (
+              kubelet_volume_stats_available_bytes{
+                namespace="monitoring",
+                persistentvolumeclaim=~"data-0-mimir-mixed-[0-9]+"
+              }
+              /
+              kubelet_volume_stats_capacity_bytes{
+                namespace="monitoring",
+                persistentvolumeclaim=~"data-0-mimir-mixed-[0-9]+"
+              }
+            ) < 0.10
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Mimir Kafka is critically low on disk space
+            description: >-
+              Kafka PVC {{ $labels.persistentvolumeclaim }} has less than 10% free space remaining.
+        - alert: MimirKafkaBrokerNotReady
+          expr: |
+            kube_pod_status_ready{
+              namespace="monitoring",
+              pod=~"mimir-mixed-[0-9]+",
+              condition="true"
+            } == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: A Mimir Kafka broker is not ready
+            description: Kafka broker {{ $labels.pod }} has not been ready for five minutes.
+        - alert: MimirKafkaUnderReplicatedPartitions
+          expr: kafka_server_replicamanager_underreplicatedpartitions > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: Mimir Kafka has under-replicated partitions
+            description: >-
+              Broker {{ $labels.kubernetes_pod_name }} has {{ $value }} under-replicated partitions.
+        - alert: MimirKafkaUnderMinISRPartitions
+          expr: kafka_server_replicamanager_underminisrpartitioncount > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Mimir Kafka has partitions below minimum ISR
+            description: >-
+              Broker {{ $labels.kubernetes_pod_name }} has {{ $value }} partitions below minimum ISR.
+        - alert: MimirKafkaOfflineLogDirectory
+          expr: kafka_log_logmanager_offlinelogdirectorycount > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: Mimir Kafka has an offline log directory
+            description: >-
+              Broker {{ $labels.kubernetes_pod_name }} reports an offline Kafka log directory.
