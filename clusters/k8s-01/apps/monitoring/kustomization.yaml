@@ -5,6 +5,7 @@ resources:
   - kube-prometheus-stack
   - loki
   - mimir
+  - mimir-kafka
   - unpoller
   - smartctl-exporter
   - k8s-monitoring

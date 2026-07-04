@@ -4,6 +4,8 @@ kind: Application
 metadata:
   name: mimir
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -57,11 +59,16 @@ spec:
           distributor:
             replicas: 2
           kafka:
-            extraEnv:
-              - name: KAFKA_LOG_RETENTION_BYTES
-                value: "2000000000"
+            enabled: false
           mimir:
             structuredConfig:
+              ingest_storage:
+                enabled: true
+                kafka:
+                  address: mimir-kafka-bootstrap.monitoring.svc.cluster.local:9092
+                  auto_create_topic_enabled: false
+                  auto_create_topic_default_partitions: 12
+                  topic: mimir-ingest
               common:
                 storage:
                   backend: s3

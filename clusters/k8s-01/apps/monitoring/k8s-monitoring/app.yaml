@@ -26,6 +26,26 @@ spec:
                 address = "http://mimir-ruler.monitoring.svc:8080"
                 tenant_id = "anonymous"
               }
+
+              mimir.alerts.kubernetes "default" {
+                address = "http://mimir-gateway.monitoring.svc.cluster.local:80"
+                global_config = `
+              route:
+                receiver: "null"
+              receivers:
+                - name: "null"
+              `
+
+                alertmanagerconfig_selector {
+                  match_labels = {
+                    "alertmanager" = "mimir",
+                  }
+                }
+
+                alertmanagerconfig_matcher {
+                  strategy = "None"
+                }
+              }
           alloy-logs:
             presets: [filesystem-log-reader, daemonset]
           alloy-metrics:

@@ -4,6 +4,8 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
   name: alertmanager
+  labels:
+    alertmanager: mimir
 spec:
   route:
     groupBy: ["alertname", "job"]
@@ -18,11 +20,11 @@ spec:
             value: critical
             matchType: =
   receivers:
-  - name: "null"
-  - name: telegram
-    telegramConfigs:
-      - botToken:
-          name: telegram-bot-token
-          key: bot-token
-        chatID: -4797781084
-        sendResolved: true
+    - name: "null"
+    - name: telegram
+      telegramConfigs:
+        - botToken:
+            name: telegram-bot-token
+            key: bot-token
+          chatID: -4797781084
+          sendResolved: true
