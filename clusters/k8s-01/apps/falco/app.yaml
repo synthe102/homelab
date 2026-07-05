@@ -39,6 +39,15 @@ spec:
                 items: ['ghcr.io/k8snetworkplumbingwg/multus-cni','docker.io/moby/buildkit', 'docker.io/grafana/alloy']
                 override:
                   items: append
+              - list: known_host_cni_binaries
+                items: ['/opt/cni/bin/loopback', '/opt/cni/bin/multus-shim']
+              - macro: known_drop_and_execute_activities
+                condition: >
+                  or (container.id = runtime
+                  and proc.pname = containerd
+                  and proc.exepath in (known_host_cni_binaries))
+                override:
+                  condition: append
           falcosidekick:
             enabled: true
             serviceMonitor:
