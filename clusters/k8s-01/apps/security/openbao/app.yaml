@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: openbao
       repoURL: https://openbao.github.io/openbao-helm
-      targetRevision: 0.28.3
+      targetRevision: 0.28.4
       helm:
         valuesObject:
           global:
@@ -26,7 +26,7 @@ spec:
           server:
             image:
               # renovate: datasource=docker depName=quay.io/openbao/openbao
-              tag: 2.5.4
+              tag: 2.5.5
             ingress:
               enabled: false
             standalone:

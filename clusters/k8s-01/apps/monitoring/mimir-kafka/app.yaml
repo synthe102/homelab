@@ -2,19 +2,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gateway-api
+  name: mimir-kafka
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  sources:
-    - path: clusters/k8s-01/apps/kube-system/gateway-api/configs
-      repoURL: 'https://github.com/synthe102/homelab.git'
-      targetRevision: HEAD
+  source:
+    path: clusters/k8s-01/apps/monitoring/mimir-kafka/configs
+    repoURL: https://github.com/synthe102/homelab.git
+    targetRevision: HEAD
   destination:
     name: in-cluster
-    namespace: kube-system
+    namespace: monitoring
   syncPolicy:
     automated:
       prune: true
