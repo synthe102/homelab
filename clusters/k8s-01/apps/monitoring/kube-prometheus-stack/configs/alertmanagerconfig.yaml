@@ -27,4 +27,61 @@ spec:
             name: telegram-bot-token
             key: bot-token
           chatID: -4797781084
+          parseMode: HTML
           sendResolved: true
+          message: |-
+            {{- if eq .Status "firing" -}}
+            🚨 <b>{{ with .CommonLabels.severity }}{{ . | toUpper | html }}{{ else }}ALERT{{ end }} · FIRING</b>
+            {{- else -}}
+            ✅ <b>RESOLVED</b>
+            {{- end }}
+            {{- if .CommonAnnotations.summary }}
+            <b>{{ .CommonAnnotations.summary | html }}</b>
+            {{- else if (index .Alerts 0).Annotations.summary }}
+            <b>{{ (index .Alerts 0).Annotations.summary | html }}</b>
+            {{- else }}
+            <b>{{ .CommonLabels.alertname | html }}</b>
+            {{- end }}
+            {{- if .CommonAnnotations.description }}
+            {{ .CommonAnnotations.description | html }}
+            {{- else if .CommonAnnotations.message }}
+            {{ .CommonAnnotations.message | html }}
+            {{- else if (index .Alerts 0).Annotations.description }}
+            {{ (index .Alerts 0).Annotations.description | html }}
+            {{- else if (index .Alerts 0).Annotations.message }}
+            {{ (index .Alerts 0).Annotations.message | html }}
+            {{- end }}
+
+            <b>Context</b>
+            {{- with .CommonLabels.cluster }}
+            Cluster: <code>{{ . | html }}</code>
+            {{- else }}
+            {{- with $.CommonLabels.k8s_cluster_name }}
+            Cluster: <code>{{ . | html }}</code>
+            {{- end }}{{ end }}
+            {{- with .CommonLabels.namespace }}
+            Namespace: <code>{{ . | html }}</code>
+            {{- end }}
+            {{- with .CommonLabels.pod }}
+            Workload: <code>{{ . | html }}</code>{{ with $.CommonLabels.container }} · <code>{{ . | html }}</code>{{ end }}
+            {{- else }}
+            {{- with .CommonLabels.service }}
+            Service: <code>{{ . | html }}</code>
+            {{- else }}
+            {{- with $.CommonLabels.job }}
+            Job: <code>{{ . | html }}</code>
+            {{- end }}{{ end }}{{ end }}
+            {{- with .CommonLabels.hostname }}
+            Node: <code>{{ . | html }}</code>
+            {{- else }}
+            {{- with $.CommonLabels.instance }}
+            Instance: <code>{{ . | html }}</code>
+            {{- end }}{{ end }}
+            {{- with .CommonLabels.rule }}
+            Detection: {{ . | html }}{{ with $.CommonLabels.source }} · <code>{{ . | html }}</code>{{ end }}
+            {{- end }}
+            {{- if gt (len .Alerts) 1 }}
+            Grouped alerts: <b>{{ len .Alerts }}</b>
+            {{- end }}
+
+            🔗 <a href="https://grafana.k8s-01.suslian.engineer/alerting/list">Alerting</a> · <a href="https://grafana.k8s-01.suslian.engineer/explore">Explore</a>{{ with .CommonAnnotations.runbook_url }} · <a href="{{ . | html }}">Runbook</a>{{ end }}{{ with .CommonAnnotations.dashboard_url }} · <a href="{{ . | html }}">Dashboard</a>{{ end }}{{ with .CommonAnnotations.panel_url }} · <a href="{{ . | html }}">Panel</a>{{ end }}{{ with (index .Alerts 0).GeneratorURL }}{{ if match "^https?://" . }} · <a href="{{ . | html }}">Source</a>{{ end }}{{ end }}
