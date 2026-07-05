@@ -96,7 +96,7 @@ spec:
       transaction.state.log.replication.factor: 3
       transaction.state.log.min.isr: 2
       log.cleanup.policy: delete
-      log.retention.hours: 24
+      log.retention.hours: 12
       log.retention.check.interval.ms: 300000
       log.segment.bytes: 268435456
       log.segment.ms: 3600000
@@ -139,5 +139,5 @@ spec:
   config:
     cleanup.policy: delete
     min.insync.replicas: 2
-    retention.ms: 86400000
+    retention.ms: 43200000
     segment.ms: 3600000
