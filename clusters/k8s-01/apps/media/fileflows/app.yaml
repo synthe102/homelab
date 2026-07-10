@@ -29,7 +29,7 @@ spec:
                   image:
                     repository: revenz/fileflows
                     # renovate: datasource=docker depName=revenz/fileflows
-                    tag: "26.06"
+                    tag: "26.07"
                   env:
                     TZ: "Europe/Paris"
                     PUID: "568"
