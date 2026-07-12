@@ -65,6 +65,16 @@ spec:
         clusterMetrics:
           enabled: true
           collector: alloy-metrics
+          kube-state-metrics:
+            jobLabel: kube-state-metrics
+        hostMetrics:
+          enabled: true
+          collector: alloy-metrics
+          linuxHosts:
+            enabled: true
+            jobLabel: node-exporter
+            metricsTuning:
+              useIntegrationAllowList: true
         telemetryServices:
           node-exporter:
             deploy: true
