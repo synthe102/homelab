@@ -75,6 +75,8 @@ spec:
             jobLabel: node-exporter
             metricsTuning:
               useIntegrationAllowList: true
+              includeMetrics:
+                - node_time_seconds
         telemetryServices:
           node-exporter:
             deploy: true
