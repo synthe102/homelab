@@ -21,7 +21,7 @@ spec:
                   nameOverride: stalwart
                   image:
                     repository: stalwartlabs/stalwart
-                    tag: v0.16.14
+                    tag: v0.16.15
                     # probes:
                     #   liveness:
                     #     enabled: true
