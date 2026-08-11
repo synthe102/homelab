@@ -19,6 +19,15 @@ spec:
           enabled: true
         serviceMonitor:
           enabled: true
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: NotIn
+                      values:
+                        - arm64
   destination:
     name: in-cluster
     namespace: monitoring
