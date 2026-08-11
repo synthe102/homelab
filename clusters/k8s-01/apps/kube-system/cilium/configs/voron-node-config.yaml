@@ -10,6 +10,7 @@ spec:
       workload.suslian.engineer/printer: voron-2.4
   defaults:
     # Raspberry Pi's downstream kernel rejects Cilium's BPF SNAT host program.
-    # Keep the cluster-wide eBPF path and use the supported iptables fallback
-    # only on the printer node.
+    # Keep the cluster-wide netkit/eBPF path and use the conventional veth plus
+    # iptables fallback only on the printer node.
+    datapath-mode: veth
     enable-bpf-masquerade: "false"
