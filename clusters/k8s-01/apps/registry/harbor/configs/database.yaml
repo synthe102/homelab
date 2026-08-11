@@ -1,0 +1,23 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: harbor-db
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  instances: 2
+  affinity:
+    nodeSelector:
+      kubernetes.io/arch: amd64
+  bootstrap:
+    initdb:
+      database: registry
+      owner: harbor
+  storage:
+    size: 20Gi
+    storageClass: ceph-block-xfs
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi

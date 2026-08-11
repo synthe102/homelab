@@ -1,0 +1,98 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: s3-harbor
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  bucketName: harbor-registry
+  storageClassName: ceph-objectstore
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: harbor-s3-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: harbor-s3-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      - s3-harbor
+    verbs:
+      - get
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - selfsubjectrulesreviews
+    verbs:
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: harbor-s3-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+subjects:
+  - kind: ServiceAccount
+    name: harbor-s3-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: harbor-s3-reader
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: harbor-kubernetes
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  provider:
+    kubernetes:
+      remoteNamespace: harbor
+      server:
+        caProvider:
+          type: ConfigMap
+          name: kube-root-ca.crt
+          key: ca.crt
+      auth:
+        serviceAccount:
+          name: harbor-s3-reader
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: harbor-registry-s3
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: SecretStore
+    name: harbor-kubernetes
+  target:
+    name: harbor-registry-s3
+    creationPolicy: Owner
+    deletionPolicy: Retain
+  data:
+    - secretKey: REGISTRY_STORAGE_S3_ACCESSKEY
+      remoteRef:
+        key: s3-harbor
+        property: AWS_ACCESS_KEY_ID
+    - secretKey: REGISTRY_STORAGE_S3_SECRETKEY
+      remoteRef:
+        key: s3-harbor
+        property: AWS_SECRET_ACCESS_KEY

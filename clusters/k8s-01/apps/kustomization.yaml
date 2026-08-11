@@ -27,3 +27,4 @@ resources:
   - mail
   - buildkite
   - security
+  - registry

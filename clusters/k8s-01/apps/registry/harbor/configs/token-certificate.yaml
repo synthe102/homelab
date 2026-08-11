@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-token
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  secretName: harbor-token
+  commonName: harbor-token
+  duration: 87600h
+  renewBefore: 720h
+  privateKey:
+    algorithm: RSA
+    size: 2048
+    rotationPolicy: Never
+  usages:
+    - digital signature
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: self-signed
