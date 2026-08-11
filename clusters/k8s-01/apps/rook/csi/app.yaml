@@ -27,8 +27,20 @@ spec:
               # readyToUse), pinning source PVCs in Terminating. cephfs/nfs
               # default to volumeSnapshot already.
               snapshotPolicy: volumeSnapshot
+              nodePlugin:
+                tolerations:
+                  - key: workload.suslian.engineer/printer
+                    operator: Equal
+                    value: voron-2.4
+                    effect: NoSchedule
             cephfs:
               name: rook-ceph.cephfs.csi.ceph.com
+              nodePlugin:
+                tolerations:
+                  - key: workload.suslian.engineer/printer
+                    operator: Equal
+                    value: voron-2.4
+                    effect: NoSchedule
           operatorConfig:
             driverSpecDefaults:
               deployCsiAddons: true
