@@ -9,3 +9,4 @@ resources:
   - gateway-external.yaml
   - redirect.yaml
   - cert.yaml
+  - voron-node-config.yaml

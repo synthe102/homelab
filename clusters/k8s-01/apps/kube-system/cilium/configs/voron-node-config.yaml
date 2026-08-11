@@ -1,0 +1,15 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNodeConfig
+metadata:
+  name: voron-kernel-compatibility
+  namespace: kube-system
+spec:
+  nodeSelector:
+    matchLabels:
+      workload.suslian.engineer/printer: voron-2.4
+  defaults:
+    # Raspberry Pi's downstream kernel rejects Cilium's BPF SNAT host program.
+    # Keep the cluster-wide eBPF path and use the supported iptables fallback
+    # only on the printer node.
+    enable-bpf-masquerade: "false"
