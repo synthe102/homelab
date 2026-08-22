@@ -13,7 +13,7 @@ spec:
   source:
     chart: strimzi-kafka-operator
     repoURL: https://strimzi.io/charts
-    targetRevision: 1.1.0
+    targetRevision: 1.2.0
     helm:
       releaseName: strimzi-cluster-operator
       valuesObject:
