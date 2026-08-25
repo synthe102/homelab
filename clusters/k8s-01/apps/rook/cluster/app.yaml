@@ -23,6 +23,11 @@ spec:
             cephConfig:
               global:
                 mon_max_pg_per_osd: "400"
+            security:
+              cephx:
+                daemon:
+                  keyRotationPolicy: KeyGeneration
+                  keyGeneration: 2
             dashboard:
               enabled: true
               urlPrefix: /
