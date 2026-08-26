@@ -33,7 +33,7 @@ jobs:
       - name: Generate Diff
         env:
           # renovate: datasource=docker depName=dagandersen/argocd-diff-preview
-          ARGOCD_DIFF_PREVIEW_VERSION: v0.2.13
+          ARGOCD_DIFF_PREVIEW_VERSION: v0.2.14
           TARGET_BRANCH: ${{ github.head_ref }}
           REPO: ${{ github.repository }}
         run: |
