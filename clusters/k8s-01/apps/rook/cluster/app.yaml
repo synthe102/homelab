@@ -19,9 +19,6 @@ spec:
             createPrometheusRules: true
           toolbox:
             enabled: true
-          cephImage:
-            repository: quay.io/ceph/ceph
-            tag: v20.2.4
           cephClusterSpec:
             cephConfig:
               global:
