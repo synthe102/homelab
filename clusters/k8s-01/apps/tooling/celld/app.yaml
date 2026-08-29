@@ -9,7 +9,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
-    namespace: tooling
+    namespace: celld
   project: default
   sources:
     - chart: app-template
