@@ -23,6 +23,7 @@ spec:
             repository: quay.io/ceph/ceph
             tag: v20.2.2
           cephClusterSpec:
+            skipUpgradeChecks: true
             cephConfig:
               global:
                 mon_max_pg_per_osd: "400"
