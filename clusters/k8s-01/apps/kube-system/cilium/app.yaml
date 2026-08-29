@@ -85,10 +85,10 @@ spec:
             autoMount:
               enabled: false
             hostRoot: /sys/fs/cgroup
-          # Use the routable cluster endpoint so Cilium can bootstrap on both
-          # Talos (KubePrism) and conventional kubeadm nodes.
-          k8sServiceHost: api.k8s-01.suslian.engineer
-          k8sServicePort: 6443
+          # Use Talos' node-local KubePrism endpoint so Cilium does not depend
+          # on reachability of the external cluster endpoint.
+          k8sServiceHost: localhost
+          k8sServicePort: 7445
           operator:
             rollOutPods: true
             dashboards:
