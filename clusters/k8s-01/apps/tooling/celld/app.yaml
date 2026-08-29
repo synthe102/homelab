@@ -1,0 +1,116 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: celld
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: tooling
+  project: default
+  sources:
+    - chart: app-template
+      helm:
+        valuesObject:
+          controllers:
+            main:
+              replicas: 3
+              strategy: RollingUpdate
+              rollingUpdate:
+                maxUnavailable: 0
+                maxSurge: 1
+              pod:
+                terminationGracePeriodSeconds: 60
+              containers:
+                main:
+                  nameOverride: celld
+                  image:
+                    repository: ghcr.io/denoland/celld
+                    # renovate: datasource=docker depName=ghcr.io/denoland/celld
+                    tag: v0.4.0
+                  ports:
+                    - name: http
+                      containerPort: 8080
+                    - name: internal
+                      containerPort: 8081
+                  env:
+                    - name: AWS_REGION
+                      value: us-east-1
+                    - name: S3_ENDPOINT
+                      value: http://rook-ceph-rgw-ceph-objectstore.rook-ceph.svc
+                    - name: CELLD_BUCKET
+                      value: s3://celld
+                    - name: CELLD_ADDR
+                      value: 0.0.0.0:8080
+                    - name: CELLD_INTERNAL_ADDR
+                      value: 0.0.0.0:8081
+                    - name: POD_IP
+                      valueFrom:
+                        fieldRef:
+                          fieldPath: status.podIP
+                    - name: CELLD_ADVERTISE
+                      value: $(POD_IP):8081
+                    - name: CELLD_WATCH
+                      value: /var/lib/celld/state
+                    - name: AWS_ACCESS_KEY_ID
+                      valueFrom:
+                        secretKeyRef:
+                          name: s3-celld
+                          key: AWS_ACCESS_KEY_ID
+                    - name: AWS_SECRET_ACCESS_KEY
+                      valueFrom:
+                        secretKeyRef:
+                          name: s3-celld
+                          key: AWS_SECRET_ACCESS_KEY
+                  probes:
+                    startup:
+                      enabled: true
+                      type: HTTP
+                      path: /.well-known/celld/health
+                      port: http
+                      spec:
+                        failureThreshold: 30
+                        periodSeconds: 5
+                    liveness:
+                      enabled: true
+                      type: HTTP
+                      path: /.well-known/celld/health
+                      port: http
+                    readiness:
+                      enabled: true
+                      type: HTTP
+                      path: /.well-known/celld/health
+                      port: http
+          service:
+            main:
+              controller: main
+              ports:
+                http:
+                  port: 8080
+          persistence:
+            state:
+              type: emptyDir
+              globalMounts:
+                - path: /var/lib/celld
+          route:
+            app:
+              hostnames:
+                - celld.k8s-01.suslian.engineer
+              parentRefs:
+                - name: internal
+                  namespace: kube-system
+                  sectionName: https-k8s-01
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 5.1.0
+    - path: clusters/k8s-01/apps/tooling/celld/configs
+      repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
