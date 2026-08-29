@@ -30,7 +30,7 @@ spec:
               cephx:
                 daemon:
                   keyRotationPolicy: KeyGeneration
-                  keyGeneration: 2
+                  keyGeneration: 3
                   keyType: aes
             dashboard:
               enabled: true
