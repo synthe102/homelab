@@ -31,6 +31,7 @@ spec:
                 daemon:
                   keyRotationPolicy: KeyGeneration
                   keyGeneration: 2
+                  keyType: aes
             dashboard:
               enabled: true
               urlPrefix: /
