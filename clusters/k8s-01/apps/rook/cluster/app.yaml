@@ -175,6 +175,9 @@ spec:
                 gateway:
                   port: 80
                   instances: 2
+                  # Temporary compatibility workaround for the 20.2.4 SigV4 verifier.
+                  rgwConfig:
+                    rgw_sigv4_insecure: "true"
                 hosting:
                   dnsNames:
                     - &host s3.k8s-01.suslian.engineer
