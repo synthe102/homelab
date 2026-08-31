@@ -1,0 +1,49 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hermes
+  namespace: tooling
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: hermes
+  # Keep ingress open for the Gateway API proxy, while making outbound access
+  # an explicit allow-list. This prevents access to other cluster endpoints.
+  enableDefaultDeny:
+    ingress: false
+    egress: true
+  # Defense-in-depth for the homelab LAN. Cluster pod/service/node networks
+  # are not allowed below because default-deny egress only permits the rules
+  # listed here.
+  egressDeny:
+    - toCIDR:
+        - 192.168.0.0/16
+  egress:
+    # Permit the Gateway hairpin to reach Authentik's backend identity. The
+    # Gateway proxy otherwise classifies this upstream as world and Envoy
+    # returns 403 before Authentik sees the OIDC discovery request.
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: authentik
+            app.kubernetes.io/name: authentik
+            app.kubernetes.io/component: server
+      toPorts:
+        - ports:
+            - port: "9000"
+              protocol: TCP
+    - toEntities:
+        - world
+    # Cilium Gateway API / ingress proxy, including the Authentik route.
+    - toEntities:
+        - ingress
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
