@@ -16,7 +16,7 @@ controllers:
       main:
         image:
           repository: nousresearch/hermes-agent
-          tag: latest@sha256:3968f8e23e759449c73c09faaf2c0f47ba65fc4fe7b689431d4b0d8ff2cb70cb
+          tag: v2026.8.31@sha256:64923faeae267792bf9bf87fe3b4c4869e35004e360c7df01730ad801b74d524
         args:
           - gateway
           - run
