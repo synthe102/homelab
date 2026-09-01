@@ -1,10 +1,11 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: root
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: in-cluster
@@ -13,6 +14,15 @@ spec:
     path: clusters/k8s-01/apps
     repoURL: https://github.com/synthe102/homelab.git
     targetRevision: HEAD
+  ignoreDifferences:
+    - group: argoproj.io
+      kind: Application
+      namespace: argocd
+      jqPathExpressions:
+        - '.metadata.finalizers[]? | select(startswith("pre-delete-finalizer.argocd.argoproj.io"))'
+        - '.metadata.finalizers[]? | select(startswith("post-delete-finalizer.argocd.argoproj.io"))'
   syncPolicy:
     automated:
       selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
