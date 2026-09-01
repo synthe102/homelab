@@ -1,0 +1,20 @@
+---
+controllerServiceAccount:
+  name: gha-runner-scale-set-controller-gha-rs-controller
+  namespace: arc-system
+containerMode:
+  type: dind
+template:
+  spec:
+    containers:
+      - name: runner
+        image: ghcr.io/actions/actions-runner:2.337.0
+        command: ["/home/runner/run.sh"]
+        volumeMounts:
+          - name: certs
+            readOnly: true
+            mountPath: /certs
+    volumes:
+      - name: certs
+        secret:
+          secretName: buildkit-client-certs

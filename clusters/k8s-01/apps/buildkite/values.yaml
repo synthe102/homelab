@@ -1,0 +1,11 @@
+---
+agentStackSecret: buildkite-agent
+config:
+  tags:
+    - queue=k8s-01
+  pod-spec-patch:
+    containers:
+      - name: checkout
+        envFrom:
+          - secretRef:
+              name: git-ssh-credentials

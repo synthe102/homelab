@@ -14,22 +14,16 @@ spec:
   sources:
     - chart: agent-stack-k8s
       helm:
-        valuesObject:
-          agentStackSecret: buildkite-agent
-          config:
-            tags:
-              - queue=k8s-01
-            pod-spec-patch:
-              containers:
-                - name: checkout
-                  envFrom:
-                    - secretRef:
-                        name: git-ssh-credentials
+        valueFiles:
+          - $values/clusters/k8s-01/apps/buildkite/values.yaml
       repoURL: ghcr.io/buildkite/helm
       targetRevision: 0.49.0
     - path: clusters/k8s-01/apps/buildkite/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   syncPolicy:
     automated:
       prune: true

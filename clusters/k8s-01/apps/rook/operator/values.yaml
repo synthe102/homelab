@@ -1,0 +1,4 @@
+---
+obcAllowAdditionalConfigFields: "bucketOwner"
+monitoring:
+  enabled: true

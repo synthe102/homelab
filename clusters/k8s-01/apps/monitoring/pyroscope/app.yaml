@@ -13,16 +13,11 @@ spec:
       repoURL: https://grafana.github.io/helm-charts
       targetRevision: 2.2.1
       helm:
-        valuesObject:
-          alloy:
-            enabled: false
-          pyroscope:
-            persistence:
-              enabled: true
-            podAnnotations:
-              profiles.grafana.com/cpu.scrape: "false"
-              profiles.grafana.com/memory.scrape: "false"
-              profiles.grafana.com/goroutine.scrape: "false"
+        valueFiles:
+          - $values/clusters/k8s-01/apps/monitoring/pyroscope/values.yaml
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: monitoring

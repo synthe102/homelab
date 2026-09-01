@@ -28,28 +28,16 @@ spec:
           repoURL: ghcr.io/actions/actions-runner-controller-charts
           targetRevision: 0.14.2
           helm:
-            valuesObject:
-              githubConfigUrl: 'https://github.com/{{.org}}/{{.repo}}'
-              githubConfigSecret: '{{dig "githubConfigSecret" "runner-auth" .}}'
-              controllerServiceAccount:
-                name: gha-runner-scale-set-controller-gha-rs-controller
-                namespace: arc-system
-              containerMode:
-                type: dind
-              template:
-                spec:
-                  containers:
-                    - name: runner
-                      image: ghcr.io/actions/actions-runner:2.337.0
-                      command: ["/home/runner/run.sh"]
-                      volumeMounts:
-                        - name: certs
-                          readOnly: true
-                          mountPath: /certs
-                  volumes:
-                    - name: certs
-                      secret:
-                        secretName: buildkit-client-certs
+            valueFiles:
+              - $values/clusters/k8s-01/apps/github-actions/gha-runner-scale-set/values.yaml
+            parameters:
+              - name: githubConfigUrl
+                value: 'https://github.com/{{.org}}/{{.repo}}'
+              - name: githubConfigSecret
+                value: '{{dig "githubConfigSecret" "runner-auth" .}}'
+        - repoURL: 'https://github.com/synthe102/homelab.git'
+          targetRevision: HEAD
+          ref: values
       destination:
         name: in-cluster
         namespace: arc-system

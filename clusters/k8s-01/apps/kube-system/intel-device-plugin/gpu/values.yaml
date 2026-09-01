@@ -1,0 +1,4 @@
+---
+name: i915
+nodeFeatureRule: false
+sharedDevNum: 2 # Allow 2 Pod per GPU

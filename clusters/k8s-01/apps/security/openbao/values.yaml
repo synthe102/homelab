@@ -1,0 +1,77 @@
+---
+global:
+  enabled: true
+injector:
+  enabled: false
+csi:
+  enabled: false
+ui:
+  enabled: true
+  serviceType: ClusterIP
+server:
+  image:
+    # renovate: datasource=docker depName=quay.io/openbao/openbao
+    tag: 2.6.2
+  ingress:
+    enabled: false
+  standalone:
+    enabled: false
+  serviceAccount:
+    create: true
+    serviceDiscovery:
+      enabled: true
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    mountPath: /openbao/data
+    storageClass: ceph-block
+    accessMode: ReadWriteOnce
+  auditStorage:
+    enabled: false
+  extraSecretEnvironmentVars:
+    - envName: BAO_SEAL_UNSEAL_KEY
+      secretName: openbao-unseal
+      secretKey: key
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      setNodeId: true
+      config: |
+        ui = true
+
+        listener "tcp" {
+          tls_disable     = 1
+          address         = "[::]:8200"
+          cluster_address = "[::]:8201"
+          telemetry {
+            unauthenticated_metrics_access = "true"
+          }
+        }
+
+        storage "raft" {
+          path = "/openbao/data"
+
+          retry_join {
+            leader_api_addr = "http://openbao-0.openbao-internal:8200"
+          }
+          retry_join {
+            leader_api_addr = "http://openbao-1.openbao-internal:8200"
+          }
+          retry_join {
+            leader_api_addr = "http://openbao-2.openbao-internal:8200"
+          }
+        }
+
+        seal "static" {
+          current_key_id = "homelab-v1"
+          current_key    = "env://BAO_SEAL_UNSEAL_KEY"
+        }
+
+        telemetry {
+          prometheus_retention_time = "30s"
+          disable_hostname          = true
+        }
+
+        service_registration "kubernetes" {}

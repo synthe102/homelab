@@ -13,16 +13,14 @@ spec:
       repoURL: https://charts.jetstack.io
       targetRevision: v1.21.1
       helm:
-        valuesObject:
-          config:
-            apiVersion: controller.config.cert-manager.io/v1alpha1
-            kind: "ControllerConfiguration"
-            enableGatewayAPI: true
-          crds:
-            enabled: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/cert-manager/values.yaml
     - path: clusters/k8s-01/apps/cert-manager/configs
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: cert-manager
