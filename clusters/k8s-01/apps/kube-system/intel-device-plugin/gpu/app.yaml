@@ -8,15 +8,16 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    chart: intel-device-plugins-gpu
-    repoURL: https://intel.github.io/helm-charts
-    targetRevision: 0.36.0
-    helm:
-      valuesObject:
-        name: i915
-        nodeFeatureRule: false
-        sharedDevNum: 2 # Allow 2 Pod per GPU
+  sources:
+    - chart: intel-device-plugins-gpu
+      repoURL: https://intel.github.io/helm-charts
+      targetRevision: 0.36.0
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/kube-system/intel-device-plugin/gpu/values.yaml
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: kube-system

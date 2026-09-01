@@ -1,0 +1,106 @@
+---
+controllers:
+  main:
+    replicas: 1
+    strategy: Recreate
+    pod:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 10000
+        fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: RuntimeDefault
+      hostUsers: false
+    containers:
+      main:
+        image:
+          repository: nousresearch/hermes-agent
+          tag: latest@sha256:245d41b2a0c35b1aa2f2ae63f42855cf5c760dd4192593e9d076ca0697f22721
+        args:
+          - gateway
+          - run
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+            add:
+              - CHOWN
+              - DAC_OVERRIDE
+              - FOWNER
+              - KILL
+              - SETGID
+              - SETUID
+        env:
+          HOME: /opt/data
+          HERMES_HOME: /opt/data
+          HERMES_WRITE_SAFE_ROOT: /opt/data
+          HERMES_DISABLE_LAZY_INSTALLS: "1"
+          PYTHONDONTWRITEBYTECODE: "1"
+          HERMES_DASHBOARD: "1"
+          HERMES_DASHBOARD_HOST: 0.0.0.0
+          HERMES_DASHBOARD_PORT: 9119
+          HERMES_DASHBOARD_PUBLIC_URL: https://hermes.suslian.engineer
+          HERMES_DASHBOARD_OIDC_ISSUER: https://auth.suslian.engineer/application/o/hermes/
+          HERMES_DASHBOARD_OIDC_CLIENT_ID: hermes-dashboard
+          HERMES_DASHBOARD_OIDC_SCOPES: "openid profile email"
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+service:
+  dashboard:
+    controller: main
+    primary: true
+    ports:
+      http:
+        port: 9119
+route:
+  dashboard:
+    hostnames:
+      - hermes.suslian.engineer
+    parentRefs:
+      - name: internal
+        namespace: kube-system
+        sectionName: https
+persistence:
+  data:
+    enabled: true
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    storageClass: ceph-block
+    size: 10Gi
+    globalMounts:
+      - path: /opt/data
+  dshm:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    sizeLimit: 1Gi
+    globalMounts:
+      - path: /dev/shm
+  run:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    sizeLimit: 128Mi
+    globalMounts:
+      - path: /run
+  tmp:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    sizeLimit: 512Mi
+    globalMounts:
+      - path: /tmp
+  var-tmp:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    sizeLimit: 256Mi
+    globalMounts:
+      - path: /var/tmp

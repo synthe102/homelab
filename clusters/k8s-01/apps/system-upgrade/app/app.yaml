@@ -13,46 +13,14 @@ spec:
       repoURL: https://bjw-s-labs.github.io/helm-charts
       targetRevision: 5.1.0
       helm:
-        valuesObject:
-          controllers:
-            system-upgrade-controller:
-              strategy: RollingUpdate
-              replicas: 2
-              containers:
-                app:
-                  image:
-                    repository: docker.io/rancher/system-upgrade-controller
-                    tag: v0.20.1
-                  env:
-                    SYSTEM_UPGRADE_CONTROLLER_LEADER_ELECT: true
-                    SYSTEM_UPGRADE_CONTROLLER_NAME: *app
-                    SYSTEM_UPGRADE_CONTROLLER_NAMESPACE:
-                      valueFrom:
-                        fieldRef:
-                          fieldPath: metadata.namespace
-                    SYSTEM_UPGRADE_CONTROLLER_NODE_NAME:
-                      valueFrom:
-                        fieldRef:
-                          fieldPath: spec.nodeName
-                    SYSTEM_UPGRADE_JOB_PRIVILEGED: false
-                  securityContext:
-                    allowPrivilegeEscalation: false
-                    readOnlyRootFilesystem: true
-                    capabilities: {drop: ["ALL"]}
-              serviceAccount:
-                identifier: system-upgrade-controller
-          defaultPodOptions:
-            automountServiceAccountToken: true
-            securityContext:
-              runAsNonRoot: true
-              runAsUser: 568
-              runAsGroup: 568
-          serviceAccount:
-            system-upgrade-controller:
-              staticToken: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/system-upgrade/app/values.yaml
     - path: clusters/k8s-01/apps/system-upgrade/app/rbac
       repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: system-upgrade

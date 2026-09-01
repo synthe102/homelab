@@ -1,0 +1,15 @@
+---
+fullnameOverride: smartctl-exporter
+prometheusRules:
+  enabled: true
+serviceMonitor:
+  enabled: true
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: NotIn
+              values:
+                - arm64

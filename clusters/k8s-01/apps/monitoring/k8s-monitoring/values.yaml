@@ -1,0 +1,87 @@
+---
+cluster:
+  name: k8s-01
+collectors:
+  alloy-singleton:
+    presets: [singleton]
+    alloy:
+      stabilityLevel: experimental
+    extraConfig: |-
+      mimir.rules.kubernetes "default" {
+        address = "http://mimir-ruler.monitoring.svc:8080"
+        tenant_id = "anonymous"
+      }
+
+      mimir.alerts.kubernetes "default" {
+        address = "http://mimir-gateway.monitoring.svc.cluster.local:80"
+        global_config = `
+      route:
+        receiver: "null"
+      receivers:
+        - name: "null"
+      `
+
+        alertmanagerconfig_selector {
+          match_labels = {
+            "alertmanager" = "mimir",
+          }
+        }
+
+        alertmanagerconfig_matcher {
+          strategy = "None"
+        }
+      }
+  alloy-logs:
+    presets: [filesystem-log-reader, daemonset]
+  alloy-metrics:
+    presets: [statefulset]
+  alloy-profiles:
+    presets: [daemonset, privileged]
+destinations:
+  logs:
+    type: loki
+    url: http://loki-headless.monitoring.svc.cluster.local:3100/loki/api/v1/push
+  metrics:
+    type: prometheus
+    url: http://mimir-gateway.monitoring.svc.cluster.local:80/api/v1/push
+  profiles:
+    type: pyroscope
+    url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
+clusterMetrics:
+  enabled: true
+  collector: alloy-metrics
+  kube-state-metrics:
+    jobLabel: kube-state-metrics
+hostMetrics:
+  enabled: true
+  collector: alloy-metrics
+  linuxHosts:
+    enabled: true
+    jobLabel: node-exporter
+    metricsTuning:
+      useIntegrationAllowList: true
+      includeMetrics:
+        - node_time_seconds
+telemetryServices:
+  node-exporter:
+    deploy: true
+  kube-state-metrics:
+    deploy: true
+prometheusOperatorObjects:
+  enabled: true
+  collector: alloy-singleton
+clusterEvents:
+  enabled: true
+  collector: alloy-singleton
+podLogsViaLoki:
+  enabled: true
+  collector: alloy-logs
+profiling:
+  enabled: true
+  collector: alloy-profiles
+  ebpf:
+    enabled: true
+  java:
+    enabled: true
+  pprof:
+    enabled: true

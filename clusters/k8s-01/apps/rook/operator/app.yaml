@@ -13,10 +13,11 @@ spec:
       repoURL: https://charts.rook.io/release
       targetRevision: v1.20.6
       helm:
-        valuesObject:
-          obcAllowAdditionalConfigFields: "bucketOwner"
-          monitoring:
-            enabled: true
+        valueFiles:
+          - $values/clusters/k8s-01/apps/rook/operator/values.yaml
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: rook-ceph

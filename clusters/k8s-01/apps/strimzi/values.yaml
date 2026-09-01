@@ -1,0 +1,11 @@
+---
+watchNamespaces:
+  - monitoring
+dashboards:
+  enabled: true
+  namespace: monitoring
+  annotations:
+    k8s-sidecar-target-directory: /tmp/dashboards/Kafka
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1

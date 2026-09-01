@@ -13,39 +13,11 @@ spec:
       repoURL: https://ceph.github.io/ceph-csi-operator
       targetRevision: 1.0.4
       helm:
-        valuesObject:
-          # Match the driver names old Rook (<v1.20) generated, i.e.
-          # <operatorNamespace>.<driver>.csi.ceph.com. Existing PVs have this
-          # baked into spec.csi.driver and the rook-ceph-cluster StorageClasses
-          # render provisioners as rook-ceph.*.csi.ceph.com. Without this the
-          # operator registers the unprefixed default and volumes fail to attach.
-          drivers:
-            rbd:
-              name: rook-ceph.rbd.csi.ceph.com
-              # Chart default for rbd is "none", which drops the csi-snapshotter
-              # sidecar and leaves Velero/CSI VolumeSnapshots stuck (never
-              # readyToUse), pinning source PVCs in Terminating. cephfs/nfs
-              # default to volumeSnapshot already.
-              snapshotPolicy: volumeSnapshot
-              nodePlugin:
-                tolerations:
-                  - key: workload.suslian.engineer/printer
-                    operator: Equal
-                    value: voron-2.4
-                    effect: NoSchedule
-            cephfs:
-              name: rook-ceph.cephfs.csi.ceph.com
-              nodePlugin:
-                tolerations:
-                  - key: workload.suslian.engineer/printer
-                    operator: Equal
-                    value: voron-2.4
-                    effect: NoSchedule
-          operatorConfig:
-            driverSpecDefaults:
-              deployCsiAddons: true
-              controllerPlugin:
-                replicas: 2
+        valueFiles:
+          - $values/clusters/k8s-01/apps/rook/csi/values.yaml
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
   destination:
     name: in-cluster
     namespace: rook-ceph

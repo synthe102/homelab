@@ -15,7 +15,8 @@ All cluster state is declared in YAML and synced via ArgoCD. A **root Applicatio
 ### Application Layout
 
 Each app lives under `clusters/k8s-01/apps/<category>/<app-name>/` with:
-- `app.yaml` — ArgoCD Application CR (Helm chart source with inline `valuesObject`, or Git source)
+- `app.yaml` — ArgoCD Application CR (Helm chart source with an external values-file source, or Git source)
+- `values.yaml` — Helm values referenced through ArgoCD's `$values` multi-source syntax when the app uses a Helm chart
 - `kustomization.yaml` — Kustomize resource list
 - `configs/` — supporting resources (ExternalSecrets, HTTPRoutes, NetworkPolicies, etc.)
 
@@ -32,7 +33,7 @@ Categories group related apps: `monitoring/`, `media/`, `home-automation/`, `gam
 
 ### Helm Values Pattern
 
-Most apps are deployed as Helm charts with values inlined directly in the ArgoCD Application `spec.sources[].helm.valuesObject`. This means Helm values live inside `app.yaml`, not in separate `values.yaml` files.
+Helm values are kept in a co-located `values.yaml` and referenced by the chart source with `spec.sources[].helm.valueFiles: [$values/<path>]`. The Application also includes the repository as a source with `ref: values`, which makes `$values` resolve to the Git repository root. ApplicationSet templates keep per-generated-application values as Helm parameters when those values depend on generator fields.
 
 ## Development Environment
 
