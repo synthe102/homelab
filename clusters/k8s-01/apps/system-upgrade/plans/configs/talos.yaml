@@ -6,7 +6,7 @@ metadata:
 spec:
   talos:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-    version: v1.13.9
+    version: v1.14.0
   parallelism: 1
   policy:
     # Allow Ceph RBD volumes to detach before the node reboots.
