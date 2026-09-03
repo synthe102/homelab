@@ -8,6 +8,9 @@ spec:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
     version: v1.14.0
   parallelism: 1
+  drain:
+    enabled: true
+    disableEviction: true
   policy:
     # Allow Ceph RBD volumes to detach before the node reboots.
     waitForVolumeDetach: true
