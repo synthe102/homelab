@@ -1,8 +1,5 @@
 ---
 replicaCount: 2
-deploymentAnnotations:
-  # Retire the previous Deployment (wave 0) before starting tuppr.
-  argocd.argoproj.io/sync-wave: "1"
 controller:
   logLevel: info
 monitoring:

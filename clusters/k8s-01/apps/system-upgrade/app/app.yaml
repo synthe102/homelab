@@ -2,8 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  # Keep the Application identity so Argo prunes the former controller and RBAC.
-  name: system-upgrade-controller
+  name: tuppr
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
