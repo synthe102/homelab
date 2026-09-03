@@ -1,25 +1,23 @@
 ---
-apiVersion: upgrade.cattle.io/v1
-kind: Plan
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: TalosUpgrade
 metadata:
   name: talos
 spec:
-  # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-  version: v1.13.9
-  concurrency: 1
-  exclusive: true
-  serviceAccountName: system-upgrade-controller
-  secrets:
-    - name: system-upgrade-controller
-      path: /var/run/secrets/talos.dev
-      ignoreUpdates: true
+  talos:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+    version: v1.13.9
+  parallelism: 1
+  policy:
+    # Allow Ceph RBD volumes to detach before the node reboots.
+    waitForVolumeDetach: true
   nodeSelector:
     matchExpressions:
       - key: kubernetes.io/os
         operator: In
         values: ["linux"]
-  upgrade:
-    image: ghcr.io/jfroy/tnu:0.4.4
-    args:
-      - --node=$(SYSTEM_UPGRADE_NODE_NAME)
-      - --tag=$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
+  healthChecks:
+    - apiVersion: v1
+      kind: Node
+      expr: status.conditions.exists(c, c.type == "Ready" && c.status == "True")
+      timeout: 10m
