@@ -41,6 +41,12 @@ controller:
     serviceMonitor:
       enabled: true
 dex:
+  startupProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  livenessProbe:
+    enabled: true
   metrics:
     enabled: true
     serviceMonitor:
