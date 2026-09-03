@@ -12,8 +12,8 @@ cephClusterSpec:
     cephx:
       daemon:
         keyRotationPolicy: KeyGeneration
-        keyGeneration: 3
-        keyType: aes
+        keyGeneration: 4
+        keyType: aes256k
   dashboard:
     enabled: true
     urlPrefix: /
