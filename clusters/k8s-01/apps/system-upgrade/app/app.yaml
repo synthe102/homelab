@@ -2,28 +2,40 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: &app system-upgrade-controller
+  # Keep the Application identity so Argo prunes the former controller and RBAC.
+  name: system-upgrade-controller
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
-    - chart: app-template
-      repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 5.1.0
+    - chart: tuppr
+      repoURL: ghcr.io/home-operations/charts
+      targetRevision: 0.5.2
       helm:
+        releaseName: tuppr
         valueFiles:
           - $values/clusters/k8s-01/apps/system-upgrade/app/values.yaml
-    - path: clusters/k8s-01/apps/system-upgrade/app/rbac
-      repoURL: 'https://github.com/synthe102/homelab.git'
-      targetRevision: HEAD
     - repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
       ref: values
   destination:
     name: in-cluster
     namespace: system-upgrade
+  ignoreDifferences:
+    # tuppr generates and rotates its own webhook certificates.
+    - group: ""
+      kind: Secret
+      name: tuppr-webhook-server-cert
+      namespace: system-upgrade
+      jsonPointers:
+        - /data
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: tuppr-validating-webhook
+      jqPathExpressions:
+        - .webhooks[].clientConfig.caBundle
   syncPolicy:
     automated:
       prune: true
@@ -33,3 +45,5 @@ spec:
         pod-security.kubernetes.io/enforce: privileged
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=true

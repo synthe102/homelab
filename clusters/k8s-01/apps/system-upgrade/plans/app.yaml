@@ -2,7 +2,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: &app system-upgrade-plan
+  # Keep the Application identity so Argo prunes the upgrade.cattle.io Plans.
+  name: system-upgrade-plan
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -19,5 +20,13 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    # Retry while the controller Application installs the CRDs and webhook.
+    retry:
+      limit: 10
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 2m
     syncOptions:
       - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
