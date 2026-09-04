@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: tuppr
       repoURL: ghcr.io/home-operations/charts
-      targetRevision: 0.5.2
+      targetRevision: 0.5.3
       helm:
         releaseName: tuppr
         valueFiles:
