@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rook-ceph-nvmeof-loadbalancer
+  namespace: rook-ceph
+spec:
+  type: LoadBalancer
+  selector:
+    app: rook-ceph-nvmeof
+  ports:
+    - name: io
+      port: 4420
+      targetPort: 4420
+      protocol: TCP
+    - name: gateway
+      port: 5500
+      targetPort: 5500
+      protocol: TCP
+    - name: monitor
+      port: 5499
+      targetPort: 5499
+      protocol: TCP
+    - name: discovery
+      port: 8009
+      targetPort: 8009
+      protocol: TCP

@@ -1,0 +1,12 @@
+---
+apiVersion: ceph.rook.io/v1
+kind: CephNVMeOFGateway
+metadata:
+  name: nvmeof
+  namespace: rook-ceph
+spec:
+  image: quay.io/ceph/nvmeof:1.5
+  pool: nvmeof
+  group: group-a
+  instances: 2
+  hostNetwork: false
