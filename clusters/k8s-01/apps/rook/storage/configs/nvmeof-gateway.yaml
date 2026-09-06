@@ -5,7 +5,7 @@ metadata:
   name: nvmeof
   namespace: rook-ceph
 spec:
-  image: quay.io/ceph/nvmeof:1.5
+  image: quay.io/ceph/nvmeof:1.9
   pool: nvmeof
   group: group-a
   instances: 2
