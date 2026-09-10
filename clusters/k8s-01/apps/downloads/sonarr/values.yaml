@@ -10,7 +10,7 @@ controllers:
         nameOverride: sonarr
         image:
           repository: ghcr.io/home-operations/sonarr
-          tag: 4.0.19
+          tag: 4.0.20
         env:
           SONARR__PORT: &port 8989
           UMASK: "022"
