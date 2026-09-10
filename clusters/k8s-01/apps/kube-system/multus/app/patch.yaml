@@ -5,8 +5,18 @@ metadata:
   name: kube-multus-ds
   namespace: kube-system
 spec:
+  updateStrategy:
+    type: OnDelete
   template:
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: open-nitro.io/dpu
+                    operator: NotIn
+                    values: ["true"]
       containers:
         - name: kube-multus
           resources:

@@ -10,3 +10,16 @@ spegel:
 service:
   registry:
     hostPort: 29999
+
+# Keep appliance DPUs outside the Talos registry-mirror configuration.
+# Apply template changes on explicit pod replacement; preserve current nodes.
+updateStrategy:
+  type: OnDelete
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: open-nitro.io/dpu
+              operator: NotIn
+              values: ["true"]

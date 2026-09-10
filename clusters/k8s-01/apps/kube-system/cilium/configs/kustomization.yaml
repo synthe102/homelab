@@ -10,3 +10,4 @@ resources:
   - redirect.yaml
   - cert.yaml
   - voron-node-config.yaml
+  - ./bf2-node-config.yaml

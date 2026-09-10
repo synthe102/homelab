@@ -31,6 +31,10 @@ metadata:
   name: l3-bgp-cluster-config
 spec:
   nodeSelector:
+    matchExpressions:
+      - key: open-nitro.io/dpu
+        operator: NotIn
+        values: ["true"]
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:

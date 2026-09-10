@@ -1,0 +1,20 @@
+{
+  "apiVersion": "cilium.io/v2",
+  "kind": "CiliumNodeConfig",
+  "metadata": {
+    "name": "open-nitro-bf2",
+    "namespace": "kube-system"
+  },
+  "spec": {
+    "nodeSelector": {
+      "matchLabels": {
+        "open-nitro.io/dpu": "true"
+      }
+    },
+    "defaults": {
+      "devices": "oob_net0",
+      "direct-routing-device": "oob_net0",
+      "enable-ipv4-masquerade": "true"
+    }
+  }
+}
