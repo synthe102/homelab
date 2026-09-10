@@ -14,7 +14,7 @@ spec:
   sources:
     - chart: forgejo
       repoURL: code.forgejo.org/forgejo-helm
-      targetRevision: 17.1.5
+      targetRevision: 17.1.6
       helm:
         valueFiles:
           - $values/clusters/k8s-01/apps/git/forgejo/values.yaml
