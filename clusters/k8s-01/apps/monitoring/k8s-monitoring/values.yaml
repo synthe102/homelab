@@ -47,6 +47,18 @@ destinations:
   profiles:
     type: pyroscope
     url: http://pyroscope-headless.monitoring.svc.cluster.local:4040
+  tempo:
+    type: otlp
+    protocol: grpc
+    url: tempo.monitoring.svc.cluster.local:4317
+    tls:
+      insecure: true
+    metrics:
+      enabled: false
+    logs:
+      enabled: false
+    traces:
+      enabled: true
 clusterMetrics:
   enabled: true
   collector: alloy-metrics
@@ -76,6 +88,15 @@ clusterEvents:
 podLogsViaLoki:
   enabled: true
   collector: alloy-logs
+applicationObservability:
+  enabled: true
+  collector: alloy-singleton
+  receivers:
+    otlp:
+      grpc:
+        enabled: true
+      http:
+        enabled: true
 profiling:
   enabled: true
   collector: alloy-profiles
