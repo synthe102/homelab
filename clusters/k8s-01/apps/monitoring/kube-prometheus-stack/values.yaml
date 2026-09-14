@@ -2,10 +2,33 @@
 defaultRules:
   disabled:
     KubeClientCertificateExpiration: true
+# Prometheus is disabled here; Grafana Alloy scrapes these monitors instead.
+_externalAuthorization: &externalAuthorization
+  type: Bearer
+  credentials:
+    name: k8s-monitoring-alloy-singleton-token
+    key: token
+kubeApiServer:
+  serviceMonitor:
+    authorization: *externalAuthorization
+kubelet:
+  serviceMonitor:
+    authorization: *externalAuthorization
+kubeControllerManager:
+  serviceMonitor:
+    authorization: *externalAuthorization
 kubeEtcd:
   service:
     selector:
       component: kube-apiserver # etcd runs on control plane nodes
+  serviceMonitor:
+    authorization: *externalAuthorization
+kubeScheduler:
+  serviceMonitor:
+    authorization: *externalAuthorization
+coreDns:
+  serviceMonitor:
+    authorization: *externalAuthorization
 kubeProxy:
   enabled: false
 alertmanager:
