@@ -1,6 +1,20 @@
 ---
 tempo:
   reportingEnabled: false
+  metricsGenerator:
+    enabled: true
+    remoteWriteUrl: http://mimir-gateway.monitoring.svc.cluster.local:80/api/v1/push
+    processor:
+      span_metrics: {}
+    storage:
+      path: /var/tempo/metrics
+    traces_storage:
+      path: /var/tempo/wal
+  overrides:
+    defaults:
+      metrics_generator:
+        processors:
+          - span-metrics
 persistence:
   enabled: true
   storageClassName: ceph-block
