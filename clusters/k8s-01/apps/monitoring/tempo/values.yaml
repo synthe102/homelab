@@ -5,6 +5,9 @@ tempo:
     enabled: true
     remoteWriteUrl: http://mimir-gateway.monitoring.svc.cluster.local:80/api/v1/push
     processor:
+      local_blocks:
+        flush_to_storage: true
+        max_block_duration: 1m
       span_metrics: {}
     storage:
       path: /var/tempo/metrics
@@ -15,6 +18,7 @@ tempo:
       metrics_generator:
         processors:
           - span-metrics
+          - local-blocks
 persistence:
   enabled: true
   storageClassName: ceph-block
