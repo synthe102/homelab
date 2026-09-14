@@ -33,6 +33,14 @@ collectors:
       }
   alloy-logs:
     presets: [filesystem-log-reader, daemonset]
+    controller:
+      tolerations:
+        - operator: Exists
+          effect: NoSchedule
+        - key: open-nitro.io/dpu
+          operator: Equal
+          value: "true"
+          effect: NoExecute
   alloy-metrics:
     presets: [statefulset]
   alloy-profiles:
@@ -88,6 +96,24 @@ clusterEvents:
 podLogsViaLoki:
   enabled: true
   collector: alloy-logs
+  extraLogProcessingStages: |-
+    stage.match {
+      selector = "{namespace=\"open-nitro\", service_name=~\"open-nitro-controller|open-nitro-dpu\"}"
+
+      stage.json {
+        expressions = {
+          trace_id = "trace_id",
+          span_id  = "span_id",
+        }
+      }
+
+      stage.structured_metadata {
+        values = {
+          trace_id = "trace_id",
+          span_id  = "span_id",
+        }
+      }
+    }
 applicationObservability:
   enabled: true
   collector: alloy-singleton

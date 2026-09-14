@@ -93,6 +93,13 @@ grafana:
           url: http://loki-headless.monitoring.svc.cluster.local:3100
           jsonData:
             maxLines: 250
+            derivedFields:
+              - name: TraceID
+                matcherType: label
+                matcherRegex: trace_id
+                datasourceUid: tempo
+                url: '$${__value.raw}'
+                urlDisplayLabel: View trace
         - name: Pyroscope
           type: phlare
           uid: phlare
@@ -106,6 +113,20 @@ grafana:
           uid: tempo
           access: proxy
           url: http://tempo.monitoring.svc.cluster.local:3200
+          jsonData:
+            tracesToLogsV2:
+              datasourceUid: loki
+              spanStartTimeShift: '-2s'
+              spanEndTimeShift: '2s'
+              tags:
+                - key: service.name
+                  value: service_name
+                - key: k8s.namespace.name
+                  value: namespace
+                - key: k8s.pod.name
+                  value: pod
+              customQuery: true
+              query: '{$${__tags}} | trace_id = "$${__trace.traceId}"'
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
