@@ -101,6 +101,11 @@ grafana:
           jsonData:
             minStep: '15s'
             backendType: 'pyroscope'
+        - name: Tempo
+          type: tempo
+          uid: tempo
+          access: proxy
+          url: http://tempo.monitoring.svc.cluster.local:3200
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1

@@ -1,0 +1,8 @@
+---
+tempo:
+  reportingEnabled: false
+persistence:
+  enabled: true
+  storageClassName: ceph-block
+serviceMonitor:
+  enabled: true

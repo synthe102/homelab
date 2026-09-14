@@ -10,3 +10,4 @@ resources:
   - smartctl-exporter
   - k8s-monitoring
   - pyroscope
+  - tempo
