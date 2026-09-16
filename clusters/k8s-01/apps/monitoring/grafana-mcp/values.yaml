@@ -46,6 +46,8 @@ controllers:
 defaultPodOptions:
   securityContext:
     runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
 service:
   app:
     controller: grafana-mcp
