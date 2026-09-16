@@ -30,10 +30,10 @@ controllers:
         probes:
           liveness:
             enabled: true
-            type: tcp
+            type: TCP
           readiness:
             enabled: true
-            type: tcp
+            type: TCP
         resources:
           requests:
             cpu: 10m
@@ -49,7 +49,6 @@ defaultPodOptions:
 service:
   app:
     controller: grafana-mcp
-    name: grafana-mcp
     ports:
       http:
         port: 8000
