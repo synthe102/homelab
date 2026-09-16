@@ -1,0 +1,55 @@
+---
+controllers:
+  grafana-mcp:
+    containers:
+      app:
+        image:
+          repository: grafana/mcp-grafana
+          tag: v1.4.2
+        # The image entrypoint defaults to SSE; run the streamable-http MCP
+        # endpoint on /mcp instead. Grafana auth uses the chart-managed admin
+        # secret, so nothing is stored in Grafana's ephemeral database.
+        command:
+          - /app/mcp-grafana
+          - --transport
+          - streamable-http
+          - --address
+          - 0.0.0.0:8000
+        env:
+          GRAFANA_URL: http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local:80
+          GRAFANA_USERNAME:
+            valueFrom:
+              secretKeyRef:
+                name: kube-prometheus-stack-grafana
+                key: admin-user
+          GRAFANA_PASSWORD:
+            valueFrom:
+              secretKeyRef:
+                name: kube-prometheus-stack-grafana
+                key: admin-password
+        probes:
+          liveness:
+            enabled: true
+            type: tcp
+          readiness:
+            enabled: true
+            type: tcp
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: true
+service:
+  app:
+    controller: grafana-mcp
+    name: grafana-mcp
+    ports:
+      http:
+        port: 8000
