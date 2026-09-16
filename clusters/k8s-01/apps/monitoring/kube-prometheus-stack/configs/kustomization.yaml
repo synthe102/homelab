@@ -6,3 +6,4 @@ resources:
   - es.yaml
   - auth.yaml
   - alloy-token.yaml
+  - pushsecret.yaml

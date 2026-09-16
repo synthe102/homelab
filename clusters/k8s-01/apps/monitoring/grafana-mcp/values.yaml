@@ -7,8 +7,8 @@ controllers:
           repository: grafana/mcp-grafana
           tag: '1.4.2'
         # The image entrypoint defaults to SSE; run the streamable-http MCP
-        # endpoint on /mcp instead. Grafana auth uses the chart-managed admin
-        # secret, so nothing is stored in Grafana's ephemeral database.
+        # endpoint on /mcp instead. Grafana auth uses the externally managed
+        # admin secret, so nothing is stored in Grafana's ephemeral database.
         command:
           - /app/mcp-grafana
           - --transport
@@ -22,12 +22,12 @@ controllers:
           GRAFANA_USERNAME:
             valueFrom:
               secretKeyRef:
-                name: kube-prometheus-stack-grafana
+                name: grafana-admin
                 key: admin-user
           GRAFANA_PASSWORD:
             valueFrom:
               secretKeyRef:
-                name: kube-prometheus-stack-grafana
+                name: grafana-admin
                 key: admin-password
         probes:
           liveness:

@@ -41,6 +41,11 @@ nodeExporter:
 kubeStateMetrics:
   enabled: false
 grafana:
+  # Without a chart-managed admin secret, the chart renders a randAlphaNum
+  # password on every ArgoCD render and rolls the pod on each sync. The
+  # in-cluster grafana-admin Secret is backed up to Bitwarden via PushSecret.
+  admin:
+    existingSecret: grafana-admin
   sidecar:
     dashboards:
       annotations:
