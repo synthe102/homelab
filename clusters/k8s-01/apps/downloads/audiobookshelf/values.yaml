@@ -10,7 +10,7 @@ controllers:
         nameOverride: audiobookshelf
         image:
           repository: ghcr.io/advplyr/audiobookshelf
-          tag: 2.36.0
+          tag: 2.36.1
         env:
           UMASK: "022"
           TZ: "Europe/Paris"
