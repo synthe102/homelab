@@ -123,6 +123,18 @@ applicationObservability:
         enabled: true
       http:
         enabled: true
+  traces:
+    # The chart default renames every HTTP span to the request method, which
+    # discards structured client span names such as "PUT /v1/resources/{id}"
+    # from instrumented applications (the original name only survives in the
+    # original_span_name attribute). Normalize only default method-only and
+    # legacy "HTTP <method>" names, and leave spans that already carry
+    # structured names (route templates, collapsed identifiers) untouched.
+    setSpanNameSemanticConvention: ""
+    transforms:
+      span:
+        - 'set_semconv_span_name("1.37.0", "original_span_name") where IsMatch(name, "^HTTP [A-Z]+$")'
+        - 'set_semconv_span_name("1.37.0", "original_span_name") where IsMatch(name, "^[A-Z]+$")'
 profiling:
   enabled: true
   collector: alloy-profiles
