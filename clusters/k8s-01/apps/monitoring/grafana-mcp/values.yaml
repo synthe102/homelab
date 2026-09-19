@@ -5,7 +5,7 @@ controllers:
       app:
         image:
           repository: grafana/mcp-grafana
-          tag: '1.4.2'
+          tag: '1.5.1'
         # The image entrypoint defaults to SSE; run the streamable-http MCP
         # endpoint on /mcp instead. Grafana auth uses the externally managed
         # admin secret, so nothing is stored in Grafana's ephemeral database.
