@@ -17,7 +17,7 @@ spec:
         valueFiles:
           - $values/clusters/k8s-01/apps/downloads/audiobookshelf/values.yaml
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 5.1.0
+      targetRevision: 5.2.1
     - repoURL: 'https://github.com/synthe102/homelab.git'
       targetRevision: HEAD
       ref: values
