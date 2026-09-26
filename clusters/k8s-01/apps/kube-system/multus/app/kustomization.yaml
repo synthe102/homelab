@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -8,3 +9,12 @@ images:
     newTag: v4.3.1-thick
 patches:
   - path: patch.yaml
+  # This CRD was also installed by the retired SR-IOV operator. Preserve all NADs.
+  - target:
+      kind: CustomResourceDefinition
+      name: network-attachment-definitions.k8s.cni.cncf.io
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-options: Prune=false,Delete=false

@@ -3,7 +3,7 @@ defaultPodOptions:
   annotations:
     k8s.v1.cni.cncf.io/networks: |
       [{
-        "name": "multus-vpn-routed",
+        "name": "sriov-vpn-routed",
         "namespace": "kube-system",
         "ips": ["10.0.100.3/24"]
       }]
@@ -16,6 +16,11 @@ controllers:
     containers:
       main:
         nameOverride: prowlarr
+        resources:
+          requests:
+            intel.com/x710: 1
+          limits:
+            intel.com/x710: 1
         image:
           repository: ghcr.io/home-operations/prowlarr
           tag: 2.6.5
