@@ -7,7 +7,7 @@ resources:
   - https://raw.githubusercontent.com/k8snetworkplumbingwg/sriov-cni/refs/tags/v2.10.0/images/sriov-cni-daemonset.yaml
 images:
   - name: ghcr.io/k8snetworkplumbingwg/sriov-network-device-plugin
-    newTag: v3.10.0
+    newTag: v3.11.0
   - name: ghcr.io/k8snetworkplumbingwg/sriov-cni
     newTag: v2.10.0
 patches:
