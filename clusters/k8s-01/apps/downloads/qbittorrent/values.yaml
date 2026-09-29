@@ -23,7 +23,7 @@ controllers:
             intel.com/x710: 1
         image:
           repository: ghcr.io/home-operations/qbittorrent
-          tag: 5.2.3
+          tag: 5.2.4
         env:
           UMASK: "022"
           QBITTORRENT__PORT: &port 8080
