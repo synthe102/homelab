@@ -5,7 +5,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/unpoller/unpoller
-          tag: v5.2.8
+          tag: v5.4.0
         env:
           TZ: Europe/Paris
           UP_UNIFI_DEFAULT_ROLE: Monitoring
