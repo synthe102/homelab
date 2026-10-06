@@ -16,7 +16,7 @@ controllers:
         nameOverride: minecraft-server
         image:
           repository: ghcr.io/itzg/minecraft-server
-          tag: 2026.9.2-java21
+          tag: 2026.9.2-java25
         env:
           EULA: "true"
           TZ: "Europe/Paris"
@@ -28,9 +28,9 @@ controllers:
           MAX_MEMORY: 11G
           ONLINE_MODE: "true"
           TYPE: PAPER
-          PAPER_BUILD: 92
-          VERSION: "1.21.11"
-          MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky"
+          PAPER_BUILD: 130
+          VERSION: "26.2"
+          MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,otterlib"
           MODRINTH_ALLOWED_VERSION_TYPE: "beta"
         envFrom:
           - secretRef:
