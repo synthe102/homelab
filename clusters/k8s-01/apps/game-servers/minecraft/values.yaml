@@ -28,7 +28,7 @@ controllers:
           MAX_MEMORY: 11G
           ONLINE_MODE: "true"
           TYPE: PAPER
-          PAPER_BUILD: 130
+          PAPER_BUILD: 157
           VERSION: "26.3"
           MODRINTH_PROJECTS: "directionhud,viabackwards,viaversion,tab-was-taken,chunky,otterlib"
           MODRINTH_ALLOWED_VERSION_TYPE: "beta"
