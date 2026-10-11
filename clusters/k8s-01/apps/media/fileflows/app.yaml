@@ -14,7 +14,7 @@ spec:
   sources:
     - chart: app-template
       repoURL: https://bjw-s-labs.github.io/helm-charts
-      targetRevision: 5.2.1
+      targetRevision: 5.3.0
       helm:
         valueFiles:
           - $values/clusters/k8s-01/apps/media/fileflows/values.yaml
