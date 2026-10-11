@@ -6,7 +6,7 @@ controllers:
         nameOverride: stalwart
         image:
           repository: stalwartlabs/stalwart
-          tag: v0.16.25
+          tag: v0.16.26
           # probes:
           #   liveness:
           #     enabled: true
