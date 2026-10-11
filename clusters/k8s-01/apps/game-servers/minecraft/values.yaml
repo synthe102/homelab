@@ -16,7 +16,7 @@ controllers:
         nameOverride: minecraft-server
         image:
           repository: ghcr.io/itzg/minecraft-server
-          tag: 2026.9.2-java25
+          tag: 2026.10.0-java25
         env:
           EULA: "true"
           TZ: "Europe/Paris"
