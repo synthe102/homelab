@@ -36,6 +36,12 @@ controllers:
           HOME: /opt/data
           HERMES_HOME: /opt/data
           HERMES_WRITE_SAFE_ROOT: /opt/data
+          BWS_ACCESS_TOKEN:
+            valueFrom:
+              secretKeyRef:
+                name: hermes-bitwarden
+                key: BWS_ACCESS_TOKEN
+          BWS_SERVER_URL: https://vault.bitwarden.eu
           HERMES_DISABLE_LAZY_INSTALLS: "1"
           PYTHONDONTWRITEBYTECODE: "1"
           HERMES_DASHBOARD: "1"

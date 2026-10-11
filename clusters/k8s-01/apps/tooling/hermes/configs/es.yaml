@@ -1,0 +1,17 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: hermes-bitwarden
+  namespace: tooling
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    name: bitwarden-homelab
+    kind: ClusterSecretStore
+  target:
+    name: hermes-bitwarden
+  data:
+    - secretKey: BWS_ACCESS_TOKEN
+      remoteRef:
+        key: HERMES_BWS_TOKEN
