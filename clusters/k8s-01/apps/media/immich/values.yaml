@@ -14,7 +14,7 @@ controllers:
       main:
         image:
           # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-          tag: &tag v3.3.1
+          tag: &tag v3.3.3
         env:
           IMMICH_MEDIA_LOCATION: /data
           DB_VECTOR_EXTENSION: vectorchord
