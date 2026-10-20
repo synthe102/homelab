@@ -11,7 +11,7 @@ spec:
   sources:
     - chart: falco
       repoURL: https://falcosecurity.github.io/charts
-      targetRevision: 9.2.0
+      targetRevision: 9.2.1
       helm:
         valueFiles:
           - $values/clusters/k8s-01/apps/falco/values.yaml
