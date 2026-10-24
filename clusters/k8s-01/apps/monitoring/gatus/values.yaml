@@ -1,0 +1,156 @@
+---
+controllers:
+  gatus:
+    replicas: 1
+    strategy: Recreate
+    serviceAccount:
+      identifier: gatus
+    containers:
+      app:
+        image:
+          repository: ghcr.io/twin/gatus
+          tag: v5.37.0
+        env:
+          TZ: Europe/Paris
+          # Merge the base config with the sidecar's generated endpoints.
+          GATUS_CONFIG_PATH: /config
+          # Let discovery populate the directory before Gatus snapshots file times.
+          GATUS_DELAY_START_SECONDS: "10"
+        probes:
+          liveness:
+            enabled: true
+            type: HTTP
+            path: /health
+          readiness:
+            enabled: true
+            type: HTTP
+            path: /health
+          startup:
+            enabled: true
+            type: HTTP
+            path: /health
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+      sidecar:
+        image:
+          repository: ghcr.io/home-operations/gatus-sidecar
+          tag: 0.5.5
+        args:
+          - --auto-httproute
+          - --gateway-name=internal
+          - --output=/config/gatus-sidecar.yaml
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+defaultPodOptions:
+  automountServiceAccountToken: true
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile:
+      type: RuntimeDefault
+serviceAccount:
+  gatus: {}
+rbac:
+  roles:
+    sidecar:
+      type: ClusterRole
+      rules:
+        - apiGroups: ["gateway.networking.k8s.io"]
+          resources: ["httproutes"]
+          verbs: ["get", "list", "watch"]
+        - apiGroups: ["gateway.networking.k8s.io"]
+          resources: ["gateways"]
+          verbs: ["get"]
+  bindings:
+    sidecar:
+      type: ClusterRoleBinding
+      roleRef:
+        identifier: sidecar
+      subjects:
+        - identifier: gatus
+configMaps:
+  config:
+    includeInChecksum: true
+    data:
+      config.yaml: |
+        metrics: true
+        skip-invalid-config-update: true
+        storage:
+          type: sqlite
+          path: /data/gatus.db
+        web:
+          port: 8080
+        # Gatus requires an endpoint before the sidecar's first discovery pass.
+        endpoints:
+          - name: gatus-local
+            group: infrastructure
+            url: http://127.0.0.1:8080/health
+            interval: 1m
+            conditions:
+              - "[STATUS] == 200"
+service:
+  app:
+    controller: gatus
+    ports:
+      http:
+        port: 8080
+serviceMonitor:
+  app:
+    endpoints:
+      - port: http
+        path: /metrics
+route:
+  app:
+    hostnames:
+      - gatus.k8s-01.suslian.engineer
+    parentRefs:
+      - name: internal
+        namespace: kube-system
+        sectionName: https-k8s-01
+persistence:
+  config:
+    type: emptyDir
+    advancedMounts:
+      gatus:
+        app:
+          - path: /config
+            readOnly: true
+        sidecar:
+          - path: /config
+  config-file:
+    type: configMap
+    identifier: config
+    advancedMounts:
+      gatus:
+        app:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
+  data:
+    type: persistentVolumeClaim
+    accessMode: ReadWriteOnce
+    storageClass: ceph-block
+    size: 1Gi
+    advancedMounts:
+      gatus:
+        app:
+          - path: /data

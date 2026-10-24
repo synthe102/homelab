@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gatus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: app-template
+      repoURL: https://bjw-s-labs.github.io/helm-charts
+      targetRevision: 5.3.0
+      helm:
+        valueFiles:
+          - $values/clusters/k8s-01/apps/monitoring/gatus/values.yaml
+    - repoURL: 'https://github.com/synthe102/homelab.git'
+      targetRevision: HEAD
+      ref: values
+  destination:
+    name: in-cluster
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

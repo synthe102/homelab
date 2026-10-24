@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - kube-prometheus-stack
   - grafana-mcp
+  - gatus
   - loki
   - mimir
   - mimir-kafka
