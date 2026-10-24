@@ -1,0 +1,14 @@
+---
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: builtin-nvmeof
+  namespace: rook-ceph
+spec:
+  name: .nvmeof
+  failureDomain: host
+  replicated:
+    size: 3
+  parameters:
+    pg_num: "1"
+    pg_num_min: "1"

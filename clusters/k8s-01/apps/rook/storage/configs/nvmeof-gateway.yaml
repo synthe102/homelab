@@ -6,7 +6,6 @@ metadata:
   namespace: rook-ceph
 spec:
   image: quay.io/ceph/nvmeof:2.0
-  pool: nvmeof
   group: group-a
   instances: 2
   hostNetwork: false
