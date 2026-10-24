@@ -4,12 +4,12 @@ kind: Gateway
 metadata:
   name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.suslian.engineer
+    external-dns.kubernetes.io/target: &hostname external.suslian.engineer
 spec:
   gatewayClassName: cilium
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/sharing-key: "external"
       lbipam.cilium.io/sharing-cross-namespace: "*"
   listeners:

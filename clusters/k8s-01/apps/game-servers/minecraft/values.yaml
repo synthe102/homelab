@@ -72,7 +72,7 @@ service:
   main:
     type: LoadBalancer
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: mc.volcan.cloud
+      external-dns.kubernetes.io/hostname: mc.volcan.cloud
     controller: main
     ports:
       map:

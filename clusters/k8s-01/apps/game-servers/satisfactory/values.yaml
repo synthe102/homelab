@@ -33,7 +33,7 @@ service:
   main:
     type: LoadBalancer
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: satisfactory.volcan.cloud
+      external-dns.kubernetes.io/hostname: satisfactory.volcan.cloud
     controller: main
     ports:
       admin:
