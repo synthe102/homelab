@@ -133,7 +133,6 @@ persistence:
       gatus:
         app:
           - path: /config
-            readOnly: true
         sidecar:
           - path: /config
   config-file:
