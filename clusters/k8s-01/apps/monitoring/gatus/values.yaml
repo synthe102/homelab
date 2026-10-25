@@ -45,7 +45,6 @@ controllers:
           tag: 0.5.5
         args:
           - --auto-httproute
-          - --gateway-name=internal
           - --output=/config/gatus-sidecar.yaml
         resources:
           requests:
