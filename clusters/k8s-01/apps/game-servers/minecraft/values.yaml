@@ -11,6 +11,8 @@ controllers:
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: RuntimeDefault
     containers:
       main:
         nameOverride: minecraft-server
@@ -27,6 +29,8 @@ controllers:
           INIT_MEMORY: 5G
           MAX_MEMORY: 11G
           ONLINE_MODE: "true"
+          ENABLE_WHITELIST: "true"
+          ENFORCE_WHITELIST: "true"
           TYPE: PAPER
           PAPER_BUILD: 205
           VERSION: "26.3"
@@ -38,6 +42,12 @@ controllers:
             tab-was-taken
             chunky
           MODRINTH_ALLOWED_VERSION_TYPE: "beta"
+          PLUGINS: |
+            https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v5.29/bluemap-5.29-paper.jar
+            https://github.com/Chicken/Auth/releases/download/authentication-v0.5.0/Authentication-Spigot-0.5.0.jar
+          # Synchronize managed plugin configs to the writable PVC on every boot.
+          COPY_PLUGINS_SRC: /map-config
+          SYNC_SKIP_NEWER_IN_DESTINATION: "false"
         envFrom:
           - secretRef:
               name: minecraft-volcan
@@ -56,33 +66,79 @@ controllers:
           capabilities: {drop: ["ALL"]}
         tty: true
         stdin: true
-        # volcan:
-        #   nameOverride: volcan-bot
-        #   image:
-        #     repository: ghcr.io/synthe102/volcan-bot
-        #     tag: "v0.0.3"
-        #   env:
-        #     MINECRAFT_RCON_ADDRESS: localhost:25575
-        #     MINECRAFT_WHITELIST_FILE: /data/whitelist.json
-        #     SQLITE_DATABASE: /data/volcan.db
-        #   envFrom:
-        #     - secretRef:
-        #         name: minecraft-volcan
+      # volcan:
+      #   nameOverride: volcan-bot
+      #   image:
+      #     repository: ghcr.io/synthe102/volcan-bot
+      #     tag: "v0.0.3"
+      #   env:
+      #     MINECRAFT_RCON_ADDRESS: localhost:25575
+      #     MINECRAFT_WHITELIST_FILE: /data/whitelist.json
+      #     SQLITE_DATABASE: /data/volcan.db
+      #   envFrom:
+      #     - secretRef:
+      #         name: minecraft-volcan
+      map-proxy:
+        image:
+          repository: ghcr.io/nginx/nginx-unprivileged
+          tag: 1.30.4-alpine@sha256:adf5042a17f4ecdd200c595fa9ffd1be37efb18f89a830bd1a00e4ab4d59d42c
+        command: [nginx]
+        args: [-e, /dev/stderr, -c, /etc/nginx/map/nginx.conf, -g, "daemon off;"]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 568
+          runAsGroup: 568
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: ["ALL"]}
+        probes:
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8123
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /healthz
+                port: 8123
 service:
   main:
     type: LoadBalancer
+    # Retain the existing Service and its allocated game-server address.
+    forceRename: minecraft-volcan
     annotations:
       external-dns.kubernetes.io/hostname: mc.volcan.cloud
     controller: main
     ports:
-      map:
-        port: 8123
       server:
         port: 25565
+  map:
+    type: ClusterIP
+    controller: main
+    ports:
+      http:
+        port: 8123
+  metrics:
+    type: ClusterIP
+    controller: main
+    ports:
       metrics:
         port: 9100
 serviceMonitor:
   app:
+    service:
+      identifier: metrics
     endpoints:
       - port: metrics
 route:
@@ -93,19 +149,67 @@ route:
       - name: external
         namespace: kube-system
         sectionName: https-volcan
+    rules:
+      - backendRefs:
+          - identifier: map
+            port: http
 persistence:
   data:
     enabled: true
     type: persistentVolumeClaim
     accessMode: ReadWriteOnce
     size: 35Gi
+    advancedMounts:
+      main:
+        main:
+          - path: /data
   tmp:
     enabled: true
     type: emptyDir
     sizeLimit: 512Mi
+    advancedMounts:
+      main:
+        main:
+          - path: /tmp
   dshm:
     enabled: true
     type: emptyDir
     sizeLimit: 512Mi
-    globalMounts:
-      - path: /dev/shm
+    advancedMounts:
+      main:
+        main:
+          - path: /dev/shm
+  map-config:
+    type: configMap
+    name: minecraft-volcan-map-config
+    items:
+      - key: core.conf
+        path: BlueMap/core.conf
+      - key: webserver.conf
+        path: BlueMap/webserver.conf
+      - key: overworld.conf
+        path: BlueMap/maps/overworld.conf
+      - key: authentication.yml
+        path: Authentication/config.yml
+      - key: login.html
+        path: Authentication/web/login.html
+    advancedMounts:
+      main:
+        main:
+          - path: /map-config
+            readOnly: true
+  map-proxy-config:
+    type: configMap
+    name: minecraft-volcan-map-proxy
+    advancedMounts:
+      main:
+        map-proxy:
+          - path: /etc/nginx/map
+            readOnly: true
+  map-proxy-tmp:
+    type: emptyDir
+    sizeLimit: 32Mi
+    advancedMounts:
+      main:
+        map-proxy:
+          - path: /tmp

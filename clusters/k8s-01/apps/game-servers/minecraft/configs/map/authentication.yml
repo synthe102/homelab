@@ -1,0 +1,11 @@
+---
+ip: "127.0.0.1"
+port: 8200
+webserver_enabled: true
+optional_authentication: false
+# Mobile connections may change IP after login; the random session cookie is used.
+ip_lock: false
+session_length_days: 7
+auth_token_length: 12
+user_max_sessions: 3
+database_url: "jdbc:sqlite:{data}/db.sqlite"

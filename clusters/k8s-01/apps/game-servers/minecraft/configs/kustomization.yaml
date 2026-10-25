@@ -5,3 +5,17 @@ resources:
   - es.yaml
   - netpol.yaml
   - dashboard.yaml
+configMapGenerator:
+  - name: minecraft-volcan-map-config
+    files:
+      - map/core.conf
+      - map/webserver.conf
+      - map/overworld.conf
+      - map/authentication.yml
+      - map/login.html
+  - name: minecraft-volcan-map-proxy
+    files:
+      - map/nginx.conf
+      - map/logout.html
+generatorOptions:
+  disableNameSuffixHash: true
