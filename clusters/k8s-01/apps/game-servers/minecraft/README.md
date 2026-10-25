@@ -3,7 +3,11 @@
 BlueMap 5.29 renders the existing Paper 26.3 world and serves it at
 <https://mc-map.volcan.cloud>. Chicken/Authentication 0.5.0 links browser sessions
 to Minecraft players. Both plugin JARs are pinned in `values.yaml` and installed
-by the Minecraft image's `PLUGINS` mechanism.
+by the Minecraft image's `MODRINTH_PROJECTS` mechanism. BlueMap uses version
+`5.29-paper`; Authentication uses version ID `xj90zwgY` (`0.5.0-spigot`).
+Authentication's Modrinth compatibility labels stop at 26.2, so its exact version
+ID is needed on Paper 26.3. Its published SHA-512 matches the GitHub JAR already
+validated with Paper 26.3 build 205.
 
 ## Login and access
 
@@ -60,22 +64,16 @@ not the generated copies on the PVC. Reloader observes the mounted ConfigMaps.
 
 ## Validation and rollout
 
-Render the same app-template version as `app.yaml`, then run the tests:
+Render the same app-template version as `app.yaml` and validate the manifests:
 
 ```sh
 helm template minecraft-volcan /path/to/app-template --namespace game-servers \
   --api-versions gateway.networking.k8s.io/v1/HTTPRoute \
   -f clusters/k8s-01/apps/game-servers/minecraft/values.yaml > /tmp/minecraft-rendered.yaml
 kubectl kustomize clusters/k8s-01/apps/game-servers/minecraft/configs > /tmp/minecraft-configs.yaml
-nix-shell -p 'python3.withPackages (ps: [ ps.pyyaml ])' nginx --run \
-  'RENDERED_MANIFESTS=/tmp/minecraft-rendered.yaml python3 -m unittest discover -s clusters/k8s-01/apps/game-servers/minecraft/tests -v'
+kubectl -n game-servers apply --dry-run=server \
+  -f /tmp/minecraft-rendered.yaml -f /tmp/minecraft-configs.yaml
 ```
-
-The tests run real Nginx with fixture backends. They check anonymous and forged
-access, private cache headers, verified identity forwarding, login/polling/POST
-logout, internal endpoint isolation, auth-service failure, and Helm-rendered
-Service, HTTPRoute, ServiceMonitor and volume boundaries. They do not prove a
-real player's in-game login or live Cilium enforcement.
 
 This Application has manual Argo CD sync. Before syncing, back up the existing
 PVC and schedule the Minecraft restart. Sync both Helm and config resources,
@@ -91,13 +89,13 @@ pruning the old configuration as shown in the preview. Verify:
 - Watch `/data` free space, JVM memory and server tick times during rendering;
   enlarge `overworld.conf`'s render mask only after measuring the initial render.
 
-Rolling back the values/configs removes the map proxy and plugin URL entries;
-the image tracks the URL-installed JARs for removal. Keep generated map data
+Rolling back the values/configs removes the map proxy and Modrinth project entries;
+the image tracks the Modrinth-installed JARs for removal. Keep generated map data
 and the Authentication database until their deletion is explicitly intended.
 
 ## References
 
-- [BlueMap 5.29](https://github.com/BlueMap-Minecraft/BlueMap/releases/tag/v5.29)
+- [BlueMap 5.29-paper](https://modrinth.com/plugin/bluemap/version/5.29-paper)
 - [Chicken/Auth](https://github.com/Chicken/Auth)
-- [Authentication 0.5.0](https://github.com/Chicken/Auth/releases/tag/authentication-v0.5.0)
-- [Minecraft image file application](https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/)
+- [Authentication 0.5.0-spigot](https://modrinth.com/plugin/authentication/version/xj90zwgY)
+- [Minecraft image Modrinth integration](https://docker-minecraft-server.readthedocs.io/en/latest/mods-and-plugins/modrinth/)

@@ -34,6 +34,8 @@ controllers:
           TYPE: PAPER
           PAPER_BUILD: 205
           VERSION: "26.3"
+          # Authentication 0.5.0-spigot's exact ID selects the already verified
+          # Paper 26.3 JAR despite its Modrinth compatibility labels stopping at 26.2.
           MODRINTH_PROJECTS: |
             directionhud?
             otterlib?
@@ -41,10 +43,9 @@ controllers:
             viaversion
             tab-was-taken
             chunky
+            bluemap:5.29-paper
+            authentication:xj90zwgY
           MODRINTH_ALLOWED_VERSION_TYPE: "beta"
-          PLUGINS: |
-            https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v5.29/bluemap-5.29-paper.jar
-            https://github.com/Chicken/Auth/releases/download/authentication-v0.5.0/Authentication-Spigot-0.5.0.jar
           # Synchronize managed plugin configs to the writable PVC on every boot.
           COPY_PLUGINS_SRC: /map-config
           SYNC_SKIP_NEWER_IN_DESTINATION: "false"
