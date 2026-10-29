@@ -42,7 +42,7 @@ controllers:
       sidecar:
         image:
           repository: ghcr.io/home-operations/gatus-sidecar
-          tag: 0.5.5
+          tag: 0.6.0
         args:
           - --auto-httproute
           - --output=/config/gatus-sidecar.yaml
