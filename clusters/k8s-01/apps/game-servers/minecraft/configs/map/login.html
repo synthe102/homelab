@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte de Volcan — Connexion</title>
+<style>
+  body { max-width: 38rem; margin: 15vh auto; padding: 1.5rem; font: 1.1rem system-ui; background: #171c24; color: #eef2f6; }
+  button { padding: 1rem; font: 1.2rem monospace; cursor: pointer; }
+  a { color: #9dd5ff; }
+</style>
+<h1>Carte de Volcan</h1>
+<p>Connectez-vous au serveur <strong>mc.volcan.cloud</strong>, puis exécutez cette commande dans Minecraft :</p>
+<button id="command" type="button">/auth {{auth_token}}</button>
+<p id="status" role="status">Cliquez pour copier. La carte s’ouvrira automatiquement après la connexion.</p>
+<p>Cette connexion est valable sept jours. <a href="/logout">Se déconnecter</a></p>
+<script>
+  document.getElementById('command').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(document.getElementById('command').textContent);
+      document.getElementById('status').textContent = 'Commande copiée. Exécutez-la dans Minecraft.';
+    } catch {
+      document.getElementById('status').textContent = 'Copiez la commande ci-dessus dans Minecraft.';
+    }
+  });
+  setInterval(async () => {
+    try {
+      const response = await fetch('./auth', { cache: 'no-store' });
+      if (response.status === 200) window.location.replace('/');
+    } catch { /* Retry while the server is temporarily unavailable. */ }
+  }, 3000);
+</script>
+</html>
