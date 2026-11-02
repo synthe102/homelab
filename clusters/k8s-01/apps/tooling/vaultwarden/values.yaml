@@ -6,7 +6,7 @@ controllers:
         nameOverride: vaultwarden
         image:
           repository: ghcr.io/dani-garcia/vaultwarden
-          tag: 1.37.4
+          tag: 1.37.5
         env:
           DATABASE_URL:
             secretKeyRef:
