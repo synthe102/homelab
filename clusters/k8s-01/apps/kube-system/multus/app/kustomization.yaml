@@ -6,7 +6,7 @@ resources:
   - serviceaccountsecret.yaml
 images:
   - name: ghcr.io/k8snetworkplumbingwg/multus-cni
-    newTag: v4.3.1-thick
+    newTag: v4.3.2-thick
 patches:
   - path: patch.yaml
   # This CRD was also installed by the retired SR-IOV operator. Preserve all NADs.
