@@ -15,11 +15,6 @@
       matchPackageNames: ['ghcr.io/siderolabs/talosctl', 'ghcr.io/siderolabs/installer'],
       automerge: false,
     },
-    {
-      description: 'Keep the NVMe-oF gateway on 1.x while the cluster runs Ceph 20.x (tentacle); 2.0 is built for Ceph 21 (umbrella) and crashloops without mon-side gateway registration',
-      matchPackageNames: ['quay.io/ceph/nvmeof'],
-      allowedVersions: '<2.0.0',
-    },
   ],
   argocd: {
     managerFilePatterns: [
