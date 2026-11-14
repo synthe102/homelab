@@ -9,9 +9,9 @@ spec:
     name: bitwarden-homelab
     kind: ClusterSecretStore
   data:
-  - secretKey: DATABASE_URL
-    remoteRef:
-      key: "K8S_01_KUBE_TOOLING_VAULTWARDEN"
-  - secretKey: rsa_key.pem
-    remoteRef:
-      key: "K8S_01_KUBE_TOOLING_VAULTWARDEN_KEY"
+    - secretKey: DATABASE_URL
+      remoteRef:
+        key: "K8S_01_KUBE_TOOLING_VAULTWARDEN"
+    - secretKey: rsa_key.pem
+      remoteRef:
+        key: "K8S_01_KUBE_TOOLING_VAULTWARDEN_KEY"

@@ -1,11 +1,12 @@
+---
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: xzg
 spec:
   endpoints:
-  - dnsName: xzg.iot.suslian.engineer
-    recordTTL: 60
-    recordType: A
-    targets:
-    - 192.168.3.206
+    - dnsName: xzg.iot.suslian.engineer
+      recordTTL: 60
+      recordType: A
+      targets:
+        - 192.168.3.206
