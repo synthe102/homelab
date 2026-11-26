@@ -8,14 +8,32 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/name: minecraft-volcan
-  # Drop known FifthColumnMC griefer/scanner source IPs at L3, before traffic
-  # ever reaches the JVM. This is a deny-only ingress rule: enableDefaultDeny.ingress
-  # is set to false so the endpoint stays open to everyone else (legit players, the
-  # LoadBalancer, metrics scraping). Without that, a lone ingressDeny rule would flip
-  # the endpoint into ingress default-deny and lock the whole server out.
+  # BlueMap listens on 8100; only the same-Pod proxy may reach that backend.
+  # Authentication binds to loopback on 8200. Neither backend has a Service.
   enableDefaultDeny:
-    ingress: false
+    ingress: true
     egress: true
+  ingress:
+    - fromEntities:
+        - all
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+    - fromEntities:
+        - ingress
+      toPorts:
+        - ports:
+            - port: "8123"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: monitoring
+      toPorts:
+        - ports:
+            - port: "9100"
+              protocol: TCP
+  # Preserve the existing scanner deny list, which takes precedence over allows.
   ingressDeny:
     - fromCIDR:
         - 213.152.161.54/32 # FifthColumnMC - main campaign (~1167 attempts)
